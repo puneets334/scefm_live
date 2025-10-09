@@ -1,0 +1,7 @@
+.asterisk_input::after {
+    content:" *";
+    color: #e32;
+    position: absolute;
+    margin: -10px 0px 0px 0px;
+    font-size: larger;
+    padding: 0 5px 0 0; }

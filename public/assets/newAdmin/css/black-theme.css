@@ -1,0 +1,245 @@
+/* black theme css old file 25-09-24  */
+.black-theme {background-color: #111111;color: #fff;}
+.black-theme {background: #111111;}
+.black-theme select {color: #ff0;background: #000;}
+.black-theme p, .black-theme h5, .black-theme h6, .black-theme h1, .black-theme h2, .black-theme h3, .black-theme h4, .black-theme label, .black-theme span, .black-theme div{color: #fff!important;}
+
+.black-theme table {background: transparent;}
+.black-theme caption, .black-theme th, .black-theme td {background: #000 !important;color: #fff;}
+.black-theme caption a, .black-theme th a, .black-theme td a {color: #ff0;}
+.black-theme caption a:hover, .black-theme th a:hover, .black-theme td a:hover {color: #ffffff;}
+.black-theme .btn-primary{background: #525252;color: #ff0;border-color: #8d8d8d;}
+/* Header CSS Start  */
+.black-theme .mngmntHeader .top-right-nav{background: #222222;}
+.black-theme .mngmntHeader .top-right-nav img.txt-icon{filter: invert(0.45) sepia(1) saturate(10) hue-rotate(30deg) brightness(1.4);}
+.black-theme .mngmntHeader .top-right-nav a {color: #ff0;}
+.black-theme .mngmntHeader .top-right-nav .theme-color a.whitebg {background: #fff;}
+.black-theme .mngmntHeader .top-right-nav .theme-color a {border: 1px solid #ffffffb0;color: #fff;}
+.black-theme .mngmntHeader .top-right-nav select.select-lang {background: transparent;color: #ff0;}
+.black-theme .mngmntHeader .top-right-nav select.select-lang option {background: #000;}
+.black-theme .mngmntHeader .top-right-nav a {color: #ff0;}
+.black-theme .mngmntHeader .top-right-nav .theme-color a.whitebg {background: #fff;}
+.black-theme .mngmntHeader .top-right-nav .theme-color a {border: 1px solid #ffffffb0;color: #fff;}
+.black-theme .mngmntHeader .top-right-nav select.select-lang {background: transparent;color: #ff0;}
+.black-theme .mngmntHeader .top-right-nav select.select-lang option { background: #000;}
+.black-theme .mngmntHeader {background: #000;}
+.black-theme .mngmntLogoSection .logoSubtitle {color: #ff0;}
+.black-theme .mngmntLogoSection .brand-text h4, .black-theme .mngmntLogoSection .brand-text h4 span {color: #ff0 !important;}
+.black-theme .mngmntUserSection .userName, .black-theme .mngmntHeader .userDetail i {color: #ff0;}
+.black-theme .mngmntHeader .userInfo a {background: #333333;color: #ff0;}
+.black-theme .mngmntHeader .userInfo .bell .count {background: #ff0;}
+.black-theme .user-action-sec ul {background: #333333;}
+.black-theme .user-action-sec:before {border-bottom-color: #333333;}
+.black-theme .wrapper {background: #222222;}
+.black-theme .mngmntHeader .userDetail .userName{color: #ff0;}
+/* Header CSS End  */
+/* Menu CSS Start  */
+.black-theme .dashboardLeftNav li a.active:before, .black-theme .dashboardLeftNav li a.btn-link:hover:before {filter: invert(1);}
+.black-theme .togglemenuSection {background: #111111;}
+.black-theme .user-action-sec ul a:hover {background: #000;color: #ff0;}
+.black-theme .user-action-sec ul a {color: #ff0;}
+.black-theme .sidePanel {background: #111111;}
+.black-theme .hamburger-icon span {background: #ff0;}
+.black-theme .dashboardLeftNav li a.active, .black-theme .dashboardLeftNav li a.btn-link:hover, .black-theme .dashboardLeftNav li a.btn-link:focus {background: #000 !important;color: #ff0 !important;box-shadow: none !important}
+.black-theme .dashLeftNavSection .menu-close-sec .main-menu-close span {color: #ff0;}
+.black-theme .menu-profile-sec .profile-info h6, .black-theme .menu-profile-sec .profile-info a.profile-lnk {color: #ff0;}
+.black-theme .menu-profile-sec .profile-link span.mdi {color: #ff0;}
+.black-theme .dashboardLeftNav li > .accordion-button[aria-expanded="true"] , .black-theme .dashboardLeftNav li > .submenu{background:#000 !important;color:#ff0;}
+.black-theme .dashboardLeftNav li > .submenu a:hover, .black-theme .dashboardLeftNav li > .submenu a:focus{background: #222 !important;color:#ff0;}
+.black-theme .dashboardLeftNav li:nth-child(2) .accordion-button[aria-expanded="true"]:before{background-position:-38px -95px;}
+.black-theme .dashboardLeftNav li:nth-child(2) a:hover:before, .black-theme .dashboardLeftNav li:nth-child(2) a:focus:before{background-position: 4px -95px !important;}
+/* Menu CSS End  */
+/* Dashboard Main Section Start  */
+.black-theme .dashbord-tile{background: #000;border-color: #ffffff52;}
+.black-theme .dashboard-tiles-area .dashbord-tile:after {background: #333;}
+.black-theme .dash-card {background: #000;}
+.black-theme .custom-table thead th {background:#111111!important;border-top:1px solid #ffffff63;border-bottom:1px solid #ffffff63;}
+.black-theme .table-striped tr:nth-child(even), .black-theme .table-striped tr:nth-child(even) td {background-color: #1a1a1a !important;}
+.black-theme .table-striped tr:nth-child(odd), .black-theme .table-striped tr:nth-child(odd) td {background-color: #333333 !important;}
+.black-theme .table-striped tr td {border-bottom: 1px solid #ffffff59;}
+.black-theme .table tr td, .black-theme .table tr th {color: #ffffff;}
+.black-theme .table tr th {background: #222222 !important;color:#ff0}
+.black-theme .title-sec .unerline-title {color: #fff;}
+.black-theme .title-sec .unerline-title:before {background: #fff !important;}
+.black-theme .calender-table .dt-td .mdi {color: #ff0;}
+.black-theme .pagination-inner a.page-link {background: #222222;border-color: #ffffff3d;color: #ff0;}
+.black-theme .pagination-inner a.page-link:hover, .black-theme .pagination-inner a.page-link:focus, .black-theme .pagination-inner li.page-item.active a {background: #000;color: #ff0;}
+.black-theme .calender-table::-webkit-scrollbar-thumb{border-radius:10px;background-color:#ffffff!important}
+.black-theme a.add-btn {background: #000;color: #ff0;box-shadow: 0px 0px 8px 0px rgb(255 255 255);}
+.black-theme .add-new-options {background: #111;box-shadow: 5px 1px 8px 0px rgb(94 93 93 / 72%);}
+.black-theme .add-new-options ul .add-lnk:hover {background: #000 !important;color: #ff0;}
+.black-theme .add-new-options ul .add-lnk {color: #ff0;}
+.black-theme .add-new-options:before {border-left-color: #ff0;}
+.black-theme .dashboard-bradcrumb .page-title h5{color: #ff0 !important;}
+.black-theme .page-breifs ul a {color: #ff0;}
+.black-theme .quick-btn {background: #333333 !important;color: #ff0 !important;}
+.black-theme .quick-btn.gray-btn {background: #000;}
+.black-theme .quick-btn:before, .black-theme .quick-btn:after {background: #222222;}
+.black-theme .tabs-section .nav-tabs li.nav-item .nav-link , .black-theme .tabs-section .nav-tabs li.nav-item .nav-link:before, .black-theme .tabs-section .nav-tabs li.nav-item .nav-link:after{background: #333;color: #ff0;}
+.black-theme .tabs-section .nav-tabs li.nav-item .nav-link.active, .black-theme .tabs-section .nav-tabs li.nav-item .nav-link:hover , .black-theme .tabs-section .nav-tabs li.nav-item .nav-link.active:before, .black-theme .tabs-section .nav-tabs li.nav-item .nav-link:hover:before, .black-theme .tabs-section .nav-tabs li.nav-item .nav-link:focus:before , .black-theme .tabs-section .nav-tabs li.nav-item .nav-link.active:after, .black-theme .tabs-section .nav-tabs li.nav-item .nav-link:hover:after, .black-theme .tabs-section .nav-tabs li.nav-item .nav-link:focus:after{background: #555555;color: #ff0;}
+.black-theme form label {color: #ffffff;}
+.black-theme .cus-form-ctrl {background: #222222;border-color: #ffffff4d !important;color: #ffffff !important;appearance: auto;}
+.black-theme .cus-form-ctrl:focus {border-color: #ffff008c !important;background: #222222;}
+.black-theme select.form-select option {background: #222222;}
+.black-theme .current-pg-title h6 {color:#ffffff;}
+.black-theme .crnt-page-head{border-color:#ffffff78;}
+.black-theme .form-check.form-switch input[type="checkbox"] {border-color: #ffffff57;}
+.black-theme .form-switch .form-check-input:focus {filter: invert(1) brightness(16);}
+.black-theme .common-modal .modal-dialog .modal-content {background: #000;box-shadow: 0px 0px 13px 0px rgb(255 255 255 / 58%);}
+.black-theme .common-modal .modal-footer{background: #333333;}
+.black-theme .common-modal .modal-body {color:#ff0;}
+.black-theme .common-modal .quick-btn {background: #333!important;border: 1px solid #ffff0036;}
+.black-theme input[type="search"] {color: white;}
+.black-theme .usrprofile-details label.prof-label {font-size: 16px;font-family: 'noto_sanssemibold';color: #ffff00;}
+.black-theme .usrprofile-details .prof-outp {color: #ffffff;font-size: 16px;}
+
+/* Dashboard Main Section End  */       
+/* Footer CSS Start  */
+.black-theme .footer-sec{background:#333333;color:#ff0;}
+/* Footer CSS End  */
+.black-theme .top-right-nav .font-action-sec ul {background: #111111;box-shadow: 0px 0px 6px 0px rgb(255 255 255);}
+.black-theme .top-right-nav .font-action-sec:before {border-bottom-color: #111111;}
+.black-theme .top-right-nav .font-action-sec ul li:hover {background: #333333;}
+.black-theme .top-right-nav .font-action-sec ul li:hover a{color: #ff0!important;}
+.black-theme .top-right-nav .font-action-sec ul li a {color: #ff0 !important;}
+.black-theme .quick-btn:hover{color: #ff0 !important;}
+.black-theme .breadcrumb-area .breadcrumb-item.active {background: #333;}
+.black-theme .breadcrumb-area .breadcrumb-item {border-color: #333;background: #222;}
+.black-theme .breadcrumb-area .breadcrumb-item a {color: #ff0;}
+.black-theme .breadcrumb-item+.breadcrumb-item::before {color: #fff;}
+.black-theme .breadcrumb-area .breadcrumb-item:hover {background: #333;}
+.black-theme .breadcrumb-area .breadcrumb-item:hover a {color: #ff0;}
+.black-theme .discription-sec p, .black-theme .innner-sub-title h5 {color: #fff;}
+.black-theme .custom-table td a {color: #ff0!important;}
+.black-theme .dataTables_length label, .black-theme .dataTables_filter label {color: #fff;}
+/* .black-theme .dataTables_length label, .black-theme .dataTables_filter label {color: black !important;} */
+
+
+/* black theme css old 25-09-24  */ 
+.black-theme .dataTables_wrapper .dataTables_paginate a.paginate_button {background: #555555 !important;color: #ff0 !important;border: 1px solid #ffffff52 !important;}
+.black-theme .dataTables_wrapper .dataTables_paginate .ellipsis {color: #ff0;background: #333333;padding: 7px 12px;border: 1px solid #b1b1b18c;}
+.black-theme .dataTables_wrapper .dataTables_paginate a.paginate_button.current, .black-theme .dataTables_wrapper .dataTables_paginate a.paginate_button:hover { background: #333 !important;color: #ff0 !important;}
+.black-theme .card-body {background: #333333;}
+.black-theme .bg-white {background: #333333 !important;}
+.black-theme .bg-primary {background: #000000 !important;}
+.black-theme .card {border: 1px solid #0000006b !important;background: #222; color: #fff;}
+.black-theme .text-black{color: #fff!important;}
+.black-theme .card-body .quick-btn {border: 1px solid #7c7c7c;}
+
+.black-theme .dash-card .table-sec table#datatable-responsive-sc_cases .btn {background: #000;color: #ff0;}
+.black-theme .dash-card .table-sec table#datatable-responsive-sc_cases td .accordion-collapse {background: #333;}
+.black-theme .calender-sec .fc-toolbar-title {color: #ff0;}
+.black-theme #calendar .fc-button-group button:hover {background: #000 !important;color: #ff0 !important;}
+.black-theme #calendar .fc-button-group button {color: #ff0 !important;}
+.black-theme button.fc-today-button {color: #ff0 !important;}
+.black-theme .calender-sec div#calendar td, .calender-sec div#calendar th {background: transparent;color: #ff0 !important;}
+.black-theme .calender-sec div#calendar td.fc-day:hover{background:#555555 !important}
+.black-theme .calender-sec div#calendar tr:nth-child(even) td{background:#333 !important}
+.black-theme .calender-sec div#calendar td a, .black-theme .calender-sec div#calendar th a{color: #ff0 !important;}
+.black-theme .calender-sec div#calendar .fc .fc-day-other .fc-daygrid-day-top {opacity: 0.5!important;}
+.black-theme .tiles-comnts .tile-comnt:hover .title-comnt-bref .table-height-div {background: #555555;}
+.black-theme .tiles-comnts .tile-comnt:hover .title-comnt-bref:after{border-bottom-color: #555555}
+.black-theme .dash-card ul.nav-tabs a.nav-link {background: #333;border-color: #525252;color: #ff0;}
+.black-theme .x_content .nav-tabs .nav-item.show .nav-link, .black-theme .x_content .nav-tabs .nav-link.active, .black-theme .x_content .nav-tabs .nav-link:hover, .black-theme .x_content .nav-tabs .nav-link:focus, .black-theme .dashboard-section .dash-card .nav-tabs .nav-link.active, .black-theme .dashboard-section .dash-card .nav-tabs .nav-link:hover, .black-theme .dashboard-section .dash-card .nav-tabs .nav-link:focus {background: #000;color: #ff0;border-color: #ff0;}
+/* FaQ Page CSS start  */
+.black-theme .faq-sec .accordion .accordion-item h2 .accordion-button{color: #ff0 }
+.black-theme .faq-sec .accordion .accordion-item h2 .accordion-button , .black-theme .breadcrum-bg .breadcrumb-item.active , .black-theme .accordion-body{background: #000;}
+.black-theme .accordion-button.collapsed {background: #222222!important;color: #ff0 !important;}
+.black-theme .faq-sec .accordion .accordion-item h2 .accordion-button:hover, .black-theme .faq-sec .accordion .accordion-item h2 .accordion-button:focus {background: #000000 !important;color: #ff0 !important;}
+.black-theme .faq-sec .accordion .accordion-item {border: 1px solid #00000087 !important;}
+.black-theme .faq-sec .accordion button.accordion-button.collapsed:after { filter: invert(100%) sepia(0%) saturate(0%) hue-rotate(0deg) brightness(100%) contrast(100%) !important;}
+.black-theme .accordion-body li , .black-theme .accordion-body{color: #fff;}
+/* FaQ Page CSS End  */
+.black-theme .select2-container--open .select2-dropdown--below{background:#000;}
+.black-theme  .select2-container--default .select2-results__option[aria-selected=true], .black-theme .select2-container--default .select2-results__option--highlighted[aria-selected] , .black-theme .datepicker table tr td.day.focused, .black-theme .datepicker table tr td.day:hover{background:#333 !important;}
+.black-theme .datepicker-dropdown{background:#555 !important;}
+.black-theme a.blue-dot .mdi {color: #0D48BE !important;}
+.black-theme a.green-dot .mdi {color: #337700!important;}
+.black-theme a.yellow-dot .mdi {color: #F1B800!important;}
+.black-theme a.red-dot .mdi {color: #BE0D0D!important;}
+.black-theme .radio-btns-inp .form-check{color:#fff!important;}
+.black-theme table tr:nth-child(even) td {background: #111 !important;}
+.black-theme .datepicker .datepicker-switch:hover, .black-theme .datepicker .next:hover, .black-theme .datepicker .prev:hover, .black-theme .datepicker tfoot tr th:hover {background: #333 !important;}
+.black-theme .select2-dropdown{background: #000;border: 1px solid #5c5c5c;}
+.black-theme .accordion-item {border-color: #555555;background: #222222;}
+.black-theme .accordion-item .accordion-button {background: #555555;color: #ff0;box-shadow: none;}
+.black-theme .accordion .accordion-button[aria-expanded="false"]:after {filter: invert(21%) sepia(86%) saturate(9%) hue-rotate(20deg) brightness(10%) contrast(10%);}
+.black-theme .accordion-item a i {color: #ff0 !important;}
+.black-theme .pagination-btns .paging .btn {background: #000 !important;color: #ff0 !important;border-color: #726f6f !important;}
+.black-theme .pagination-btns .paging.paging-input input#page_input {background: #000;color: #ff0;border-color: #726f6f;}
+.black-theme .dataTables_wrapper .dataTables_info{color: #fff;}
+.black-theme .x_content .nav-tabs .nav-link, .black-theme .dashboard-section .dash-card .nav-tabs .nav-link {background: #333;color: #ff0;border-color: #626262;}
+.black-theme .form-control:disabled, .black-theme .form-control[readonly] {background: #444;}
+.black-theme span.select2.select2-container.select2-container--default {background: #000 !important;}
+.black-theme .select2-container--default .select2-selection--multiple {background: #333;}
+.black-theme .select2-container--default .select2-selection--multiple .select2-selection__choice {background: #000;color: #ff0;}
+/* --- Modal CSS Start  */
+.black-theme .common-modal .modal-header .btn-close:before {color: #ff0;}
+.black-theme .common-modal .modal-header .btn-close {background: #333;}
+.black-theme .common-modal .modal-header .btn-close:hover {background: #555;}
+.black-theme .common-modal .modal-header .btn-close:hover:before {color: #ff0;}
+.black-theme .common-modal .uk-modal-dialog {background: #000;box-shadow: 0px 0px 20px rgb(221 221 221 / 61%);}
+.black-theme .common-modal .uk-modal-dialog svg line {fill: #fff !important;stroke: rgb(255 255 255);}
+/* --- Modal CSS End  */
+/* 17-10-24 start  */
+.black-theme .custom-table td a svg path {fill: #ff0;}
+.black-theme .custom-table td a svg polygon{stroke: #ff0;}
+.black-theme .alert-warning {background: #000;border-color: #ffff0085;}
+.black-theme input[type="text"]::placeholder, .black-theme input[type="date"]::placeholder, .black-theme input[type="email"]::placeholder, .black-theme input[type="tel"]::placeholder, .black-theme input[type="number"]::placeholder, .black-theme input[type="url"]::placeholder, .black-theme input[type="password"]::placeholder, .black-theme input[type="search"]::placeholder, .black-theme select::placeholder, .black-theme textarea::placeholder{color:#d6d6d6}
+/* 18-10-24 start  */
+.black-theme .daterangepicker , .black-theme .daterangepicker .drp-calendar.left .calendar-table , .black-theme .daterangepicker select.hourselect, .black-theme .daterangepicker select.minuteselect, .black-theme .daterangepicker select.secondselect, .black-theme .daterangepicker select.ampmselect{background: #000000 !important;}
+.black-theme .daterangepicker .calendar-table .next span, .black-theme .daterangepicker .calendar-table .prev span {border-color: #ff0 !important;}
+.black-theme .daterangepicker .drp-buttons .btn {background: #333;color: #ff0;border-radius: 21px;border-color: #707070;}
+.black-theme table tr td.in-range.available {color: #ff0 !important;background: #555 !important;}
+.black-theme .modal  .modal-dialog .modal-content {background: #000;box-shadow: 0px 0px 13px 0px rgb(255 255 255 / 58%);}
+.black-theme .modal  .modal-footer{background: #333333;}
+.black-theme .modal  .modal-body {color:#ff0;}
+.black-theme .modal  .quick-btn {background: #333!important;border: 1px solid #ffff0036;}
+.black-theme .modal .modal-header button.btn-close {color: #fff !important;filter: invert(1);}
+.black-theme .datepicker table tr td span.focused, .black-theme .datepicker table tr td span:hover{color:#ff0!important;background:#555;}
+.black-theme .alert-danger{background:#000;border-color:#ffff0080;}
+.black-theme .scif{color: #fff;}
+
+/* 19-11-24 start  */
+.black-theme form .col-lg-4 .mb-3 span.input-group-addon {background: #000 !important;border-left-color: #ffffff4d !important;}
+.black-theme form .col-lg-4 .mb-3 span.input-group-addon a.pin-code-loc {color: #ff0;}
+.black-theme .accordion-button:not(.collapsed) , .black-theme .accordion-button:hover{background: #555555 !important;
+    color: #ff0;}
+/* 19-11-24 End  */
+/* 2-12-24 start  */
+.black-theme .datepicker-days {
+    background: #111111;
+}
+.black-theme .datepicker td.active.day{color: #ffffff !important;outline: 1px solid #ffffff}
+.black-theme .datepicker td.day:hover {color: #ffffff !important;outline: 1px solid #ffffff}
+.black-theme .datepicker td.disabled.day:hover {color:#9f9ca3!important;outline:none}
+/* 2-12-24 End  */
+.black-theme .or-divider span {
+    background: #000 !important;
+}
+.black-theme .or-divider:before {
+    background: #cccccc75;
+}
+.black-theme .form-with-tooltip .col-lg-4 .mb-3 span.input-group-addon {
+    background: #000;
+}
+.black-theme .court-fee-box{background: #000;}
+.dataTables_wrapper .dataTables_length{margin-bottom:0}
+.black-theme .table>:not(caption)>*>*{background-color:#000000}
+.black-theme .modal-body .callout{background-color:#333}
+.black-theme .modal-body .list-group-item{color:#fff;background-color:#333}
+.black-theme .modal-body .fontIcon{color:#fff!important}
+.black-theme ::-webkit-scrollbar-thumb{background:#ff0}
+.black-theme .input-group-text{background-color:#000;border:var(--bs-border-width) solid #000}
+.black-theme .input-group .bg-light{background-color:black!important}
+.black-theme .uk-card-default{background:#222}
+.black-theme table input{background:transparent;border:1pc solid #fff}
+.black-theme .uk-modal-dialog{background:#222222;}
+.black-theme .uk-modal-header{background:#222222;border-bottom:1px solid #444}
+.black-theme .uk-modal-footer{background:#222222;border-top:1px solid #444}
+.black-theme .uk-button-default{background-color:#ffffff!important}
+.black-theme body{background-color:#000000!important;color:#fff!important}
+.black-theme form label{color:#ffffff!important}
+.black-theme .sweet-alert{background-color:#222}
+.black-theme .alert{background:#222;border-color:#fff}
+

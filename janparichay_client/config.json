@@ -1,0 +1,11 @@
+{
+    "ClientServicePort": "3032",
+    "ClientServiceHost": "localhost",
+    "JanParichayAPIBaseURL": "https://apijanparichaystag.meripehchaan.gov.in/",
+    "ServiceId": "scefm3nym9s0ecvqoe91mma2bi83hk09",
+    "AuthKey": "12pfqdp71ihyib511zr9ak3di5yizrtu",
+    "AESIV": "lxpmkmmpvg5pkr8h",
+    "LogLevel": "DEBUG",
+    "Logging": "1",
+    "RestAuthId": "1489u8z6p2"
+}

@@ -1,0 +1,52 @@
+<BharatKoshPayment DepartmentCode="020" Version="1.0">
+  <Submit>
+    <OrderBatch TotalAmount="1" Transactions="1" merchantBatchCode="TEST04092019">
+      <Order InstallationId="10051" OrderCode="TEST04092019">
+        <CartDetails>
+          <Description />
+          <Amount CurrencyCode="INR" exponent="0" value="1" />
+          <OrderContent>3185</OrderContent>
+          <PaymentTypeId>1110</PaymentTypeId>
+          <PAOCode>028825</PAOCode>
+          <DDOCode>200727</DDOCode>
+        </CartDetails>
+        <PaymentMethodMask>
+          <Include Code="Online" />
+        </PaymentMethodMask>
+        <Shopper>
+          <ShopperEmailAddress>abc@gmail.com</ShopperEmailAddress>
+        </Shopper>
+        <ShippingAddress>
+          <Address>
+            <FirstName>WWWWW</FirstName>
+            <LastName>XXXXXX</LastName>
+            <Address1>NOT GIVEN</Address1>
+            <Address2 />
+            <PostalCode>00000</PostalCode>
+            <City>Daman</City>
+            <StateRegion>Delhi</StateRegion>
+            <State>Delhi</State>
+            <CountryCode>INDIA</CountryCode>
+            <MobileNumber>9911111111</MobileNumber>
+          </Address>
+        </ShippingAddress>
+        <BillingAddress>
+          <Address>
+            <FirstName>WWWWW</FirstName>
+            <LastName>XXXXXX</LastName>
+            <Address1>NOT GIVEN</Address1>
+            <Address2 />
+            <PostalCode>00000</PostalCode>
+            <City>Daman</City>
+            <StateRegion>Delhi</StateRegion>
+            <State>Delhi</State>
+            <CountryCode>INDIA</CountryCode>
+            <MobileNumber>9911111111</MobileNumber>
+          </Address>
+        </BillingAddress>
+        <StatementNarrative />
+	<Remarks />
+      </Order>
+    </OrderBatch>
+  </Submit>  
+</BharatKoshPayment>

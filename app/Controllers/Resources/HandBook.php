@@ -1,0 +1,34 @@
+<?php
+
+// if (!defined('BASEPATH')) exit('No direct script access allowed');
+
+namespace App\Controllers\Resources;
+
+use App\Controllers\BaseController;
+use App\Models\Assistance\NoticeCiruclarsModel;
+
+class HandBook extends BaseController
+{
+
+    protected $NoticeCiruclarsModel;
+
+    public function __construct()
+    {
+        parent::__construct();
+        // $this->load->helper();
+        // $this->load->model('assistance/NoticeCiruclarsModel');
+        // $this->load->library('form_validation');
+        // $this->load->helper('file');
+        $this->NoticeCiruclarsModel = new NoticeCiruclarsModel();
+        helper(['file']);
+    }
+
+    public function index()
+    {
+        $data['notice_circualrs'] = $this->NoticeCiruclarsModel->notice_circulars_list();
+        // $this->load->view('templates/header');
+        // $this->load->view('resources/hand_book', $data);
+        // $this->load->view('templates/footer');
+        $this->render('resources.hand_book', compact('data'));
+    }
+}

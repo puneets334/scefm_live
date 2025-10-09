@@ -1,0 +1,47 @@
+@extends('layout.advocateApp')
+@section('title', 'File an IA')
+@section('heading', 'File an IA')
+@section('pinned-main-offcanvas') @endsection
+@section('content-container-ribbon')@endsection
+@section('content')
+@if(!empty(@$direct_access_params))
+<?php
+$attribute = array('id' => 'case-ia-crud-form', 'target' => 'case-ia-crud-iframe');
+echo form_open(base_url('case/search/search_case_details'), $attribute);
+?>
+@foreach($direct_access_params as $key=>$value)
+<input type="hidden" name="{{$key}}" value="{{$value}}">
+@endforeach
+</form>
+@endif
+<div class="mainPanel ">
+    <div class="panelInner">
+        <div class="middleContent">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-12">
+                        <div class="row">
+                            <div class="col-12 sm-12 col-md-12 col-lg-12 middleContent-left">
+                                <div class="center-content-inner comn-innercontent">
+                                    <?php
+                                    $var = base_url('case/search/' . url_encryption('ia'));
+                                    ?>
+                                    <iframe name="case-ia-crud-iframe" class="col-12 iframe-scroll-bar" src="{{empty(@$direct_access_params) ? base_url('case/search/'.url_encryption('ia')) : ''}}"></iframe>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+@endsection
+@push('script')
+<script src="<?= base_url() . 'assets/newAdmin/' ?>js/jquery351.min.js"></script>
+<script type="text/javascript">
+    $(function() {
+        $('#case-ia-crud-form').submit();
+    });
+</script>
+@endpush

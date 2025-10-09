@@ -1,0 +1,807 @@
+<div class="panel panel-default">
+    <h4 style="text-align: center;color: #31B0D5"> Pay eCourt Fee </h4>
+    <h5 style="text-align: center;"><b>Please note that No Printing charges are required to be paid</b> </h5>
+    <div class="panel-body">
+        <?php
+        $attribute = array('class' => 'form-horizontal', 'name' => 'court_fee_details', 'id' => 'court_fee_details', 'autocomplete' => 'off');
+        echo form_open('newcase/courtFee/add_court_fee_details', $attribute);
+        //$total_court_fee = $court_fee_details[0]['orders_challendged'] * $court_fee_details[0]['court_fee'];
+        ?>
+        <div>
+            <div class="col-md-12 col-sm-12 col-xs-12" style="display: none;">
+                <table id="datatable-responsive" class="table table-striped table-bordered dt-responsive nowrap" cellspacing="0" width="100%">
+                    <thead>
+                    <tr class="success">
+                        <th>Cost Per Page ( <i class="fa fa-rupee"></i> )</th>
+                        <th>Uploaded Page(s)</th>
+                        <th>Total Cost ( <i class="fa fa-rupee"></i> )</th>
+                        <!--<th>Already Paid ( <i class="fa fa-rupee"></i> )</th>
+                        <th>To Pay ( <i class="fa fa-rupee"></i> )</th>-->
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr>
+                        <?php
+                        $printing_cost= $_SESSION['estab_details']['printing_cost'];
+                        // if the case type is Arbitration Petition, Curative Petition or Original Suit the Printing Charges shall be calculated as Rs 0.75/- per page * multiplied by 6 Sets = Rs 4.5/- per page to be charged. chnaged done on 27/04/21
+                        if(!empty($court_fee_list1)) {
+                            $case_type_id = $court_fee_list1[0]['sc_case_type_id'];
+                        }
+                        //changes code for setting printing charges 0 for all casetype by kbp on 26/04/2023
+                        /*if($case_type_id=='24' || $case_type_id=='25' || $case_type_id=='26' || $case_type_id=='17')
+                        {
+                            $printing_cost_total = (int) $uploaded_pages_count * 4.50;
+                            $printing_cost=4.5;
+                        }
+                        else{
+                            $printing_cost_total = (int) $uploaded_pages_count * (int) $_SESSION['estab_details']['printing_cost'];
+                            $printing_cost=$_SESSION['estab_details']['printing_cost'];
+                        }*/
+
+                        $printing_cost_total = (int) $uploaded_pages_count * (int) $_SESSION['estab_details']['printing_cost'];
+                        $printing_cost=$_SESSION['estab_details']['printing_cost'];
+
+
+
+                        //comment 16 march 2021 by akg
+                        /*$printing_cost_already_paid = 0;
+                        $printing_cost_to_be_paid = $printing_cost_total - $printing_cost_already_paid;*/
+                        ?>
+                        <!--  //comment 16 march 2021 by akg
+                    <input type="hidden" id="print_fee_details" name="print_fee_details" value="<?php /*echo_data(url_encryption($uploaded_pages_count . '$$' . $printing_cost_total . '$$' . $printing_cost_already_paid . '$$' . $printing_cost_to_be_paid)); */?>" />-->
+                        <td><?php echo_data($printing_cost); ?></td>
+                        <td><?php echo_data($uploaded_pages_count); ?></td>
+                        <td><?php echo_data($printing_cost_total); ?></td>
+                        <!--<td><?php /*echo_data($printing_cost_already_paid); */?></td>
+                    <td><?php /*echo_data($printing_cost_to_be_paid); */?></td>-->
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-12 ccol-md-12 col-sm-12 col-xs-12">
+                <div class="row">
+                    <?php //var_dump($court_fee_list1) ?>
+                    <div class="col-sm-8 col-xs-8">
+                        <table id="datatable-responsive1" class="table table-striped table-bordered dt-responsive nowrap" cellspacing="0" width="100%">
+                            <thead>
+                            <tr class="success">
+                                <th>#</th>
+                                <th>Court Fee Details </th>
+                                <th style="text-align: center">Amount ( <i class="fa fa-rupee"></i> )</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <?php
+                            //var_dump($court_fee_list1);
+                            $sr_no=1;
+                            $display_vakalatnama='N';
+                            $no_of_lower_court_order_challanged=0;
+                            $total_petitioners=0;
+
+                            if(!empty($court_fee_list3))
+                                $trial_court_order_challanged_for_caveat=$court_fee_list3[0]['trial_court_order_challanged_for_caveat'];
+                            else
+                                $trial_court_order_challanged_for_caveat=0;
+
+
+                            if(!empty($court_fee_list1)) {
+                                $no_of_lower_court_order_challanged = $court_fee_list1[0]['order_challanged'];
+                                $total_petitioners=$court_fee_list1[0]['total_petitioners'];
+
+                            }
+                            else {
+                                $no_of_lower_court_order_challanged = 0;
+                                $total_petitioners=0;
+                            }
+                            $case_nature=$court_fee_list1[0]['nature'];
+                            $ci = &get_instance();
+                            $ci->load->model('newcase/Get_details_model');
+                            $ci->load->model('newcase/Common_model');
+
+                            $registration_id = $_SESSION['efiling_details']['registration_id'];
+                            if(empty($case_nature))
+                            {
+                                if($_SESSION['efiling_details']['ref_m_efiled_type_id'] == E_FILING_TYPE_CAVEAT)
+                                {
+                                    $arr = array();
+                                    $arr['registration_id'] = $registration_id;
+                                    $arr['step']= 6;
+                                    $caveat_details = $this->Common_model->getCaveatDataByRegistrationId($arr);
+                                    if(!empty($caveat_details[0]))
+                                        $case_nature=$caveat_details[0]['nature'];
+                                }
+                            }
+
+
+                            $base_disposed_cases = $ci->Get_details_model->get_subordinate_court_details($registration_id);
+                            $lower_court_type = $base_disposed_cases[0]['court_type'];
+                            $lower_court_case_type_id = $base_disposed_cases[0]['case_type_id'];
+                            $establishment_code=$base_disposed_cases[0]['estab_code'];
+
+
+
+                            foreach ($court_fee_list1 as $row)  {
+                                if($sc_case_type_id==19)
+                                {
+                                    $case_nature='R'; //if the contempt petition casetype is selected then it can be treated as criminal matters thus no doc fees will be applicable
+                                }
+
+                                if($row['sc_case_type_id']=='9' || $row['sc_case_type_id']=='25' || $row['sc_case_type_id']=='39' ) // for Review Petition , Curative Petition,Contempt petition(came from lower court) and MA : Court Fee is to be paid same as having paid in the Main/base Matter
+                                {
+                                    //($row['sc_case_type_id']=='19' && $lower_court_type!=4)
+                                    $base_case_subject_category_details=get_challanged_sc_base_case_details($registration_id);
+                                    $subject_category=$base_case_subject_category_details['submaster_id'];
+                                    $subcode1 = $base_case_subject_category_details['subcode1'];
+                                    $sc_case_type_id =$base_case_subject_category_details['case_type_id'];
+                                }
+                                else {
+                                    $subject_category = $row['subject_cat']; //submaster id
+                                    $subcode1 = $row['subcode1'];
+                                    $sc_case_type_id = $row['sc_case_type_id'];
+                                }
+                                // echo $subject_category.'#'.$subcode1.'#'.$sc_case_type_id;
+
+
+
+                                $no_of_lower_court_order_challanged=$row['order_challanged'];
+                                $display_vakalatnama='Y'; //  Vakalatnama need to add automatically once subject category selected
+                                ?>
+                                <tr style="color: #0d6aad;size: 20px;">
+                                    <td><?= $sr_no ?></td>
+                                    <td>
+                                        Case Nature : <?php if($row['nature']=='C'){ echo 'Civil';}else{echo 'Criminal';}; ?>&nbsp;, Case Type : <?=$row['casename']?><br>
+                                        Subject Category : <?= $row['sub_name1'] ?><br>
+                                        <?php if (!empty($row['category_sc_old'])) { ?>
+                                            (<?= $row['category_sc_old'] ?>)
+                                        <?php } ?>
+                                        <?= $row['sub_name2'] ?>
+                                        <?= $row['sub_name3'] ?>
+                                        <?= $row['sub_name4'] ?>
+                                        <?php if (($subject_category == '222' || $sc_case_type_id=='7') && $row['court_fee_calculation_helper_flag'] == 'Y') {
+                                            ?>(Matrimonial Case)
+                                        <?php }
+
+                                        //subcode 1=8 belongs to Letter Petition & Pil Matters
+                                        if((int)$row['order_challanged'] > 0 &&  $sc_case_type_id!='5' && ($subcode1!='8' || $sc_case_type_id=='7') &&  $sc_case_type_id!='19') { ?>
+                                            <br>
+                                            (No. of order Challanged
+                                            : <?= (int)$row['order_challanged']; ?> => Total Court Fee=Court fee * <?= (int)$row['order_challanged']; ?>)
+
+                                        <?php }
+
+                                        if ($subcode1=='8' && $subject_category!='133' && $sc_case_type_id!='7'  && $sc_case_type_id!='23' && $sc_case_type_id!='24') {
+                                            if($sc_case_type_id==1)
+                                            {?>
+                                                <br>
+                                                (No. of order Challanged
+                                                : <?= (int)$row['order_challanged']; ?> => Total Court Fee=1500 * <?= (int)$row['order_challanged']; ?>)
+
+                                                <?php
+
+                                            }
+                                            elseif($sc_case_type_id==3)
+                                            {?>
+                                                <br>
+                                                (No. of order Challanged
+                                                : <?= (int)$row['order_challanged']; ?> => Total Court Fee=5000 * <?= (int)$row['order_challanged']; ?>)
+
+                                                <?php
+
+                                            }
+                                            else
+                                            {
+                                                $court_fee1= 500 * $row['total_petitioners'];
+                                                ?> <br>
+                                                (No. of Petitioners
+                                                : <?= (int)$row['total_petitioners']; ?> => Total Court Fee=500 * <?= (int)$row['total_petitioners']; ?>)
+                                            <?php }
+                                        }
+                                        if($sc_case_type_id=='5')
+                                        {?>
+                                            <br>
+                                            (No. of Petitioners
+                                            : <?= (int)$row['total_petitioners']; ?> => Total Court Fee=500 * <?= (int)$row['total_petitioners']; ?>)
+                                        <?php } ?>
+                                    </td>
+                                    <td align="center">
+                                        <?php
+                                        if($sc_case_type_id==19)
+                                        {
+                                            $case_nature='R'; //if the contempt petition casetype is selected then it can be treated as criminal matters thus no doc fees will be applicable
+                                        }
+
+                                        if($case_nature == 'C') {
+
+                                            $court_fee1=0;
+
+                                            if($subcode1=='8' && $sc_case_type_id!='7' && $sc_case_type_id!='23' && $sc_case_type_id!='24' && $sc_case_type_id!='1' && $sc_case_type_id!='3') // for Letter Petition & Pil Matters:130(except submaster id:133) court fee will fixed as 500 * no of petitioners filing the matters. changed on 26/04/2021
+                                            {
+                                                if($subject_category != '133' && $sc_case_type_id!='7')
+                                                    $court_fee1=500*(int)$row['total_petitioners'];
+                                                else
+                                                    $court_fee1=(int)$court_fee1+1500;
+                                            }
+                                            elseif($sc_case_type_id=='5')
+                                            {
+                                                $court_fee1=500*(int)$row['total_petitioners'];
+                                            }
+
+                                            elseif($sc_case_type_id=='1')
+                                            {
+                                                if($subcode1=='8' || $lower_court_case_type_id=='5' || $lower_court_case_type_id=='7')
+                                                    $court_fee1=1500*(int)$no_of_lower_court_order_challanged;
+                                                else
+                                                    $court_fee1 = $court_fee1 + $row['court_fee'];
+                                            }
+                                            elseif($sc_case_type_id=='3') //civil appeal
+                                            {
+
+                                                if($establishment_code=='NGTD' || $establishment_code=='AFT') //490506=Natioan green tribunal , 226817=Armed force tribunal
+                                                {
+                                                    $court_fee1=1500;
+                                                }
+                                                elseif($establishment_code=='NCDRC')
+                                                {
+                                                    $court_fee1=5000;
+                                                }
+                                                else {
+                                                    $court_fee1 = (int)$court_fee1 +5000;
+                                                }
+                                            }
+                                            elseif($sc_case_type_id=='7') // for the casetype-Transfer Petition - if matrimonial then 500 else 2500 court fee will be charged . subject category court fee will not be applicable in the above case as well as for the subject category 1802. Changes done on 16/06/2021.
+                                            {
+                                                if($row['court_fee_calculation_helper_flag'] == 'Y') {
+                                                    $court_fee1 = $court_fee1 + 500; // 500 for matrimonial case
+                                                }
+                                                else
+                                                {
+                                                    $court_fee1 = $court_fee1 + 2500;
+                                                }
+                                            }
+                                            elseif($sc_case_type_id=='19' && $lower_court_type==4)  // 0 court fee will be applicable for the Contempt petition (Civil) nature cases, if lower court is self i.e. supreme court
+                                            {
+                                                $court_fee1=0;
+                                            }
+                                            elseif($sc_case_type_id=='23') // election petition
+                                            {
+                                                $court_fee1 = (int)$court_fee1 + 20000;
+                                            }
+                                            elseif($sc_case_type_id=='24') // arbitration petition
+                                            {
+                                                $court_fee1 = (int)$court_fee1 + 5000;
+                                            }
+                                            else
+                                            {
+                                                if ($subject_category == '222') { // Ordinary Civil Matters : T.P. Under Section 25 of the C.P.C.,subject category:1802
+                                                    if($row['court_fee_calculation_helper_flag'] == 'Y') {
+                                                        $court_fee1 = $court_fee1 + $row['court_fee']; // 500 for matrimonial case
+                                                    }
+                                                    else
+                                                    {
+                                                        $court_fee1 = $court_fee1 + 2500;
+                                                    }
+                                                }
+                                                else if($subject_category == '164')  //for the subject category "HABEAS CORPUS MATTERS" : Nature of the Matter will be Criminal Only so the case nuture condition will not not applicable for the same. changes done on 26/04/21
+                                                {
+
+                                                    if($subject_category=='130')
+                                                    {
+                                                        if($sc_case_type_id=='5')
+                                                            $court_fee1=(int)$court_fee1+500; // for Civil writ
+                                                        else
+                                                            $court_fee1=(int)$court_fee1+1500; // for Civil matter(SLP)
+                                                    }
+                                                }
+                                                else {
+                                                    $court_fee1 = $court_fee1 + $row['court_fee'];
+                                                }
+                                            }
+                                            if($no_of_lower_court_order_challanged > 0 && $sc_case_type_id!='5' && ($subcode1!='8' || $sc_case_type_id=='7' )) { //only in writ petition(casetype id :5) and letter petition subject category(sub code1 :8) court fee will calculated multiply by no of petitioners and for the rest multiply by no of order challanged
+                                                $court_fee1 = (int)$court_fee1 * (int)$no_of_lower_court_order_challanged;
+                                            }
+                                        }
+                                        else {
+                                            //for criminal matter:decided based on case nature
+                                            $court_fee1=0;
+                                        }
+
+                                        ?>
+
+                                        <i class="fa fa-rupee"></i> <?=$court_fee1; ?>
+
+                                    </td>
+                                </tr>
+                                <?php  $sr_no++;
+                            }
+                            // var_dump($court_fee_list2);
+                            //echo $display_vakalatnama;
+                            $lower_court_entry_count=0;
+                            if ($_SESSION['efiling_details']['ref_m_efiled_type_id'] == E_FILING_TYPE_NEW_CASE) {
+                                $lower_court_entry_count=$no_of_lower_court_order_challanged;
+                            }
+                            if ($_SESSION['efiling_details']['ref_m_efiled_type_id'] == E_FILING_TYPE_CAVEAT) {
+                                $lower_court_entry_count=$trial_court_order_challanged_for_caveat;
+                            }
+
+                            $all_added_docs_and_ias = array_column($court_fee_list3, 'doccode');
+
+                            if (!in_array('12', $all_added_docs_and_ias) && !in_array('13', $all_added_docs_and_ias))
+                            {
+                                foreach ($court_fee_list2 as $row)  {
+                                    if($sc_case_type_id==19)
+                                    {
+                                        $case_nature='R'; //if the contempt petition casetype is selected then it can be treated as criminal matters thus no doc fees will be applicable
+                                    }
+                                    if($display_vakalatnama=='Y' || $_SESSION['efiling_details']['ref_m_efiled_type_id'] == E_FILING_TYPE_CAVEAT) {
+                                        ?>   <tr style="color: #0055aa;size: 20px;">
+                                            <td><?=$sr_no?></td>
+                                            <td> <?=$row['docdesc'] ?>
+                                                <?php
+                                                if($case_type_id=='5') { ?>
+                                                    (No. of Petitioners
+                                                    : <?= $total_petitioners; ?>)
+                                                <?php } else {
+                                                    if($lower_court_entry_count > 0) { ?>
+
+                                                        (No. of order Challanged
+                                                        : <?= $lower_court_entry_count; ?>)
+
+                                                    <?php } } ?>
+                                            </td>
+                                            <td align="center"><i class="fa fa-rupee"></i>
+                                                <?php
+
+                                                //print_r($case_nature);
+                                                if(($case_nature == 'C' && $_SESSION['efiling_details']['ref_m_efiled_type_id'] != E_FILING_TYPE_CAVEAT) || ($case_nature=='C' && $_SESSION['efiling_details']['ref_m_efiled_type_id'] == E_FILING_TYPE_CAVEAT )) // CHNAGE BY KBPUJARI ON 28062023 TO MAKE 0 COURT FEE FOR THE CAVEAT FILING IF THE CASE TYPE IS SELECTED AS CRIMINAL
+                                                //if ($case_nature == 'C' || $_SESSION['efiling_details']['ref_m_efiled_type_id'] == E_FILING_TYPE_CAVEAT)
+                                                    $doc_court_fee = $row['docfee'];
+                                                else
+                                                    $doc_court_fee = 0;
+                                                if($case_type_id=='5')
+                                                {
+                                                    echo (int)$doc_court_fee * (int)$total_petitioners;
+                                                }
+                                                else{
+                                                    if($lower_court_entry_count > 0) {
+                                                        echo (int)$doc_court_fee * (int)$lower_court_entry_count ;
+                                                    }
+                                                    else
+                                                    {
+                                                        echo  (int)$doc_court_fee ;
+                                                    }
+                                                }
+
+                                                ?>
+                                            </td>
+                                        </tr>
+                                        <?php  $sr_no++; }
+                                }
+                            }
+
+
+
+                            $doc_list_with_letter_of_inspection_file=array(150);
+                            $doc_list_no_of_non_party_appellant=array(895);
+                            $doc_list_with_affidavit=array(20,50,190);
+                            $doc_list_of_affidavit_attested_place=array(30,60,90,110,170,220);
+                            $doc_list_for_per_petition_calculation=array(84);
+                            $doc_list_for_per_lower_court_order_challanged_number=array(85 , 86 , 87 , 817 , 120 , 827 , 828 , 829 , 830 , 831 , 835, 8328,130);
+                            $doc_list_of_zero_doc_fee_for_criminal_matter=array(842 , 8120 , 8137 , 8144 , 8152 , 8153 , 8160 , 8252 , 8271 , 8302 , 8324 , 8346 , 8368 , 8385);
+
+
+
+                            //var_dump($court_fee_list3);
+
+
+
+                            foreach ($court_fee_list3 as $row) {
+
+                                $no_of_affidavit_copies=$row['no_of_affidavit_copies'];
+                                if($sc_case_type_id==19)
+                                {
+                                    $row['nature']='R'; //if the contempt petition casetype is selected then it can be treated as criminal matters thus no doc fees will be applicable
+                                }
+
+                                $doc = (int)$row['doccode'] . (int)$row['doccode1'];
+                                if (in_array((int)$doc, $doc_list_with_affidavit, TRUE)) {
+                                    $doc_court_fee=0;
+                                    $doc_extra_details='';
+                                    if ($row['court_fee_calculation_helper_flag'] == 'Y') //DOC submit with Affidavit flag
+                                    {
+                                        if ($row['nature'] == 'C')
+                                            $doc_court_fee = $row['docfee'];
+                                        else
+                                            $doc_court_fee = 0;
+                                        $doc_extra_details=' (Submitted in the form of Affidavit)';
+                                    }
+                                    else {
+                                        $doc_court_fee = 0;
+                                        $doc_extra_details=' ( Not submitted in the form of Affidavit)';
+                                    }
+                                    ?>
+                                    <tr style="color: #0055aa;size: 20px;">
+                                        <td><?= $sr_no ?></td>
+                                        <td> <?= $row['docdesc']?><?=$doc_extra_details ?> </td>
+                                        <td align="center"><i class="fa fa-rupee"></i> <?= $doc_court_fee ?></td>
+                                    </tr>
+
+                                    <?php
+                                    $sr_no++;
+
+                                } elseif (in_array((int)$doc, $doc_list_of_affidavit_attested_place, TRUE)) {
+
+                                    $doc_court_fee=0;
+                                    $doc_extra_details='';
+                                    if ($row['nature'] == 'C')
+                                        $doc_court_fee = $row['docfee'];
+                                    else
+                                        $doc_court_fee = 0;
+
+                                    if($sc_case_type_id=='19' && $doc=='11')  //For Affidavit 0 court fee will be applicable for the Affidavit id - Contempt petition (Civil) nature cases
+                                    {
+                                        $doc_court_fee=0;
+                                    }
+
+                                    /*if ($row['court_fee_calculation_helper_flag'] == 'Y') //DOC submit with Affidavit attested within Delhi
+                                    {
+                                        $doc_court_fee = $row['docfee'];
+                                        $doc_extra_details=' (Attested within Delhi)';
+                                    }
+                                    else {
+                                        $doc_court_fee = 0;
+                                        $doc_extra_details=' (Attested outside of Delhi)';
+                                    }*/
+
+                                    if($no_of_affidavit_copies > 0)
+                                    {
+                                        $doc_extra_details=' (No of Copies:'.$no_of_affidavit_copies.')';
+                                    }
+                                    ?>
+                                    <tr style="color: #0055aa;size: 20px;">
+                                        <td><?= $sr_no ?></td>
+                                        <td> <?= $row['docdesc'] ?><?=$doc_extra_details?> </td>
+                                        <td align="center"><i class="fa fa-rupee"></i>
+                                            <?php  if($no_of_affidavit_copies > 0)
+                                                echo (int)$doc_court_fee * (int)$no_of_affidavit_copies ;
+                                            else
+                                                echo (int)$doc_court_fee;
+                                            ?>
+                                        </td>
+                                    </tr>
+
+                                    <?php
+                                    $sr_no++;
+
+                                }elseif (in_array((int)$doc, $doc_list_with_letter_of_inspection_file, TRUE)) {
+                                    $doc_court_fee=0;
+                                    $doc_extra_details='';
+                                    if ($row['court_fee_calculation_helper_flag'] == 'Y') //Letter submitted as letter of inspection of file
+                                    {
+                                        if ($row['nature'] == 'C')
+                                            $doc_court_fee = $row['docfee'];
+                                        else
+                                            $doc_court_fee = 0;
+
+                                        $doc_extra_details=' (Letter of inspection of file)';
+                                    }
+                                    else {
+                                        $doc_court_fee = 0;
+                                    }
+                                    ?>
+                                    <tr style="color: #0055aa;size: 20px;">
+                                        <td><?= $sr_no;
+                                            $doc ?></td>
+                                        <td> <?= $row['docdesc']?><?=$doc_extra_details ?> </td>
+                                        <td align="center"><i class="fa fa-rupee"></i> <?= $doc_court_fee ?></td>
+                                    </tr>
+                                    <?php
+                                    $sr_no++;
+
+                                } elseif (in_array((int)$doc, $doc_list_for_per_petition_calculation, TRUE)) {
+                                    ?>
+                                    <tr style="color: #0055aa;size: 20px;">
+                                        <td><?= $sr_no ?></td>
+                                        <td> <?= $row['docdesc'] ?> <br> (No. of petitioners
+                                            : <?= $row['total_petitioners']; ?>)
+                                        </td>
+                                        <td align="center"><i class="fa fa-rupee"></i>
+                                            <?php
+                                            if ($row['nature'] == 'C')
+                                                $doc_court_fee = $row['docfee'];
+                                            else
+                                                $doc_court_fee = 0;
+
+                                            if((int)$row['total_petitioners'] > 0)
+                                                echo (int)$doc_court_fee * (int)$row['total_petitioners'] ;
+                                            else
+                                                echo (int)$doc_court_fee;?>
+
+                                        </td>
+                                    </tr>
+                                    <?php
+                                    $sr_no++;
+                                } elseif (in_array((int)$doc, $doc_list_for_per_lower_court_order_challanged_number, TRUE)) {
+                                    ?>
+                                    <tr style="color: #0055aa;size: 20px;">
+                                        <td><?= $sr_no ?></td>
+                                        <td> <?= $row['docdesc'] ?> <br> (No. of order Challanged
+                                            : <?= $row['order_challanged']; ?>)
+                                        </td>
+                                        <td align="center"><i class="fa fa-rupee"></i>
+                                            <?php
+                                            if ($row['nature'] == 'C')
+                                                $doc_court_fee = $row['docfee'];
+                                            else
+                                                $doc_court_fee = 0;
+
+                                            if((int)$row['order_challanged'] > 0)
+                                                echo (int)$doc_court_fee * (int)$row['order_challanged'] ;
+                                            else
+                                                echo (int)$doc_court_fee;
+                                            ?>
+                                        </td>
+                                    </tr>
+                                    <?php
+                                    $sr_no++;
+                                } elseif (in_array((int)$doc, $doc_list_of_zero_doc_fee_for_criminal_matter, TRUE)) {
+                                    $doc_court_fee=0;
+                                    if ($row['nature'] == 'C')
+                                        $doc_court_fee=(int)$row['docfee'];
+                                    else
+                                        $doc_court_fee=0;
+                                    ?>
+                                    <tr style="color: #0055aa;size: 20px;">
+                                        <td><?= $sr_no ?></td>
+                                        <td> <?= $row['docdesc'] ?>
+                                        </td>
+                                        <td align="center"><i class="fa fa-rupee"></i> <?= (int)$doc_court_fee; ?></td>
+                                    </tr>
+                                    <?php
+                                    $sr_no++;
+                                } elseif (in_array((int)$doc, $doc_list_no_of_non_party_appellant, TRUE)) {
+                                    ?>
+                                    <tr style="color: #0055aa;size: 20px;">
+                                        <td><?= $sr_no ?></td>
+                                        <td> <?= $row['docdesc'] ?> <br> No of Petitioners / appellant (Non-party)
+                                            : <?= $row['no_of_petitioner_appellant']; ?>
+                                        </td>
+                                        <td align="center"><i class="fa fa-rupee"></i>
+                                            <?php
+                                            if ($row['nature'] == 'C')
+                                            {
+                                                if ((int)$row['no_of_petitioner_appellant'] > 0) {
+                                                    echo (int)$row['docfee'] * (int)$row['no_of_petitioner_appellant'];
+                                                }
+                                                else
+                                                {
+                                                    echo (int)$row['docfee'];
+                                                }
+                                            }
+                                            else
+                                                $doc_court_fee = 0;
+                                            ?></td>
+                                    </tr>
+                                    <?php
+
+                                }
+
+                                else {
+                                    //var_dump($row);
+                                    echo $row['no_of_petitioner_appellant'];
+
+                                    ?>
+                                    <tr style="color: #0055aa;size: 20px;">
+                                        <td><?= $sr_no; ?></td>
+                                        <td> <?= $row['docdesc'] ?> </td>
+                                        <td align="center"><i class="fa fa-rupee"></i>
+                                            <?php
+                                            //if ($row['nature'] == 'C' || $_SESSION['efiling_details']['ref_m_efiled_type_id'] == E_FILING_TYPE_CAVEAT)
+                                            if(($case_nature == 'C' && $_SESSION['efiling_details']['ref_m_efiled_type_id'] != E_FILING_TYPE_CAVEAT) || ($case_nature=='C' && $_SESSION['efiling_details']['ref_m_efiled_type_id'] == E_FILING_TYPE_CAVEAT )) // CHNAGE BY KBPUJARI ON 28062023 TO MAKE 0 COURT FEE FOR THE CAVEAT FILING IF THE CASE TYPE IS SELECTED AS CRIMINAL
+                                                $doc_court_fee=(int)$row['docfee'];
+                                            else
+                                                $doc_court_fee=0;?>
+                                            <?= (int)$doc_court_fee ?></td>
+                                    </tr>
+                                    <?php
+                                    $sr_no++;
+                                }
+                            }
+                            //As per direction Existing code written to add affidavit automatically commented on 28062023 : KBPujari
+                            /*if (!in_array('11', $all_added_docs_and_ias))
+                            {
+                                foreach ($court_fee_list4 as $row)  {
+                                    */?><!--   <tr style="color: #0055aa;size: 20px;">
+                                        <td><?/*=$sr_no*/?></td>
+                                        <td> <?/*=$row['docdesc'] */?>
+                                        </td>
+                                        <td align="center"><i class="fa fa-rupee"></i>
+                                            <?php
+/*                                            if ($case_nature == 'C')
+                                                $doc_court_fee = $row['docfee'].'adasd';
+                                            else
+                                                $doc_court_fee = 0;
+
+                                            echo $doc_court_fee;
+
+                                            */?>
+                                        </td>
+                                    </tr>
+                                    --><?php /* $sr_no++;
+                                }
+                            }*/
+                            ?>
+                            <?php $user_declared_extra_fee=0;
+                            foreach ($payment_details as $Efee){?>
+                                <?php
+                                if($Efee['payment_status']=='Y' && $Efee['user_declared_extra_fee'] !=0){?>
+                                    <tr style="color: #0055aa;size: 20px;">
+                                        <td><?= $sr_no; ?></td>
+                                        <td> Extra Court Fee </td>
+                                        <td align="center"><?= $user_declared_extra_fee=$user_declared_extra_fee +(int)$Efee['user_declared_extra_fee'];?></td>
+                                    </tr>
+                                    <?php  $sr_no++; } ?>
+                            <?php  }
+                            ?>
+                            <tr><td colspan="3" style="text-align: right;padding-right: 71px;">
+                                    <label style="margin-top: 10px;font-weight: bold">Total :  <i class="fa fa-rupee"></i> <?=$court_fee?></label>
+
+                                </td></tr>
+                            </tbody>
+                        </table>
+
+                    </div>
+                    <div class="col-sm-4 col-xs-4" style="margin-top: 5%;">
+                        <div class="col-lg-12 ccol-md-12 col-sm-12 col-xs-12">
+                            <div class="form-group">
+                                <label class="control-label col-md-8 col-sm-12 col-xs-12 input-sm">Want to pay more Court Fee ( <i class="fa fa-rupee"></i> )
+                                    <span style="color: red">*</span></label>
+                                <div class="col-md-4 col-sm-12 col-xs-12">
+                                    <div class="input-group " >
+                                        <input type="text" onKeyPress="edValueKeyPress()" onKeyUp="edValueKeyPress(this)"  id="user_declared_extra_fee" name="user_declared_extra_fee" minlength="1" maxlength="5" class="form-control input-lg " placeholder="Court Fee Amount" value="0">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-12 ccol-md-12 col-sm-12 col-xs-12">
+                            <?php
+                            $court_fee_already_paid=0; $user_declared_extra_fee=0; $user_declared_court_fee=0; $uploaded_pages=0;$printing_cost_already_paid=0;
+                            foreach($payment_details as $payment)
+                            {
+                                /*if($payment['payment_status']=='Y')
+                                    $court_fee_already_paid=$court_fee_already_paid+(int)$payment['received_amt'];
+                                $user_declared_court_fee=$user_declared_court_fee + (int)$payment['user_declared_court_fee'];
+                                $user_declared_extra_fee=$user_declared_extra_fee + (int)$payment['user_declared_extra_fee'];
+                                $uploaded_pages=$uploaded_pages + (int)$payment['uploaded_pages'];
+                                $printing_cost_already_paid=$printing_cost_already_paid + (int)$payment['printing_total'];*/
+                                if($payment['payment_status']=='Y'){
+                                    $court_fee_already_paid=$court_fee_already_paid+(int)$payment['received_amt'];
+                                    $user_declared_court_fee=$user_declared_court_fee + (int)$payment['user_declared_court_fee'];
+                                    $user_declared_extra_fee=$user_declared_extra_fee + (int)$payment['user_declared_extra_fee'];
+                                    $uploaded_pages=$uploaded_pages + (int)$payment['uploaded_pages'];
+                                    $printing_cost_already_paid=$printing_cost_already_paid + (int)$payment['printing_total'];
+                                }
+                            }
+                            $court_fee_already_paid_without_extra_fee=$court_fee_already_paid-$user_declared_extra_fee;
+                            $uploaded_pages_count_pending=$uploaded_pages_count-$uploaded_pages;
+                            $printing_cost_to_be_paid = (int)$uploaded_pages_count_pending * (double)$printing_cost;
+
+                            //comment 16 march 2021 by akg
+                            //$total_court_fee=(int)$court_fee+(int)$printing_cost_to_be_paid;
+
+                            $printing_cost_total=(int)$printing_cost_to_be_paid+(int)$printing_cost_already_paid;
+                            $total_court_fee=(int)$court_fee+(int)$printing_cost_to_be_paid+(int)$printing_cost_already_paid;
+                            $user_declared_court_fee=$court_fee-$user_declared_court_fee;
+                            $pending_court_fee=$total_court_fee-$court_fee_already_paid_without_extra_fee;
+
+                            //  if($pending_court_fee !=0){
+                            ?>
+                            <div class="form-group">
+                                <label class="control-label col-md-5 col-sm-12 col-xs-12 input-sm">Court Fee<br> (To Pay)( <i class="fa fa-rupee"></i> )
+                                    <span style="color: red">*</span></label>
+                                <div class="col-md-7 col-sm-12 col-xs-12">
+                                    <div class="input-group " >
+                                        <!--<label style="width: 70px;" class="form-control input-sm " <span class="input-group-addon" data-placement="bottom"  data-toggle="popover" data-content="Total Court Fee "><?/*=$court_fee;*/?></label>-->
+                                        <input type="hidden" id="print_fee_details" name="print_fee_details" value="<?php echo_data(url_encryption($uploaded_pages_count_pending .'$$'.$printing_cost_total.'$$'.$printing_cost_already_paid.'$$'.$printing_cost_to_be_paid.'$$'.$user_declared_court_fee)); ?>" />
+                                        <input type="hidden" id="usr_court_fee_fixed" name="usr_court_fee_fixed" minlength="1" maxlength="5" class="form-control input-lg " placeholder="Court Fee Amount" value="<?=$pending_court_fee;?>" readonly />
+                                        <input type="text" id="usr_court_fee" name="usr_court_fee" minlength="1" maxlength="5" class="form-control input-lg " placeholder="Court Fee Amount" value="<?=$pending_court_fee;?>" readonly />
+                                        <label style="margin-top: 10px;font-weight: bold">Total Court Fee : <?=$court_fee?> + <?=$printing_cost_total;?> = <i class="fa fa-rupee"></i> <?=$total_court_fee?></label>
+                                        <label style="margin-top: 2px;font-weight: bold;color: #2c4762">Court Fee Already paid:  <i class="fa fa-rupee"></i> <?=$court_fee_already_paid?> </label>
+
+                                    </div>
+                                </div>
+                            </div>
+                            <?php //}?>
+                        </div>
+                    </div>
+
+                    <!--<label style="margin-top: 2px;font-weight: bold;color: red;><i class="fa fa-disclaimer"></i>"THE COURT FEE CALCULATED AND SHOWN IN THIS PAGE IS AS PER THE CASE TYPE, EARLIER COURT AND CASE CATEGORY.ANY DEFICIT COURT FEE WHICH REMAINS AS DIFFERENCE SHALL BE RAISED AS DEFECT AT SCRUTINY STAGE AND THE PAYMENT TO SUCH EFFECT COMPLYING THE DEFECT RAISED SHALL BE MADE BY THE AOR/PARTY-IN-PERSON."</label>-->
+                    <label style="margin-top: 2px;font-weight: bold;color: red;><i class="fa fa-disclaimer"></i>"THE COURT FEE CALCULATED AND SHOWN IN THIS PAGE IS AS PER THE CASE TYPE, EARLIER COURT AND CASE CATEGORY. ANY DEFICIT COURT FEES DEFECT MAY BE RAISED AT THE SCRUTINY STAGE AND DEFICIT PAYMENT TO BE PAID ACCORDINGLY."</label>
+                </div>
+
+            </div>
+            <div class="col-lg-6 ccol-md-6 col-sm-12 col-xs-12">
+                <!--                code to show amount to be paid-->
+            </div>
+        </div>
+
+
+        <div class="clearfix"></div><br><br>
+        <div class="text-center">
+            <?php
+            if ($_SESSION['efiling_details']['ref_m_efiled_type_id'] == E_FILING_TYPE_NEW_CASE) {
+                /*$prev_url = base_url('documentIndex');
+                $next_url = base_url('newcase/view');*/
+                $prev_url = base_url('newcaseQF/uploadDocuments');
+                //$next_url = base_url('newcaseQF/view');
+                $next_url = base_url('newcaseQF/courtFee');
+            }
+            /*else if ($_SESSION['efiling_details']['ref_m_efiled_type_id'] == E_FILING_TYPE_CAVEAT) {
+                //$prev_url = base_url('documentIndex');
+                //$next_url = base_url('caveat/view');
+                $prev_url = base_url('newcaseQF/uploadDocuments');
+                //$next_url = base_url('newcaseQF/caveat/view');
+                $next_url = base_url('newcaseQF/courtFee');
+            }*/
+            else {
+                $prev_url = '#';
+                $next_url = '#';
+            }
+            ?>
+            <a href="<?= $prev_url ?>" class="btn btn-primary btnPrevious" type="button">Previous</a>
+            <input type="submit" class="btn btn-success pay_fee" id="pay_fee" name="submit" value="PAY" style="display: none;">
+
+            <?php
+            // $payment_details['0']['payment_status']= 'Y';
+            //$StageArray = array(10);
+            /*if (in_array(NEW_CASE_COURT_FEE, $StageArray) || (isset($payment_details['0']['payment_status']) && !empty($payment_details['0']['payment_status']) && $payment_details['0']['payment_status'] == 'Y')) { */?>
+            <?php
+            if(in_array(NEW_CASE_COURT_FEE, $StageArray) || (isset($payment_details['0']['payment_status']) && !empty($payment_details['0']['payment_status']) && $payment_details['0']['payment_status'] == 'Y') || ($pending_court_fee==0)) { ?>
+                <!--<a href="<?/*= $next_url */?>" class="btn btn-primary btnNext pay_fee_next" type="button">Next</a>-->
+            <?php }
+            echo '<a href="' . base_url('newcaseQF/courtFee') . '" class="btn btn-success btn-sm">Final Submit</a>';
+            ?>
+
+
+        </div>
+        <?php echo form_close(); ?>
+    </div>
+</div>
+<?php
+if (isset($payment_details) && !empty($payment_details)) {
+    $this->load->view('shcilPayment/payment_list_view');
+}
+?>
+<script>
+    var pending_court_fee="<?=$pending_court_fee; ?>";
+    if (pending_court_fee > 0){
+        $('.pay_fee').show();
+        $('.pay_fee_next').hide();
+    }else {
+        $('.pay_fee').hide();
+        $('.pay_fee_next').show();
+    }
+
+    function edValueKeyPress(txb)
+    {
+        txb.value = txb.value.replace(/[^0-9]/g,'');
+        var usr_court_fee=$('#usr_court_fee_fixed').val();
+        var morefee=$('#user_declared_extra_fee').val();
+        if (morefee==''){
+            morefee=parseInt(0);
+            $('#usr_court_fee').val(usr_court_fee)
+        }
+        var usr_court_fee_final=parseInt(usr_court_fee) + parseInt(morefee);
+
+        $('#usr_court_fee').val(usr_court_fee_final);
+        if (usr_court_fee_final > 0){
+            $('.pay_fee').show();
+            $('.pay_fee_next').hide();
+        }else {
+            $('.pay_fee').hide();
+            $('.pay_fee_next').show();
+        }
+
+    }
+</script>

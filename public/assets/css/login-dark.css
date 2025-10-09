@@ -1,0 +1,47 @@
+/* Background Image Media Queries */
+.login {
+	/*background-image: url('../images/sc1.jpg');*/
+	background-position: center center;
+	background-repeat: no-repeat;
+	background-size: cover;
+        background-color:#f2f2f2 ;
+}
+@media screen and (min-width: 640px){
+	.login {
+		/*background-image: url('../images/sc1.jpg');*/
+                background-color:#f2f2f2 ;
+	}
+}	
+@media screen and (min-width: 960px){
+	.login {
+		/*background-image: url('../images/sc1.jpg');*/
+                background-color:#f2f2f2 ;
+	}
+}	
+@media screen and (min-width: 1200px){
+	.login {
+		/*background-image: url('../images/sc1.jpg');*/
+                background-color:#f2f2f2 ;
+	}
+}	
+@media screen and (min-width: 1600px){
+	.login {
+		/*background-image: url('../images/sc1.jpg');*/
+                background-color:#f2f2f2 ;
+	}
+}
+
+/*.uk-back{
+   padding: 0px;!important;
+   width: 380px;!important;
+   height:500px;!important;
+}
+
+.uk-input-custom{
+   
+   height:50px;!important;
+}
+
+.uk-back-image{
+       max-width: 90%;!important;
+}*/

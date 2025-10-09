@@ -1,0 +1,97 @@
+.side-menu_new {
+    width: -webkit-fill-available;
+    height: auto;
+    margin:12em auto 0;
+    font-size: 1em;
+    line-height: 1em;
+    color: #fff;
+    font-weight:700;
+    text-transform:capitalize;
+    position:absolute;
+    top:0; 
+    bottom:0;
+    left: -13em;
+}
+.side-menu_new ul { 
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+.side-menu_new ul li {
+    display:block;
+    background-color: #333;
+    /* height: 2em;*/
+    /* padding: 1.5em 0.3em;*/
+    padding: 15px 15px 15px 15px;
+    position: relative; 
+    -webkit-transition: -webkit-transform 0.9s,     background-color .5s, color .5s;
+    transition: transform 0.5s, background-color .3s, color .3s;
+}
+/*the colors of the different columns*/
+.side-menu_new ul li:nth-child(1) { 
+    background-color: #cacaca; 
+    width: 265px;} 
+.side-menu_new ul li:hover {
+    background-color: #cacaca; /*you can make different colors depending on the nth-child like above*/
+    -webkit-transform: translateX(13em);
+    transform: translateX(13em);/*equal to left in the .side-menu_new*/
+    border-top: 2px solid #8e8e8e !important; 
+    border-bottom: 2px solid #8e8e8e !important; 
+    border-left: 2px solid #8e8e8e !important; 
+    border-right: 2px solid #8e8e8e !important; 
+}
+.side-menu_new ul li a {
+    display:block;
+    color: #FFF;
+    text-decoration: none;
+}
+.side-menu_new ul li span {
+    display:block;
+    position: absolute;
+    font-size:1em;
+    line-height: 2em;
+    height:2em;
+    top:-5px; 
+    bottom:0;
+    margin:0 auto;
+    padding:1em 1.5em;
+    /*    padding: 10px 2.5em;*/
+    right: 0.16666666666667em;
+    color: #F8F6FF;
+}
+.nav-sm .nav.side-menu li a {
+    text-align: center!important;
+    font-weight: 400;
+    font-size: 10px;
+    padding: 0px 0px;
+    float: right;
+}
+.nav-sm .nav.side-menu li a i{
+    font-size: 38px !important;
+    text-align: center; 
+    width: 100%;
+} 
+.side-menu_new ul li:nth-child(1){
+    /*    background-color: #cacaca;*/
+    background-color: #e0e0e0;
+    width: 239px;
+    border-right: 1px solid #8e8e8e;
+    border-bottom: 1px solid #8e8e8e;
+}
+.icon_font_css{
+    font-size: 28px !important;  
+    color:#334556 !important;
+}
+.hover_text_css{
+    font-size: 10px !important;
+    float: right;
+    margin: 0px -10px 0px 0px;
+} 
+.img_css{
+    margin: -14px -36px 0px 0px;
+    height: 44px;
+    padding: 10px 2.5em;
+} 
+.small_text_css{
+    margin: 0px -5px 0px 0px;
+}

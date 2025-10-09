@@ -1,0 +1,12 @@
+@media screen and (max-width: 440px){
+    
+}
+
+@media screen and (max-width: 640px){
+    
+}
+
+@media screen and (max-width: 767px){
+    .back-top{ right: 0.5em; bottom: 1em; padding: 0.25em; width: 1.2em; height: 1.2em;}
+    .back-top svg{ margin-top: 3px;}
+} 

@@ -1,0 +1,63 @@
+* {
+    box-sizing: border-box;
+} 
+
+h3 {
+    text-align: center;  
+} 
+h4 {
+    text-align: center;  
+    color: #31B0D5;
+} 
+panel-body{
+    margin:20px;
+}
+
+input-sm{
+    text-transform: uppercase;
+    padding: 0;
+}
+
+info-panel-body{
+    padding: 100px;
+    padding-top: 0;
+    padding-bottom: 0;
+}
+input[type=text],input[type=email] ,select, textarea{
+    text-transform: uppercase;
+}
+.message {
+    border: 1px dotted !important;
+    color: white;
+    font-size: small;
+    margin: auto;
+    margin-bottom: 6px;
+    padding: 3px;
+    position: relative;
+    text-align: center;
+    width: 100%;
+}
+.message.valid {
+    background: #56b356 none repeat scroll 0 0;
+}
+.message.invalid {
+    background: red none repeat scroll 0 0;
+}
+.filter_select_dropdown{
+    width:100% !important;
+    padding-bottom: 2% !important;
+} 
+.abc span{
+    font-weight: 600;
+    font-size: 16px; 
+    color: black;
+}
+.abc1 p{
+    display: block;
+
+}
+.abc1 p span{
+    font-weight: 600;
+    font-size: 16px; 
+    color: red; 
+}
