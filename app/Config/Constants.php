@@ -680,8 +680,8 @@ define('ESIGN_SERVICE_URL',"http://10.25.78.22/web_service/index.php/Esigner/sig
 // define('ICMIS_SERVICE_URL',"http://10.40.186.81:88");
 //define('ICMIS_SERVICE_URL',"http://10.25.78.48:83/public");
 //define('ICMIS_SERVICE_URL',"http://10.40.186.78:83/public");
-
-define('ICMIS_SERVICE_URL',"http://10.192.105.88:84");
+define('ICMIS_SERVICE_URL',"http://10.25.80.170:88");
+// define('ICMIS_SERVICE_URL',"http://10.192.105.88:84");
 // define('ICMIS_SERVICE_URL',"http://10.25.78.23:85");
 // define('ICMIS_SERVICE_URL',"http://10.25.78.61:81");
 // define('ICMIS_SERVICE_URL',"http://10.40.186.239:88");
@@ -717,9 +717,9 @@ define('ESIGN_REDIRECT_URL_CODE',"88");
 
 #---STOCK HOLDING PAYMENT URL------------#
 
-define('STOCK_HOLDING_PAYMENT_BASE_URL',"https://www.shcileservices.com/OnlineE-Payment/sEpsePmtTrans");
-define('STOCK_HOLDING_PAYMENT_STATUS_URL',"https://www.shcileservices.com/OnlineE-Payment/sEpsGetTransStatus");
-define('STOCK_HOLDING_PAYMENT_CHALLAN_URL',"https://www.shcileservices.com/OnlineE-Payment/sEpsPaymentChallan");
+// define('STOCK_HOLDING_PAYMENT_BASE_URL',"https://www.shcileservices.com/OnlineE-Payment/sEpsePmtTrans");
+// define('STOCK_HOLDING_PAYMENT_STATUS_URL',"https://www.shcileservices.com/OnlineE-Payment/sEpsGetTransStatus");
+// define('STOCK_HOLDING_PAYMENT_CHALLAN_URL',"https://www.shcileservices.com/OnlineE-Payment/sEpsPaymentChallan");
 
 define('STOCK_HOLDING_LOGIN',"dlsupcourt");
 define('STOCK_HOLDING_PASSWORD',"ourtdls");
@@ -733,9 +733,9 @@ define('STOCK_HOLDING_UDF4',"efiling");
 define('STOCK_HOLDING_UDF5',"efiling");
 
 #    ------------------- STOCK HOLDING PAYMENT for Testing ---------------------------
-// define('STOCK_HOLDING_PAYMENT_BASE_URL',"https://dr.shcileservices.com/OnlineE-Payment/sEpsePmtTrans");
-// define('STOCK_HOLDING_PAYMENT_STATUS_URL',"https://dr.shcileservices.com/OnlineE-Payment/sEpsGetTransStatus");
-// define('STOCK_HOLDING_PAYMENT_CHALLAN_URL',"https://dr.shcileservices.com/OnlineE-Payment/sEpsPaymentChallan");
+define('STOCK_HOLDING_PAYMENT_BASE_URL',"https://dr.shcileservices.com/OnlineE-Payment/sEpsePmtTrans");
+define('STOCK_HOLDING_PAYMENT_STATUS_URL',"https://dr.shcileservices.com/OnlineE-Payment/sEpsGetTransStatus");
+define('STOCK_HOLDING_PAYMENT_CHALLAN_URL',"https://dr.shcileservices.com/OnlineE-Payment/sEpsPaymentChallan");
 #STOCK_HOLDING_PAYMENT_BASE_URL="https://115.111.15.137/OnlineE-Payment/sEpsePmtTrans");
 #STOCK_HOLDING_PAYMENT_STATUS_URL="https://115.111.15.137/OnlineE-Payment/sEpsGetTransStatus");
 #STOCK_HOLDING_PAYMENT_CHALLAN_URL="https://115.111.15.137/OnlineE-Payment/sEpsPaymentChallan");
@@ -1084,3 +1084,10 @@ define('CART_DESCRIPTION_FOR_FEE_STAMP_COPYING', 'Copying Fee in Stamp');
 define('CART_DESCRIPTION_FOR_POSTAGE_COPYING', 'Postage');
 
 define('PORTAL_VERSION',3);
+
+
+//COURT FEE PROCESSING CHARGES
+define('COURT_FEE_PROCESSING_CHARGES',true);
+define('PROCESSING_CHARGES_CASE_TYPE',array(23,24));
+define('PROCESSING_CHARGES_FOR_23',20000);
+define('PROCESSING_CHARGES_FOR_24',20000);
