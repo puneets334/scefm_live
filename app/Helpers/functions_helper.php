@@ -2193,7 +2193,7 @@ function calculate_court_fee($registration_id = null, $request_type = null, $wit
                             }
                         } elseif ($sc_case_type_id == '23') // election petition
                         {
-                            $total_court_fee = (int)$total_court_fee + 20000;
+                            $total_court_fee = (int)$total_court_fee + 5000;
                         } elseif ($sc_case_type_id == '24') // arbitration petition
                         {
                             $total_court_fee = (int)$total_court_fee + 5000;

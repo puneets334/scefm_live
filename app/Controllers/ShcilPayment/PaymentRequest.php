@@ -3,6 +3,7 @@
 namespace App\Controllers\ShcilPayment;
 
 use App\Controllers\BaseController;
+use App\Models\Common\CommonModel;
 use App\Models\Affirmation\EsignSignatureModel;
 use App\Models\AppearingFor\AppearingForModel;
 use App\Models\NewCase\GetDetailsModel;
@@ -11,12 +12,14 @@ class PaymentRequest extends BaseController {
     protected $Get_details_model;
     protected $Esign_signature_model;
     protected $Appearing_for_model;
+    protected $Common_model;
 
     public function __construct() {
         parent::__construct();
         $this->Get_details_model = new GetDetailsModel();
         $this->Esign_signature_model = new EsignSignatureModel();
         $this->Appearing_for_model = new AppearingForModel();
+        $this->Common_model = new CommonModel();
     }
 
 
@@ -34,7 +37,6 @@ class PaymentRequest extends BaseController {
             return redirect()->to(base_url('dashboard'));
             exit(0);
         }
-
         if (isset($_SESSION['efiling_details']['registration_id']) && !empty($_SESSION['efiling_details']['registration_id'])
                 && isset($_SESSION['pg_request_payment_details']) && !empty($_SESSION['pg_request_payment_details'])) {
             $party_name = '-';
@@ -77,8 +79,14 @@ class PaymentRequest extends BaseController {
             else if($_SESSION['efiling_details']['efiling_type'] == 'DEFICIT_COURT_FEE'){
                 $party_name='-';
             }
-
-            
+            $court_fee_list1 = $this->Common_model->get_subject_category_casetype_court_fee($_SESSION['efiling_details']['registration_id']);
+            $processing_charges = 0;
+            if($court_fee_list1[0]['sc_case_type_id']==23){
+                $processing_charges = PROCESSING_CHARGES_FOR_23;
+            }
+            if($court_fee_list1[0]['sc_case_type_id']==24){
+                $processing_charges = PROCESSING_CHARGES_FOR_24;
+            }
             $params = array('login' => $pg_params['login'],
             'password' => $pg_params['password'],
             'prodid' => $pg_params['Product'],
@@ -121,7 +129,15 @@ class PaymentRequest extends BaseController {
         echo '<input type = "hidden" name = "udf5" value = "' . htmlentities($params['print_fees'], ENT_QUOTES) . '" />';
         echo '<input type = "hidden" name = "udf6" value = "Supreme Court of India" />';
         echo '<input type = "hidden" name = "udf7" value = "Delhi" />';
-        echo '<input type = "hidden" name = "udf8" value = "" />';
+        if(COURT_FEE_PROCESSING_CHARGES){ 
+            if(in_array($court_fee_list1[0]['sc_case_type_id'],PROCESSING_CHARGES_CASE_TYPE)){
+                echo '<input type = "hidden" name = "udf8" value = "' . htmlentities($processing_charges, ENT_QUOTES) . '" />';
+            } else {
+                echo '<input type = "hidden" name = "udf8" value = "" />';
+            }
+        } else {
+            echo '<input type = "hidden" name = "udf8" value = "" />';
+        }
         echo '<input type = "hidden" name = "udf9" value = "" />';
         echo '<input type = "hidden" name = "addInfo" value = "" />';
         echo form_close();
