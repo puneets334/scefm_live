@@ -20,7 +20,7 @@ $routes->get('newcase/', 'NewCase\DefaultController::index');
 $routes->get('newcase/caseDetails', 'NewCase\CaseDetails::index');
 $routes->match(['GET', 'POST'], 'newcase/petitioner', 'NewCase\Petitioner::index');
 $routes->match(['GET', 'POST'], 'newcase/petitioner/add_petitioner', 'NewCase\Petitioner::add_petitioner');
-$routes->match(['GET', 'POST'], 'newcase/extra_party/(:any)', 'NewCase\ExtraParty::index/$1');
+$routes->match(['GET', 'POST'], 'newcase/extra_party', 'NewCase\ExtraParty::index');
 $routes->get('newcase/defaultController/(:any)', 'NewCase\DefaultController::index/$1');
 $routes->match(['GET', 'POST'], 'newcase/courtFee', 'NewCase\CourtFee::index');
 $routes->match(['GET', 'POST'], 'newcase/respondent', 'NewCase\Respondent::index');
@@ -563,5 +563,7 @@ $routes->match(['GET', 'POST'], 'sendTestMsg', 'DefaultController::sendTestMsg')
 
 $routes->get('Janparichay', 'Login\Janparichay::index');
 $routes->get('login/Janparichay/logout', 'Login\Janparichay::logout');
+
+$routes->match(['GET', 'POST'], 'newcase/add_extra_party', 'NewCase\ExtraParty::add_extra_party');
 
 });
