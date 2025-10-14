@@ -2182,4 +2182,62 @@ class NewCaseModel extends Model {
         }
     }
 
+
+    public function get_efiling_declaration_question(){
+        $builder = $this->db->table('efil.m_checklist_new');
+        $builder->SELECT('*');
+        $builder->WHERE('question_no', '8888');
+        $query = $builder->get();
+        if ($query->getNumRows()) {
+            $result = $query->getRowArray();
+            return $result;
+        } else {
+            return false;
+        }
+    }
+
+
+    public function check_efiling_declaration_answer($registration_id){
+        $builder = $this->db->table('efil.tbl_check_list_transaction');
+        $builder->SELECT('*');
+        $builder->WHERE('question_no', '8888');
+        $builder->WHERE('registration_id', $registration_id);
+        $query = $builder->get();
+        if ($query->getNumRows() > 0) {
+            $result = $query->getRowArray();
+            return $result;
+        } else {
+            return false;
+        }
+    }
+
+    public function saved_efiling_declaration_question_answer($registration_id, $question_id, $question_no, $consent){
+        if(!empty($question_id) && !empty($question_no) && !empty($consent)){
+            $data_update =  array(
+                'registration_id' => $registration_id,
+                'question_no' => $question_no,
+                'answer' => $consent,
+                'created_by' => getSessionData('login')['userid'],
+                'ref_m_check_list_new_id' =>  $question_id
+            );
+
+            $builder = $this->db->table('efil.tbl_check_list_transaction');
+            $builder->SELECT('*');
+            $builder->WHERE('question_no', $question_no);
+            $builder->WHERE('registration_id', $registration_id);
+            $query = $builder->get();
+            if ($query->getNumRows() > 0) {
+                $result = $query->getRowArray();
+                return $this->db->table('efil.tbl_check_list_transaction')
+                        ->WHERE('id', $result['id'])
+                        ->SET($data_update)
+                        ->UPDATE();
+            } else {
+               return $this->db->table('efil.tbl_check_list_transaction')->INSERT($data_update);
+            }
+        }else{
+            return false;
+        }
+    }
+
 }

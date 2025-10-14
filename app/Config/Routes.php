@@ -23,6 +23,8 @@ $routes->match(['GET', 'POST'], 'newcase/petitioner/add_petitioner', 'NewCase\Pe
 $routes->match(['GET', 'POST'], 'newcase/extra_party', 'NewCase\ExtraParty::index');
 $routes->get('newcase/defaultController/(:any)', 'NewCase\DefaultController::index/$1');
 $routes->match(['GET', 'POST'], 'newcase/courtFee', 'NewCase\CourtFee::index');
+$routes->match(['GET', 'POST'], 'newcase/efiling_declaration', 'NewCase\CaseDetails::efiling_declaration');
+$routes->match(['GET', 'POST'], 'newcase/add_declaration', 'NewCase\CaseDetails::saved_efiling_declaration');
 $routes->match(['GET', 'POST'], 'newcase/respondent', 'NewCase\Respondent::index');
 $routes->match(['GET', 'POST'], 'newcase/respondent/add_respondent', 'NewCase\Respondent::add_respondent');
 $routes->match(['GET', 'POST'], 'newcase/subordinate_court', 'NewCase\SubordinateCourt::index');
