@@ -543,6 +543,24 @@ $sas = array(Initial_Defected_Stage, I_B_Defected_Stage);
                     </li>
                     <li class="nav-item" role="presentation">
                         <?php
+                            if ($segment->getSegment(2) == 'extra_party') {
+                                $ColorCode = 'background-color: #01ADEF';
+                                $status_color = 'first active';
+                            // $disabled_status='';
+                            } elseif (in_array(NEW_CASE_EXTRA_PARTY, $StageArray)) {
+                                $ColorCode = 'background-color: #169F85;color:#ffffff;';
+                                $status_color = '';
+                            // $disabled_status='';
+                            } else {
+                                $ColorCode = 'background-color: #f0ad4e;color:#ffffff;';
+                                $status_color = '';
+                                //$disabled_status='pointer-events: none; cursor: default;';
+                            }
+                            ?>
+                            <a href="<?= $url_extra_party ?>" class="nav-link <?php echo $status_color; ?>" type="button" style="z-index:9; <?php if(!in_array(NEW_CASE_RESPONDENT, $StageArray)){ echo $disabled_status1;} ?>" aria-selected="false"><span class="tab-num" style="<?php echo $ColorCode; ?>">4</span> Extra Party </a>
+                    </li>
+                    <li class="nav-item" role="presentation">
+                        <?php
                         if ($segment->getSegment(2) == 'subordinate_court') {
                             $ColorCode = 'background-color: #01ADEF';
                             $status_color = 'first active';
@@ -557,7 +575,7 @@ $sas = array(Initial_Defected_Stage, I_B_Defected_Stage);
                             $disabled_status = 'pointer-events: none; cursor: default;';
                         }
                         ?>
-                        <a href="<?= $url_subordinate_court ?>" class="nav-link <?php echo $status_color; ?>" id="home-tab" type="button" style="<?php if (!in_array(NEW_CASE_RESPONDENT, $StageArray)) { echo $disabled_status1; } ?>" aria-selected="false"><span class="tab-num" style="<?php echo $ColorCode; ?>">4</span>Earlier Courts</a>
+                        <a href="<?= $url_subordinate_court ?>" class="nav-link <?php echo $status_color; ?>" id="home-tab" type="button" style="<?php if (!in_array(NEW_CASE_RESPONDENT, $StageArray)) { echo $disabled_status1; } ?>" aria-selected="false"><span class="tab-num" style="<?php echo $ColorCode; ?>">5</span>Earlier Courts</a>
                     </li>
                     <li class="nav-item"
                         role="presentation">
@@ -584,7 +602,7 @@ $sas = array(Initial_Defected_Stage, I_B_Defected_Stage);
                                 echo $disabled_status1;
                             } ?>"
                             aria-selected="false"><span class="tab-num"
-                                style="<?php echo $ColorCode; ?>">5</span>Upload Document / Index</a>
+                                style="<?php echo $ColorCode; ?>">6</span>Upload Document / Index</a>
                     </li>
                     <li class="nav-item"
                         role="presentation">
@@ -614,7 +632,7 @@ $sas = array(Initial_Defected_Stage, I_B_Defected_Stage);
                             } ?>"
                             type="button"
                             aria-selected="false"><span class="tab-num"
-                                style="<?php echo $ColorCode; ?>">6</span>Pay Court Fee</a>
+                                style="<?php echo $ColorCode; ?>">7</span>Pay Court Fee</a>
                     </li>
                     <li class="nav-item"
                         role="presentation">
@@ -641,7 +659,7 @@ $sas = array(Initial_Defected_Stage, I_B_Defected_Stage);
                                 echo $disabled_status1;
                             } ?>"
                             aria-selected="false"><span class="tab-num"
-                                style="<?php echo $ColorCode; ?>">7</span>View</a>
+                                style="<?php echo $ColorCode; ?>">8</span>View</a>
                     </li>
                 </ul>
             @endif
