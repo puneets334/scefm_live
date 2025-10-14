@@ -2213,6 +2213,7 @@ class NewCaseModel extends Model {
 
     public function saved_efiling_declaration_question_answer($registration_id, $question_id, $question_no, $consent){
         if(!empty($question_id) && !empty($question_no) && !empty($consent)){
+           $this->update_breadcrumbs($registration_id, EFILING_DECLARATION);
             $data_update =  array(
                 'registration_id' => $registration_id,
                 'question_no' => $question_no,
@@ -2235,6 +2236,8 @@ class NewCaseModel extends Model {
             } else {
                return $this->db->table('efil.tbl_check_list_transaction')->INSERT($data_update);
             }
+           
+            
         }else{
             return false;
         }
