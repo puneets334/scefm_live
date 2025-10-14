@@ -369,6 +369,7 @@ $sas = array(Initial_Defected_Stage, I_B_Defected_Stage);
                 $url_case_courtfee = base_url('newcase/courtFee');
                 $url_case_affirmation = base_url('affirmation');
                 $url_case_view = base_url('newcase/view');
+                $url_efiling_declaration =  base_url('newcase/efiling_declaration');
                 $final_submit_action = true;
                 $final_submit_continue_action = true;
             } elseif ((!empty(getSessionData('efiling_details')['stage_id']) && !empty(getSessionData('login')) && (getSessionData('login')['ref_m_usertype_id'] == USER_DEPARTMENT && getSessionData('efiling_details')['stage_id'] == Draft_Stage)) || (getSessionData('login')['ref_m_usertype_id'] == USER_CLERK && in_array(getSessionData('efiling_details')['stage_id'], [Draft_Stage, Initial_Defected_Stage]))) {
@@ -413,6 +414,30 @@ $sas = array(Initial_Defected_Stage, I_B_Defected_Stage);
                             type="button"
                             aria-selected="false"><span class="tab-num" style="<?php echo $ColorCode; ?>">1</span> Upload Document / Index </a>
                     </li> 
+                    <li class="nav-item"
+                        role="presentation">
+                        <?php
+                        if ($segment->getSegment(2) == 'declaration') {
+                            $ColorCode = 'background-color: #01ADEF';
+                            $status_color = 'active';
+                        //  $disabled_status='';
+                        } elseif (in_array(EFILING_DECLARATION, $StageArray)) {
+                            //$ColorCode = $bgcolor . ";color:#ffffff";
+                            $ColorCode='background-color: #169F85;';
+                            $status_color = '';
+                        // $disabled_status='';
+                        } else {
+
+                            $ColorCode='background-color: #C11900;';
+                            $status_color = '';
+                        // $disabled_status='pointer-events: none; cursor: default;';
+                        }
+
+                        ?>
+                        <a href="<?= $url_efiling_declaration ?>" class="nav-link <?php echo $status_color; ?>" style="z-index:3;<?php if(!in_array(NEW_CASE_RESPONDENT, $StageArray)){ echo $disabled_status1;} ?>"
+                            type="button"
+                            aria-selected="false"><span class="tab-num" style="<?php echo $ColorCode; ?>">2</span> Declaration </a>
+                    </li>
 
                     <li class="nav-item"
                         role="presentation">
@@ -436,7 +461,7 @@ $sas = array(Initial_Defected_Stage, I_B_Defected_Stage);
                         ?>
                         <a href="<?= $url_case_courtfee ?>" class="nav-link <?php echo $status_color; ?>" style="z-index:3;<?php if(!in_array(NEW_CASE_RESPONDENT, $StageArray)){ echo $disabled_status1;} ?>"
                             type="button"
-                            aria-selected="false"><span class="tab-num" style="<?php echo $ColorCode; ?>">2</span> Pay Court Fee </a>
+                            aria-selected="false"><span class="tab-num" style="<?php echo $ColorCode; ?>">3</span> Pay Court Fee </a>
                     </li>                        
 
                     <li class="nav-item"
@@ -458,7 +483,7 @@ $sas = array(Initial_Defected_Stage, I_B_Defected_Stage);
                         ?>
                         <a href="<?= base_url('newcase/view') ?>" class="nav-link <?php echo $status_color; ?>" style="z-index:1;<?php if(!in_array(NEW_CASE_RESPONDENT, $StageArray)){ echo $disabled_status1;}?>"
                             type="button"
-                            aria-selected="false"><span class="tab-num" style="<?php echo $ColorCode; ?>">3</span>  View </a>
+                            aria-selected="false"><span class="tab-num" style="<?php echo $ColorCode; ?>">4</span>  View </a>
                     </li>
                 </ul>
             @else

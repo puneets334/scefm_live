@@ -676,4 +676,35 @@ class CaseDetails extends BaseController
         exit(0);
     }
 
+
+    public function efiling_declaration(){
+        if(!empty(getSessionData('efiling_details'))){
+                $data['crnt_dt'] = date('d/m/Y');
+                $data['new_case_details'] = $this->Get_details_model->get_new_case_details(getSessionData('efiling_details')['registration_id']);
+                $data['get_declaration_question'] = $this->New_case_model->get_efiling_declaration_question();
+                $data['check_declaration_answer'] = $this->New_case_model->check_efiling_declaration_answer(getSessionData('efiling_details')['registration_id']);
+                return $this->render('newcase.efile_declaration_view', $data);
+        }else{
+            return response()->redirect(base_url('adminDashboard'));
+            exit(0);
+        }
+    }
+
+
+    public function saved_efiling_declaration(){
+       $registration_id = getSessionData('efiling_details')['registration_id'];
+       $question_id =  $this->request->getPost('question_id');
+       $question_no =  $this->request->getPost('question_no');
+       $consent =  $this->request->getPost('consent');
+       $status =  $this->New_case_model->saved_efiling_declaration_question_answer($registration_id, $question_id, $question_no, $consent);
+       if($status){
+            $this->session->setFlashdata('message', "<div class='alert alert-success fade in' style='text-align: center;'>Successfully Saved</div>");
+            return redirect()->to(base_url('newcase/efiling_declaration'));
+       }else{
+             $this->session->setFlashdata('message', "<div class='alert alert-danger fade in' style='text-align: center;'>Something Wrong..!!</div>");
+            return redirect()->to(base_url('newcase/efiling_declaration'));
+       }
+
+    }
+
 }
