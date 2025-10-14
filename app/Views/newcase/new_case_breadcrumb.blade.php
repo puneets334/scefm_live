@@ -404,7 +404,7 @@ $sas = array(Initial_Defected_Stage, I_B_Defected_Stage);
                             $ColorCode = 'background-color: #169F85;color:#ffffff;';
                             $status_color = '';
                         // $disabled_status='';
-                        } else {
+                        } else { 
                             $ColorCode = 'background-color: #C11900;color:#ffffff;';
                             $status_color = '';
                         // $disabled_status='pointer-events: none; cursor: default;';
