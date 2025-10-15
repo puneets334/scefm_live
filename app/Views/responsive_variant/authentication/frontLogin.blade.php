@@ -90,7 +90,6 @@
                         $attribute = array('class' => 'form_horizontal', 'name' => 'form_horizontal', 'id' => 'login-form', 'accept-charset' => 'utf-8', 'autocomplete' => 'off', 'onsubmit' => 'enableSubmit();');
                         echo form_open(base_url('login'), $attribute);
                         ?>
-                        <?= csrf_field() ?>
                         <div class="row">
                             <div class="col-12 col-sm-12 col-md-12 col-lg-12">
                                 <div class="mb-3">

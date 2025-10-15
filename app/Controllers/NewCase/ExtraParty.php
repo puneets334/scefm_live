@@ -40,9 +40,10 @@ class ExtraParty extends BaseController {
         $this->validation = \Config\Services::validation();
     }
 
-    // public function _remap($param = NULL) {        
-    //     if($this->uri->total_segments()== 4) {             
-    //         $this->add_extra_party($this->uri->segment(4));
+    // public function _remap($param = NULL) { 
+    //     $segment = service('uri');   
+    //     if($segment->getTotalSegments()== 4) {             
+    //         $this->add_extra_party($segment->getSegment(4));
     //     } elseif ($param == 'index') {
     //         $this->index(NULL);
     //     } elseif ($param == 'add_extra_party') {
@@ -105,6 +106,9 @@ class ExtraParty extends BaseController {
     }
 
     public function add_extra_party($party_id = NULL) { 
+        if(isset($_POST['partyid']) && !empty($_POST['partyid'])) {
+            $party_id = $_POST['partyid'];
+        }
         if (isset($party_id) && !empty($party_id)) {
             $party_id = url_decryption($party_id);
             if (!$party_id) {
@@ -416,7 +420,10 @@ class ExtraParty extends BaseController {
             );
             $party_details = array_merge($party_details, $party_update_data);
             //UPDATE EXTRA PARTY DETAILS
+            //echo 'party_id:'.$party_id.' registration_id:'.$registration_id; 
+            // echo'<pre>'; print_r($party_details); echo'</pre>'; //exit(0);
             $status = $this->NewCaseModel->add_update_case_parties($registration_id, $party_details, NEW_CASE_EXTRA_PARTY, $party_id);
+        //    var_dump($status); exit(0);
             if ($status) {
                 reset_affirmation($registration_id);
                 echo '2@@@' . htmlentities('Party details updated successfully !', ENT_QUOTES) . '@@@' . base_url('newcase/defaultController/' . url_encryption(trim($registration_id . '#' . E_FILING_TYPE_NEW_CASE . '#' . $_SESSION['efiling_details']['stage_id'])));
