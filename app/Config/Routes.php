@@ -570,4 +570,7 @@ $routes->match(['GET', 'POST'], 'newcase/extra_party/(:any)', 'NewCase\ExtraPart
 $routes->match(['GET', 'POST'], 'newcase/add_extra_party', 'NewCase\ExtraParty::add_extra_party');
 $routes->match(['GET', 'POST'], 'newcase/deleteParty/(:any)', 'NewCase\DeleteParty::index/$1');
 
+$routes->match(['GET', 'POST'], 'newcase/checklist', 'NewCase\CheckList::index');
+$routes->match(['GET', 'POST'], 'newcase/add_checklist', 'NewCase\CheckList::add_checklist');
+
 });

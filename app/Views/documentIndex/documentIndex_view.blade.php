@@ -206,7 +206,9 @@
                                 <?php
                                 if (!empty(getSessionData('efiling_details')['ref_m_efiled_type_id']) && getSessionData('efiling_details')['ref_m_efiled_type_id'] == E_FILING_TYPE_NEW_CASE) {
                                     $previous_url = base_url('newcase/subordinate_court');
-                                    $next_url = base_url('newcase/courtFee');
+                                    // $next_url = base_url('newcase/courtFee');
+                                    $next_url = base_url('newcase/checklist');
+                                    
                                 } elseif (!empty(getSessionData('efiling_details')['ref_m_efiled_type_id']) && getSessionData('efiling_details')['ref_m_efiled_type_id'] == E_FILING_TYPE_MISC_DOCS) {
                                     $previous_url = base_url('on_behalf_of');
                                     $next_url = base_url('miscellaneous_docs/courtFee');

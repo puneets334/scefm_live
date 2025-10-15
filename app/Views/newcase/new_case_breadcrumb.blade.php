@@ -436,7 +436,7 @@ $sas = array(Initial_Defected_Stage, I_B_Defected_Stage);
                         ?>
                         <a href="<?= $url_efiling_declaration ?>" class="nav-link <?php echo $status_color; ?>" style="z-index:3;<?php if(!in_array(NEW_CASE_RESPONDENT, $StageArray)){ echo $disabled_status1;} ?>"
                             type="button"
-                            aria-selected="false"><span class="tab-num" style="<?php echo $ColorCode; ?>">2</span> Declaration </a>
+                            aria-selected="false"><span class="tab-num" style="<?php echo $ColorCode; ?>">2</span> Checklist / Declaration </a>
                     </li>
 
                     <li class="nav-item"
@@ -629,6 +629,28 @@ $sas = array(Initial_Defected_Stage, I_B_Defected_Stage);
                             aria-selected="false"><span class="tab-num"
                                 style="<?php echo $ColorCode; ?>">6</span>Upload Document / Index</a>
                     </li>
+                    <li class="nav-item" role="presentation">
+                        <?php
+                        
+                        if ($segment->getSegment(2) == 'checklist') {
+                            $ColorCode = 'background-color: #01ADEF';
+                            $status_color = 'first active';
+                            $disabled_status = '';
+                        } elseif (in_array(NEW_CASE_CHECKLIST, $StageArray)) {
+                            //$ColorCode = $bgcolor . ";color:#ffffff";
+                            $bgcolor = 'background-color: #169F85;';
+                            $ColorCode = $bgcolor . ';color:#ffffff';
+                            $status_color = '';
+                            $disabled_status = '';
+                        } else {
+                            $bgcolor = 'background-color: #C11900;';
+                            $ColorCode = $bgcolor . ';color:#ffffff';
+                            $status_color = '';
+                            $disabled_status = 'pointer-events: none; cursor: default;';
+                        }
+                        ?>
+                        <a href="<?= $url_case_checklist ?>" class="nav-link <?php echo $status_color; ?>" id="home-tab" type="button" style="<?php if (!in_array(NEW_CASE_RESPONDENT, $StageArray)) { echo $disabled_status1; } ?>" aria-selected="false"><span class="tab-num" style="<?php echo $ColorCode; ?>">7</span> Check List / Declaration </a>
+                    </li>
                     <li class="nav-item"
                         role="presentation">
                         <?php
@@ -657,7 +679,7 @@ $sas = array(Initial_Defected_Stage, I_B_Defected_Stage);
                             } ?>"
                             type="button"
                             aria-selected="false"><span class="tab-num"
-                                style="<?php echo $ColorCode; ?>">7</span>Pay Court Fee</a>
+                                style="<?php echo $ColorCode; ?>">8</span>Pay Court Fee</a>
                     </li>
                     <li class="nav-item"
                         role="presentation">
@@ -684,7 +706,7 @@ $sas = array(Initial_Defected_Stage, I_B_Defected_Stage);
                                 echo $disabled_status1;
                             } ?>"
                             aria-selected="false"><span class="tab-num"
-                                style="<?php echo $ColorCode; ?>">8</span>View</a>
+                                style="<?php echo $ColorCode; ?>">9</span>View</a>
                     </li>
                 </ul>
             @endif

@@ -5074,3 +5074,20 @@ function getDistrictName($id){
     $Dropdown_list_model = new DropdownListModel();
     return $Dropdown_list_model->getDistrictName($id);
 }
+
+function checklist_question_by_id($ref_m_check_list_new_id) {
+    $ChecklistModel = new ChecklistModel();
+    $checked_question = $ChecklistModel->checkkist_question_by_id($ref_m_check_list_new_id);
+    if ($checked_question) {
+        return $checked_question->question;
+    }
+}
+
+
+function checklist_response($question_id, $registration_id) {
+    $ChecklistModel = new ChecklistModel();
+    $checked_response = $ChecklistModel->checkkist_resp($question_id, $registration_id);
+    if ($checked_response) {
+        pr($checked_response);
+    }
+}
