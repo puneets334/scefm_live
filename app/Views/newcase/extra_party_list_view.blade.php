@@ -10,8 +10,9 @@ if(isset(getSessionData('efiling_details')['stage_id'])){
 ?>
 <div class="panel panel-default">
     <div class="panel-body">        
-        <div class="col-md-12 col-sm-12 col-xs-12">             
-            <table id="datatable-responsive" class="table table-striped table-bordered dt-responsive nowrap" cellspacing="0" width="100%">
+        <div class="col-md-12 col-sm-12 col-xs-12">     
+            <div class="table-responsive box-body no-padding">        
+            <table id="datatable-responsive" class="table table-striped table-bordered table-responsive custom-table" cellspacing="0" width="100%">
                 <thead>
                     <tr class="success">
                         <th>#</th>
@@ -105,6 +106,7 @@ if(isset(getSessionData('efiling_details')['stage_id'])){
                     ?>
                 </tbody>
             </table>
+        </div>
         </div>
     </div>
 </div>

@@ -862,7 +862,7 @@
                 <div class="col-12 col-sm-12 col-md-12 col-lg-12 my-3">
                     <div class="save-btns text-center">
                         <a tabindex='30'
-                            href="<?= base_url('newcase/respondent') ?>"
+                            href="<?= base_url('newcase/extra_party') ?>"
                             class="btn quick-btn gray-btn"
                             type="button">PREVIOUS</a>
                         <input tabindex='28'

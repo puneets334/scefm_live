@@ -566,6 +566,8 @@ $routes->match(['GET', 'POST'], 'sendTestMsg', 'DefaultController::sendTestMsg')
 $routes->get('Janparichay', 'Login\Janparichay::index');
 $routes->get('login/Janparichay/logout', 'Login\Janparichay::logout');
 
+$routes->match(['GET', 'POST'], 'newcase/extra_party/(:any)', 'NewCase\ExtraParty::index/$1');
 $routes->match(['GET', 'POST'], 'newcase/add_extra_party', 'NewCase\ExtraParty::add_extra_party');
+$routes->match(['GET', 'POST'], 'newcase/deleteParty/(:any)', 'NewCase\DeleteParty::index/$1');
 
 });

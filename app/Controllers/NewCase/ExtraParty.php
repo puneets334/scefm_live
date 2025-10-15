@@ -53,7 +53,7 @@ class ExtraParty extends BaseController {
     // }
 
     public function index($party_id = NULL) {
-        return redirect()->to(base_url('newcase/subordinate_court')); exit(0);
+        // return redirect()->to(base_url('newcase/subordinate_court')); exit(0);
         if (isset($party_id) && !empty($party_id)) {
             $party_id = url_decryption($party_id);
             if (!$party_id) {
@@ -73,6 +73,10 @@ class ExtraParty extends BaseController {
             return redirect()->to(base_url('newcase/view'));
             exit(0);
         }
+        $data['party_details'] = [];
+        $data['party_id'] = NULL;
+        $data['extra_parties_list'] = [];
+        $data['district_list'] = [];
         // $data['state_list'] = $this->DropdownListModel->get_states_list();
         $data['state_list'] = $this->DropdownListModel->get_address_state_list();
         $countryList = $this->DropdownListModel->getCountryList();
@@ -86,8 +90,8 @@ class ExtraParty extends BaseController {
                 $data['district_list'] = $this->DropdownListModel->get_districts_list($data['party_details'][0]['state_id']);
             }
         }
-        if(!empty($this->session->userdata['efiling_details']['breadcrumb_status'])) {
-            $breadCrumArr = explode(',',$this->session->userdata['efiling_details']['breadcrumb_status']);
+        if(!empty(getSessionData('efiling_details')['breadcrumb_status'])) {
+            $breadCrumArr = explode(',',getSessionData('efiling_details')['breadcrumb_status']);
             if(in_array(NEW_CASE_LRS,$breadCrumArr)) {
                 $data['is_dead_data'] = true;
             } else{
@@ -100,7 +104,7 @@ class ExtraParty extends BaseController {
         return $this->render('newcase.new_case_view', $data);
     }
 
-    public function add_extra_party($party_id = NULL) {        
+    public function add_extra_party($party_id = NULL) { 
         if (isset($party_id) && !empty($party_id)) {
             $party_id = url_decryption($party_id);
             if (!$party_id) {
@@ -109,6 +113,8 @@ class ExtraParty extends BaseController {
                 exit(0);
             }
         }
+        $is_dead_minor = false;
+        $is_dead_file_status = false;
         $validations = [];
         $stages_array = array('', Draft_Stage, Initial_Defected_Stage, I_B_Defected_Stage);
         if (!in_array($_SESSION['efiling_details']['stage_id'], $stages_array)) {
@@ -128,7 +134,7 @@ class ExtraParty extends BaseController {
                 "rules" => "required|in_list[P,R]"
             ],
         ];
-        if ($_POST['party_as'] == 'I') {
+        if (isset($_POST['party_as']) && $_POST['party_as'] == 'I') {
             $validations += [
                 "party_name" => [
                     "label" => "Petitioner name",
@@ -155,6 +161,7 @@ class ExtraParty extends BaseController {
                     ],
                 ];
             }
+            
             if($_POST['is_dead_minor'] == '0') {
                 $is_dead_minor = false;
                 $is_dead_file_status = false;
@@ -215,7 +222,7 @@ class ExtraParty extends BaseController {
                 ],
             ];
         } else{
-            if ($_POST['party_as'] != 'D3') {
+            if (isset($_POST['party_as']) && $_POST['party_as'] != 'D3') {
                 $validations += [
                     "org_state" => [
                         "label" => "Organisation State Name",
@@ -303,7 +310,7 @@ class ExtraParty extends BaseController {
             $party_dob = NULL;
         }
         $party_age = !empty($_POST["party_age"]) ? escape_data($_POST["party_age"]) : NULL;
-        $party_gender = escape_data($_POST["party_gender"]);
+        $party_gender = isset($_POST["party_gender"]) ? escape_data($_POST["party_gender"]) : '';
         if ($party_as != 'I') {
             $is_org = TRUE;
             if ($party_as != 'D3') {
@@ -404,7 +411,7 @@ class ExtraParty extends BaseController {
         if (isset($registration_id) && !empty($registration_id) && isset($party_id) && !empty($party_id)) {
             $party_update_data = array(
                 'updated_on' => $curr_dt_time,
-                'updated_by' => $this->session->userdata['login']['id'],
+                'updated_by' => getSessionData('login')['id'],
                 'updated_by_ip' => $_SERVER['REMOTE_ADDR']
             );
             $party_details = array_merge($party_details, $party_update_data);
@@ -420,13 +427,14 @@ class ExtraParty extends BaseController {
             $party_create_data = array(
                 'registration_id' => $registration_id,
                 'created_on' => $curr_dt_time,
-                'created_by' => $this->session->userdata['login']['id'],
+                'created_by' => getSessionData('login')['id'],
                 'created_by_ip' => $_SERVER['REMOTE_ADDR']
             );
             $party_details = array_merge($party_details, $party_create_data);
             $all_party_no = get_extra_party_P_or_R($p_r_type);
             $breadcrumb_statusGet = explode(',', $_SESSION['efiling_details']['breadcrumb_status']);
             $breadcrumb_status=count($breadcrumb_statusGet); $step=11;
+            $inserted_party_id = 0;
             if ($step >= $breadcrumb_status) {
                 if ($p_r_type == 'P') {
                     $extra_party_check_current_case_details = ($_SESSION['efiling_details']['no_of_petitioners']);

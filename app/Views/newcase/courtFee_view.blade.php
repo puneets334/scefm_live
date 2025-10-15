@@ -169,13 +169,13 @@
                                             $subcode1 = $row['subcode1'];
                                             $sc_case_type_id = $row['sc_case_type_id'];
                                         }
-                                        $processing_charges = 0;
-                                        if($sc_case_type_id==23){
-                                            $processing_charges = PROCESSING_CHARGES_FOR_23;
-                                        }
-                                        if($sc_case_type_id==24){
-                                            $processing_charges = PROCESSING_CHARGES_FOR_24;
-                                        }
+                                        // $processing_charges = 0;
+                                        // if($sc_case_type_id==23){
+                                        //     $processing_charges = PROCESSING_CHARGES_FOR_23;
+                                        // }
+                                        // if($sc_case_type_id==24){
+                                        //     $processing_charges = PROCESSING_CHARGES_FOR_24;
+                                        // }
                                         // if($sc_case_type_id==19 || $sc_case_type_id==2 || $sc_case_type_id==4 || $sc_case_type_id==10)
                                         if (in_array($sc_case_type_id, $allowed_case_type_id_CRL))
                                         {
@@ -287,7 +287,7 @@
                                                             $court_fee1 = 0;
                                                         } elseif ($sc_case_type_id == '23') // election petition
                                                         {
-                                                            $court_fee1 = (int)$court_fee1 + 5000;
+                                                            $court_fee1 = (int)$court_fee1 + 20000;
                                                         } elseif ($sc_case_type_id == '24') // arbitration petition
                                                         {
                                                             $court_fee1 = (int)$court_fee1 + 5000;
@@ -324,7 +324,9 @@
                                                 ₹ <?= $court_fee1; ?>
                                             </td>
                                         </tr>
-                                        <?php if(COURT_FEE_PROCESSING_CHARGES){ 
+                                        <!-- <?php /*if (empty(getSessionData('efiling_details')['if_sclsc']) && (getSessionData('efiling_details')['if_sclsc'] != 1)){
+                                            if($case_nature == 'C'){
+                                             if(COURT_FEE_PROCESSING_CHARGES){ 
                                             if(in_array($sc_case_type_id,PROCESSING_CHARGES_CASE_TYPE)){
                                                 $sr_no++;
                                             ?>
@@ -333,7 +335,8 @@
                                                 <td data-key="Court Fee Details ">Processing Charges</td>
                                                 <td data-key="Amount ( ₹ )" align="center">₹ <?= (int)($processing_charges); ?></td>
                                             </tr>
-                                            <?php } } ?>
+                                            <?php } } }
+                                            } */?> -->
                                         <?php $sr_no++;
                                     }
                                 }
@@ -607,11 +610,13 @@
                                 } ?>
                                 
                             <?php   }  ?> 
-                            <?php $court_fee = $court_fee;
-                            if(COURT_FEE_PROCESSING_CHARGES){ 
+                            <?php /*$court_fee = $court_fee;
+                            if (empty(getSessionData('efiling_details')['if_sclsc']) && (getSessionData('efiling_details')['if_sclsc'] != 1)){
+                                if($case_nature == 'C'){
+                                if(COURT_FEE_PROCESSING_CHARGES){ 
                                     if(in_array($sc_case_type_id,PROCESSING_CHARGES_CASE_TYPE)){
                                         $court_fee = $court_fee + (int)($processing_charges);
-                                    } } ?>
+                                    } } } }*/ ?>
                             <tr>
                                 <td data-key="#"></td>
                                 <td data-key="Court Fee Details"></td>

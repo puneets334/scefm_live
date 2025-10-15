@@ -485,6 +485,7 @@ function getStringOfAmount($number)
 }
 
 function send_mail_msg($to_email, $subject, $message, $to_user_name="") {
+    return true;exit;
     if (!empty($to_user_name) && $to_user_name != null) {
        //return relay_mail_api_through_60_server(array($to_email), $subject, $message, $to_user_name);
        return relay_mail_api_through_jio_cloud_server(array($to_email), $subject, $message, $to_user_name);
@@ -712,6 +713,7 @@ function relay_doc_mail_api($to_email, $subject, $message)
 
 function send_mobile_sms($mobile_no, $sentSMS, $templateId = SCISMS_GENERIC_TEMPLATE)
 {
+    return true;exit;
     $result = sendSMS(SMS_EMAIL_API_USER, $mobile_no, $sentSMS, $templateId);
     // return json_decode($result);
     return $result;
@@ -2193,7 +2195,7 @@ function calculate_court_fee($registration_id = null, $request_type = null, $wit
                             }
                         } elseif ($sc_case_type_id == '23') // election petition
                         {
-                            $total_court_fee = (int)$total_court_fee + 5000;
+                            $total_court_fee = (int)$total_court_fee + 20000;
                         } elseif ($sc_case_type_id == '24') // arbitration petition
                         {
                             $total_court_fee = (int)$total_court_fee + 5000;
