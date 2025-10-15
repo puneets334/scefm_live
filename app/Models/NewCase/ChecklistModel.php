@@ -76,7 +76,14 @@ class ChecklistModel extends Model
             $result = $query->getResultArray();
             return $result;
         } else {
-            return NULL;
+            $builder = $this->db->table('efil.m_checklist_new mcn');
+            $builder->SELECT('*');
+            $builder->WHERE('mcn.sc_case_type_id', 999999);
+            $builder->WHERE('mcn.is_deleted', 'false');
+            $builder->orderBy('id', 'ASC');
+            $query = $builder->get();
+            $result = $query->getResultArray();
+            return $result;
         }
     }
 

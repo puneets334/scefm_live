@@ -39,7 +39,8 @@
                                 //$this->load->view('affirmation/affirmation_view')
                             @elseif ($segment->getSegment(2) == 'checklist')
                                 @if (!empty(getSessionData('efiling_details')['stage_id']) && (getSessionData('efiling_details')['stage_id'] == I_B_Defected_Stage || getSessionData('efiling_details')['stage_id'] == I_B_Defects_Cured_Stage))
-                                <!-- shivam page -->                                 
+                                <!-- shivam page -->  
+                                 @include('newcase.efile_declaration_view')                               
                                 @else
                                     @include('newcase.checklist_view')
                                 @endif

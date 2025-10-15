@@ -101,6 +101,9 @@ if (isset($ref_m_usertype_id) && !empty($ref_m_usertype_id) && $ref_m_usertype_i
                     <div class="col-12 sm-12 col-md-12 col-lg-12 middleContent-left">
                         <div class="center-content-inner comn-innercontent">
                             <div class="tab-content">
+                                <div class="row">
+                                        <h6 class="text-left mt-2"><a href="https://www.sci.gov.in/limitation-calculator/" target="_blank">Limitation Calculator</a></h6>
+                                    </div>
                                 <div class="tab-pane active" id="home" role="tabpanel" aria-labelledby="home-tab">
                                     <?php
                                     $attribute = array('class' => 'form-horizontal', 'name' => 'add_checklist', 'id' => 'add_checklist', 'autocomplete' => 'off');
@@ -157,7 +160,7 @@ if (isset($ref_m_usertype_id) && !empty($ref_m_usertype_id) && $ref_m_usertype_i
                                                                                             echo "";
                                                                                         } ?>
                                                                                     </th>
-                                                                                    <th></th>
+                                                                                    <th>Select if complied (Blue denotes compliance)</th>
                                                                                 </tr>
                                                                             </thead>
                                                                             <tbody>
@@ -266,7 +269,7 @@ if (isset($ref_m_usertype_id) && !empty($ref_m_usertype_id) && $ref_m_usertype_i
                                                                                             }
                                                                                             ?>
                                                                                         </th>
-                                                                                        <th></th>
+                                                                                        <th>Select if complied (Blue denotes compliance)</th>
                                                                                     </tr>
                                                                                 </thead>
                                                                                 <tbody>
@@ -368,7 +371,7 @@ if (isset($ref_m_usertype_id) && !empty($ref_m_usertype_id) && $ref_m_usertype_i
                                                                                     <th>
                                                                                         <?php echo 'PROPOSED ADVOCATE\'S CHECK LIST (TO BE CERTIFIED BY ADVOCATE-ON-RECORD)'; ?>
                                                                                     </th>
-                                                                                    <th></th>
+                                                                                    <th>Select if complied (Blue denotes compliance)</th>
                                                                                 </tr>
                                                                             </thead>
                                                                             <tbody>
