@@ -404,7 +404,7 @@ $sas = array(Initial_Defected_Stage, I_B_Defected_Stage);
                             $ColorCode = 'background-color: #169F85;color:#ffffff;';
                             $status_color = '';
                         // $disabled_status='';
-                        } else {
+                        } else { 
                             $ColorCode = 'background-color: #C11900;color:#ffffff;';
                             $status_color = '';
                         // $disabled_status='pointer-events: none; cursor: default;';
@@ -417,7 +417,8 @@ $sas = array(Initial_Defected_Stage, I_B_Defected_Stage);
                     <li class="nav-item"
                         role="presentation">
                         <?php
-                        if ($segment->getSegment(2) == 'declaration') {
+                        
+                        if ($segment->getSegment(2) == 'efiling_declaration') {
                             $ColorCode = 'background-color: #01ADEF';
                             $status_color = 'active';
                         //  $disabled_status='';
@@ -436,7 +437,7 @@ $sas = array(Initial_Defected_Stage, I_B_Defected_Stage);
                         ?>
                         <a href="<?= $url_efiling_declaration ?>" class="nav-link <?php echo $status_color; ?>" style="z-index:3;<?php if(!in_array(NEW_CASE_RESPONDENT, $StageArray)){ echo $disabled_status1;} ?>"
                             type="button"
-                            aria-selected="false"><span class="tab-num" style="<?php echo $ColorCode; ?>">2</span> Checklist / Declaration </a>
+                            aria-selected="false"><span class="tab-num" style="<?php echo $ColorCode; ?>">2</span> CheckList / Declaration </a>
                     </li>
 
                     <li class="nav-item"
