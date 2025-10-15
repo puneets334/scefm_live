@@ -573,4 +573,8 @@ $routes->match(['GET', 'POST'], 'newcase/deleteParty/(:any)', 'NewCase\DeletePar
 $routes->match(['GET', 'POST'], 'newcase/checklist', 'NewCase\CheckList::index');
 $routes->match(['GET', 'POST'], 'newcase/add_checklist', 'NewCase\CheckList::add_checklist');
 
+
+$routes->match(['GET', 'POST'], 'newcase/efiling_declaration', 'NewCase\CaseDetails::efiling_declaration');
+$routes->match(['GET', 'POST'], 'newcase/add_declaration', 'NewCase\CaseDetails::saved_efiling_declaration');
+
 });

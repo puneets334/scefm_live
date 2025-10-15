@@ -367,6 +367,7 @@ $sas = array(Initial_Defected_Stage, I_B_Defected_Stage);
                 $url_case_create_index = base_url('documentIndex');
                 $url_case_upload_docs = base_url('uploadDocuments');
                 $url_case_courtfee = base_url('newcase/courtFee');
+                $url_case_checklist = base_url('newcase/checklist');
                 $url_case_affirmation = base_url('affirmation');
                 $url_case_view = base_url('newcase/view');
                 $url_efiling_declaration =  base_url('newcase/efiling_declaration');
@@ -1755,6 +1756,32 @@ $sas = array(Initial_Defected_Stage, I_B_Defected_Stage);
              });
              return false;
          });
+
+         function toggleAllAccordions() {
+             var button = document.getElementById("collapseAll");
+             var accordionHeaders = document.querySelectorAll(".accordion-header button");
+             var accordionCollapses = document.querySelectorAll(".accordion-collapse");
+             var isCollapsed = Array.from(accordionHeaders).some(function (header) {
+                 return !header.classList.contains("collapsed");
+             });
+             if (isCollapsed) {
+                 button.innerHTML = "Expand all";
+                 accordionHeaders.forEach(function (header) {
+                     header.classList.add("collapsed");
+                 });
+                 accordionCollapses.forEach(function (collapse) {
+                     collapse.classList.remove("show");
+                 });
+             } else {
+                 button.innerHTML = "Collapse all";
+                 accordionHeaders.forEach(function (header) {
+                     header.classList.remove("collapsed");
+                 });
+                 accordionCollapses.forEach(function (collapse) {
+                     collapse.classList.add("show");
+                 });
+             }
+         }
 </script>
 <style>
     .obj_wrapper{
