@@ -42,13 +42,20 @@
     <div class="tab-content">
         <div class="tab-pane active" id="home" role="tabpanel" aria-labelledby="home-tab">
             <div class="tab-form-inner">
-                <h4 style="text-align: center;color: #31B0D5">Extra Party Information </h4>
+                <h4 style="text-align: center;color: #31B0D5">Extra Party Information</h4>
                 <div class="col-12 col-sm-12 col-md-12 col-lg-12">
+                   
                     <?php
-                    
+                     $partyid = (!empty($party_details[0]['id']) && isset($party_details[0]['id'])) ? (int)$party_details[0]['id'] : NULL;
+                     if(!empty($partyid)){
+                        $partyid = url_encryption($partyid);
+                        $base_url_add_extra_party=base_url('newcase/add_extra_party/' . $partyid);
+                     } else {
+                        $base_url_add_extra_party=base_url('newcase/add_extra_party');
+                     }  
                     $attribute = ['class' => 'form-horizontal', 'name' => 'add_extra_party', 'id' => 'add_extra_party', 'autocomplete' => 'off'];
                     echo form_open('#', $attribute);
-                    echo csrf_field();
+                    // echo csrf_field();
                     ?>
                     <div class="row">
                         <div class="col-12 col-sm-12 col-md-4 col-lg-4">
@@ -498,7 +505,6 @@
                         if (isset($is_dead_data) && !empty($is_dead_data)) {
                             $isdead_data = $is_dead_data;
                         }
-                        $partyid = (!empty($party_details[0]['party_id']) && isset($party_details[0]['party_id'])) ? (int)$party_details[0]['party_id'] : NULL;
                         ?>
                         <input type="hidden" name="partyid" id="partyid" value="<?php echo $partyid; ?>" />
                         <input type="hidden" name="is_dead_data" id="is_dead_data" value="<?php echo $isdead_data; ?>" />
@@ -1045,7 +1051,7 @@
             var CSRF_TOKEN_VALUE = $('[name="CSRF_TOKEN"]').val();
             $.ajax({
                 type: "POST",
-                url: '<?php echo base_url('newcase/add_extra_party'); ?>',
+                url: '<?php echo $base_url_add_extra_party; ?>',
                 data: form_data,
                 async: false,
                 beforeSend: function() {
@@ -1102,4 +1108,112 @@
             });
         });
     });
+
+    $('#party_pincode').blur(function() {
+        var CSRF_TOKEN = 'CSRF_TOKEN';
+        var CSRF_TOKEN_VALUE = $('[name="CSRF_TOKEN"]').val();
+        var pincode = $("#party_pincode").val();
+        if (pincode) {
+            var stateObj = JSON.parse(state_Arr);
+            var options = '';
+            options += '<option value="">Select State</option>';
+            stateObj.forEach((response) =>
+                options += '<option value="' + response.id + '">' + response.state_name + '</option>');
+            $('#party_state').html(options).select2().trigger("change");
+            $.ajax({
+                type: "POST",
+                data: {
+                    CSRF_TOKEN: CSRF_TOKEN_VALUE,
+                    pincode: pincode
+                },
+                url: "<?php echo base_url('newcase/Ajaxcalls/getAddressByPincode'); ?>",
+                success: function(response) {
+                    var taluk_name;
+                    var district_name;
+                    var state;
+                    if (response) {
+                        var resData = JSON.parse(response);
+                        if (resData) {
+                            taluk_name = resData[0]['taluk_name'].trim().toUpperCase();
+                            district_name = resData[0]['district_name'].trim().toUpperCase();
+                            state = resData[0]['state'].trim().toUpperCase();
+                        }
+                        if (taluk_name) {
+                            $("#party_city").val('');
+                            $("#party_city").val(taluk_name);
+                        } else {
+                            $("#party_city").val('');
+                        }
+                        if (state) {
+                            var stateObj = JSON.parse(state_Arr);
+                            if (stateObj) {
+                                var singleObj = stateObj.find(
+                                    item => item['state_name'] === state
+                                );
+                            }
+                            if (singleObj) {
+                                $('#party_state').val('');
+                                $('#party_state').val(singleObj.id).select2().trigger("change");
+                            } else {
+                                $('#party_state').val('');
+                            }
+                            if (district_name) {
+                                var stateId = $('#party_state').val();
+                                setSelectedDistrict(stateId, district_name);
+                            }
+                        } else {
+                            $('#party_state').val('');
+                        }
+                    }
+                    $.getJSON("<?php echo base_url('csrftoken'); ?>", function(result) {
+                        $('[name="CSRF_TOKEN"]').val(result.CSRF_TOKEN_VALUE);
+                    });
+                },
+                error: function() {
+                    $.getJSON("<?php echo base_url('csrftoken'); ?>", function(result) {
+                        $('[name="CSRF_TOKEN"]').val(result.CSRF_TOKEN_VALUE);
+                    });
+                }
+            });
+        }
+    });
+
+    function setSelectedDistrict(stateId, district_name) {
+        if (stateId && district_name) {
+            var CSRF_TOKEN = 'CSRF_TOKEN';
+            var CSRF_TOKEN_VALUE = $('[name="CSRF_TOKEN"]').val();
+            $.ajax({
+                type: "POST",
+                data: {
+                    CSRF_TOKEN: CSRF_TOKEN_VALUE,
+                    state_id: stateId
+                },
+                url: "<?php echo base_url('newcase/Ajaxcalls/getSelectedDistricts'); ?>",
+                success: function(resData) {
+                    if (resData) {
+                        var districtObj = JSON.parse(resData);
+                        var singleObj = districtObj.find(
+                            item => item['district_name'] === district_name
+                        );
+                        if (singleObj) {
+                            $('#party_district').val('');
+                            $('#party_district').val(singleObj.id).select2().trigger("change");
+                        } else {
+                            $('#party_district').val('');
+                        }
+                    } else {
+                        $('#party_district').val('');
+                    }
+                    $.getJSON("<?php echo base_url('csrftoken'); ?>", function(result) {
+                        $('[name="CSRF_TOKEN"]').val(result.CSRF_TOKEN_VALUE);
+                    });
+                },
+                error: function() {
+                    $.getJSON("<?php echo base_url('csrftoken'); ?>", function(result) {
+                        $('[name="CSRF_TOKEN"]').val(result.CSRF_TOKEN_VALUE);
+                    });
+                }
+            });
+        }
+    }
 </script>
