@@ -1,26 +1,30 @@
 <?php
 
-if (!defined('BASEPATH'))
-    exit('No direct script access allowed');
+namespace App\Controllers\Newcase;
 
-class DeleteParty extends CI_Controller {
+use App\Controllers\BaseController;
+use App\Models\NewCase\NewCaseModel;
+
+class DeleteParty extends BaseController {
+
+    protected $NewCaseModel;
 
     public function __construct() {
         parent::__construct();
 
-        $this->load->model('newcase/New_case_model');
+        $this->NewCaseModel = new NewCaseModel();
     }
 
-    public function _remap($param = NULL) {
+    // public function _remap($param = NULL) {
 
-        $this->index($param);
+    //     $this->index($param);
 
-        /* if($param == 'index') {
-          $this->index(NULL);
-          }else {
-          $this->index($param);
-          } */
-    }
+    //     /* if($param == 'index') {
+    //       $this->index(NULL);
+    //       }else {
+    //       $this->index($param);
+    //       } */
+    // }
 
     public function index($delete_party_id) {
 
@@ -50,7 +54,7 @@ class DeleteParty extends CI_Controller {
 
             $registration_id = $_SESSION['efiling_details']['registration_id'];
 
-            $delete_status = $this->New_case_model->delete_case_party($registration_id, $delete_party_id);
+            $delete_status = $this->NewCaseModel->delete_case_party($registration_id, $delete_party_id);
 
             if ($delete_status) {
                 reset_affirmation($registration_id);
@@ -58,7 +62,7 @@ class DeleteParty extends CI_Controller {
             } else {
                 $_SESSION['MSG'] = message_show("fail", "Some error. Please try again."); // this msg is not being displayed. checking required
             }
-            redirect('newcase/extra_party');
+            return redirect()->to(base_url('newcase/extra_party'));
             //redirect('newcase/defaultController/' . url_encryption(trim($registration_id . '#' . E_FILING_TYPE_NEW_CASE . '#' . $_SESSION['efiling_details']['stage_id'])));
             exit(0);
         }

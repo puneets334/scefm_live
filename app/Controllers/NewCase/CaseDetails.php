@@ -629,9 +629,9 @@ class CaseDetails extends BaseController
                     $efiling_num = getSessionData('efiling_details')['efiling_no'];
                     $sentSMS = "Efiling No. " . efile_preview($efiling_num) . " generated from your efiling account & still pending for final submit. - Supreme Court of India";
                     $subject = "Efiling No. " . efile_preview($efiling_num) . " generated from your efiling account";
-                    // send_mobile_sms(getSessionData('login')['mobile_number'], $sentSMS, SCISMS_Efiling_No_Generated);
-                    // send_mail_msg(getSessionData('login')['emailid'], $subject, $sentSMS, $user_name);
-                    // send_whatsapp_message($result['registration_id'], $efiling_num, "generated from your efiling account & still pending for final submit.");
+                    send_mobile_sms(getSessionData('login')['mobile_number'], $sentSMS, SCISMS_Efiling_No_Generated);
+                    send_mail_msg(getSessionData('login')['emailid'], $subject, $sentSMS, $user_name);
+                    send_whatsapp_message($result['registration_id'], $efiling_num, "generated from your efiling account & still pending for final submit.");
                     /*start upload duc data*/
                     $registration_id = $result['registration_id'];
                     casewithAIUpdate($result['registration_id'],$_SESSION['efiling_details']['efiling_no']);

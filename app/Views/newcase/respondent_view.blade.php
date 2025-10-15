@@ -373,9 +373,11 @@
                             <?php if (!empty(getSessionData('case_table_ids')) && !empty(getSessionData('case_table_ids')['m_respondent_id'])) { ?>
                                 <input type="submit" class="btn btn-success" id="pet_save" tabindex='26' value="UPDATE">
                                 <?php if (isset($IsDeadMinor) && !empty($IsDeadMinor) && $IsDeadMinor == 'Y') { ?>
-                                    <a tabindex='27' href="<?= base_url('newcase/subordinate_court') ?>" class="quick-btn gray-btn" type="button">NEXT</a>
+                                    <!-- <a tabindex='27' href="<?= base_url('newcase/subordinate_court') ?>" class="quick-btn gray-btn" type="button">NEXT</a> -->
+                                    <a tabindex='27' href="<?= base_url('newcase/extra_party') ?>" class="quick-btn gray-btn" type="button">NEXT</a>
                                 <?php } else { ?>
-                                    <a tabindex='27' href="<?= base_url('newcase/subordinate_court') ?>" class="quick-btn gray-btn" type="button">NEXT</a>
+                                    <!-- <a tabindex='27' href="<?= base_url('newcase/subordinate_court') ?>" class="quick-btn gray-btn" type="button">NEXT</a> -->
+                                    <a tabindex='27' href="<?= base_url('newcase/extra_party') ?>" class="quick-btn gray-btn" type="button">NEXT</a>
                                 <?php } ?>
                             <?php } else { ?>
                                 <input type="submit" class="btn btn-success" id="pet_save" value="SAVE" tabindex='26'>

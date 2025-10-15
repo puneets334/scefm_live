@@ -87,6 +87,47 @@ class PaymentRequest extends BaseController {
             if($court_fee_list1[0]['sc_case_type_id']==24){
                 $processing_charges = PROCESSING_CHARGES_FOR_24;
             }
+
+            $case_nature = !empty($court_fee_list1) ? $court_fee_list1[0]['nature'] : '';
+            $registration_id = getSessionData('efiling_details')['registration_id'];
+            $Common_model = new \App\Models\Common\CommonModel();
+            $Get_details_model = new \App\Models\NewCase\GetDetailsModel();
+            if (empty($case_nature)) {
+                if (getSessionData('efiling_details')['ref_m_efiled_type_id'] == E_FILING_TYPE_CAVEAT) {
+                    $arr = array();
+                    $arr['registration_id'] = $registration_id;
+                    $arr['step'] = 6;
+                    $caveat_details = $Common_model->getCaveatDataByRegistrationId($arr);
+                    if (!empty($caveat_details[0]))
+                        $case_nature = $caveat_details[0]['nature'];
+                }
+            }
+            if (!empty(getSessionData('efiling_details')['if_sclsc']) && (getSessionData('efiling_details')['if_sclsc'] == 1)) {
+                $case_nature = 'R';
+                //SET case nature as Criminal to mke court fee 0 if is_slsc selected by AOR/PIP
+            }
+            $allowed_case_type_id_CRL = array(2, 4, 6, 8, 10, 12, 14, 16, 18, 20, 26, 28, 33, 35, 36, 41, 19); // ALl Criminal Casetype with Contempt Petition (Civil) 19
+            if ($court_fee_list1[0]['sc_case_type_id'] == '9' || $court_fee_list1[0]['sc_case_type_id'] == '25' || $court_fee_list1[0]['sc_case_type_id'] == '39')
+            // for Review Petition , Curative Petition,Contempt petition(came from lower court) and MA : Court Fee is to be paid same as having paid in the Main/base Matter
+            {
+                $base_case_subject_category_details = get_challanged_sc_base_case_details($registration_id, $court_fee_list1[0]['sc_case_type_id']);
+                $subject_category = $base_case_subject_category_details['submaster_id'];
+                $subcode1 = $base_case_subject_category_details['subcode1'];
+                // $sc_case_type_id = $base_case_subject_category_details['case_type_id'];
+                $case_type_id_CRL = $base_case_subject_category_details['case_type_id'];
+                if (in_array($case_type_id_CRL, $allowed_case_type_id_CRL)) {
+                    $case_nature = 'R';
+                    $sc_case_type_id = $case_type_id_CRL;
+                }
+            }   else {
+                $sc_case_type_id = $court_fee_list1[0]['sc_case_type_id'];
+            }
+            // if($sc_case_type_id==19 || $sc_case_type_id==2 || $sc_case_type_id==4 || $sc_case_type_id==10)
+            if (in_array($sc_case_type_id, $allowed_case_type_id_CRL))
+            {
+                $case_nature = 'R';
+                //if the contempt petition casetype is selected then it can be treated as criminal matters thus no doc fees will be applicable
+            }
             $params = array('login' => $pg_params['login'],
             'password' => $pg_params['password'],
             'prodid' => $pg_params['Product'],
@@ -105,6 +146,7 @@ class PaymentRequest extends BaseController {
             'return_url' => base_url() . "shcilPayment/paymentResponse",
             
         );
+        
         $request = $params['login'] . $params['password'] . $params['txnType'] . $params['prodid'] . $params['txnid'] . $params['amt'] . $params['scamt'] . $params['txndate'];
         $sign = hash_hmac('sha512', $request, $params['ReqHashKey']);
         $paramsCookie = session_get_cookie_params();
@@ -129,15 +171,24 @@ class PaymentRequest extends BaseController {
         echo '<input type = "hidden" name = "udf5" value = "' . htmlentities($params['print_fees'], ENT_QUOTES) . '" />';
         echo '<input type = "hidden" name = "udf6" value = "Supreme Court of India" />';
         echo '<input type = "hidden" name = "udf7" value = "Delhi" />';
-        if(COURT_FEE_PROCESSING_CHARGES){ 
-            if(in_array($court_fee_list1[0]['sc_case_type_id'],PROCESSING_CHARGES_CASE_TYPE)){
-                echo '<input type = "hidden" name = "udf8" value = "' . htmlentities($processing_charges, ENT_QUOTES) . '" />';
-            } else {
-                echo '<input type = "hidden" name = "udf8" value = "" />';
-            }
-        } else {
-            echo '<input type = "hidden" name = "udf8" value = "" />';
-        }
+        // if (empty(getSessionData('efiling_details')['if_sclsc']) && (getSessionData('efiling_details')['if_sclsc'] != 1)){
+        //     if($case_nature == 'C'){
+        //         if(COURT_FEE_PROCESSING_CHARGES){ 
+        //             if(in_array($court_fee_list1[0]['sc_case_type_id'],PROCESSING_CHARGES_CASE_TYPE)){
+        //                 echo '<input type = "hidden" name = "udf8" value = "' . htmlentities($processing_charges, ENT_QUOTES) . '" />';
+        //             } else {
+        //                 echo '<input type = "hidden" name = "udf8" value = "" />';
+        //             }
+        //         } else {
+        //             echo '<input type = "hidden" name = "udf8" value = "" />';
+        //         }
+        //     } else {
+        //         echo '<input type = "hidden" name = "udf8" value = "" />';
+        //     }
+        // } else {
+        //     echo '<input type = "hidden" name = "udf8" value = "" />';
+        // }
+        echo '<input type = "hidden" name = "udf8" value = "" />';
         echo '<input type = "hidden" name = "udf9" value = "" />';
         echo '<input type = "hidden" name = "addInfo" value = "" />';
         echo form_close();
