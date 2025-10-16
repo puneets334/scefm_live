@@ -28,6 +28,7 @@ use CodeIgniter\View\RendererInterface;
 use App\ThirdParty\src\XMLSecurityDSig;
 use App\ThirdParty\src\XMLSecurityKey;
 use App\ThirdParty\src\XMLSecEnc;
+use App\Models\NewCase\ChecklistModel;
 //use Mpdf;
 if (!function_exists('pr')) {
     function pr($request)
