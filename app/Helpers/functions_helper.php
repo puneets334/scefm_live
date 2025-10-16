@@ -2033,7 +2033,7 @@ function get_challanged_sc_base_case_details($registration_id, $sc_case_type_id_
             $case_data_d = curl_exec($curl);
             curl_close($curl);
             $case_data = json_decode($case_data_d);
-        $case_data = !empty($case_data) ? $case_data->case_details[0] : '';
+        $case_data = !empty($case_data->case_details) ? $case_data->case_details[0] : '';
         $base_disposed_case_diary_no = !empty($case_data) ? $case_data->diary_no . $case_data->diary_year : '';
         if(!empty($base_disposed_case_diary_no)){
             $bdcdetails = file_get_contents(ICMIS_SERVICE_URL . '/ConsumedData/getCaseDetails?diaryNo=' . $base_disposed_case_diary_no);
