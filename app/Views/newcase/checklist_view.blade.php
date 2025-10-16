@@ -5,14 +5,9 @@
 <link href="<?= base_url() . 'assets/newAdmin/' ?>css/material.css" rel="stylesheet" />
 <link href="<?= base_url() . 'assets/newAdmin/' ?>css/style.css" rel="stylesheet">
 <link href="<?= base_url() . 'assets/newAdmin/' ?>css/jquery.dataTables.min.css" rel="stylesheet" type="text/css">
-<link href="<?= base_url() . 'assets/newAdmin/' ?>css/fullcalendar.css" rel="stylesheet">
-<link href="<?= base_url() ?>assets/css/bootstrap-datepicker.css" rel="stylesheet">
-<link href="<?= base_url() ?>assets/css/bootstrap-datepicker.min.css" rel="stylesheet">
 <link href="<?= base_url() ?>assets/css/jquery-ui.css" rel="stylesheet">
-<link href="<?= base_url() . 'assets' ?>/css/select2.min.css" rel="stylesheet">
 <link href="<?= base_url() . 'assets/newAdmin/' ?>css/black-theme.css" rel="stylesheet">
 <link href="<?= base_url() . 'assets/newAdmin/' ?>css/responsive.css" rel="stylesheet">
-<link href="<?= base_url(); ?>assets/css/sweetalert.css" rel="stylesheet">
 <style>
     .form_check_swith_custom input {
         margin: 0 !important;
@@ -475,30 +470,15 @@ if (isset($ref_m_usertype_id) && !empty($ref_m_usertype_id) && $ref_m_usertype_i
         </div>
     </div>
 </div>
-@push('script')
 <script src="<?= base_url() . 'assets/newAdmin/' ?>js/jquery351.min.js"></script>
 <script src="<?= base_url() . 'assets/newAdmin/' ?>js/bootstrap.bundle.min.js"></script>
 <script src="<?= base_url() . 'assets/newAdmin/' ?>js/general.js"></script>
 <script src="<?= base_url() . 'assets' ?>/vendors/jquery/dist/jquery.min.js"></script>
-<script src="<?= base_url() ?>assets/js/bootstrap-datepicker.min.js"></script>
 <script src="<?= base_url() ?>assets/js/sha256.js"></script>
 <script src="<?= base_url() ?>assets/newAdmin/js/jquery.dataTables.min.js"></script>
-<script src="<?= base_url() . 'assets' ?>/js/select2.min.js"></script>
-<script src="<?= base_url(); ?>assets/js/sweetalert.min.js"></script>
+@push('script')
 <script>
     $(document).ready(function() {
-        // var today = new Date();
-        // var startYear = 1984;
-        // var startDate = new Date(startYear, 1, 1);
-        // $('#listing_dt').datepicker({
-        //     format: "dd-mm-yyyy",
-        //     showOtherMonths: true,
-        //     selectOtherMonths: true,
-        //     changeMonth: true,
-        //     changeYear: true,
-        //     // endDate: today,
-        //     autoclose: true
-        // });
         function showLoader() {
             $('#loader-wrapper').show();
             setTimeout(function() {
