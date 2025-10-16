@@ -35,6 +35,8 @@
         justify-content: space-between;
         flex-wrap: wrap;
         align-items: end;
+        margin: 0px !important;
+        line-height: 0 !important;
     }
 
     .date_cust {
@@ -95,6 +97,11 @@ if (isset($ref_m_usertype_id) && !empty($ref_m_usertype_id) && $ref_m_usertype_i
 </div>
 <div class="center-content-inner comn-innercontent">
     <div class="tab-content">
+        <?php if (session()->getFlashdata('msg')): ?>
+            <div class="alert" role="alert" style="margin-top: 21px;">
+                <?= session()->getFlashdata('msg') ?>
+            </div>
+        <?php endif; ?>
         <div class="tab-pane active" id="home" role="tabpanel" aria-labelledby="home-tab">
             <div class="tab-form-inner">
                 <div class="row">
@@ -102,15 +109,15 @@ if (isset($ref_m_usertype_id) && !empty($ref_m_usertype_id) && $ref_m_usertype_i
                         <div class="center-content-inner comn-innercontent">
                             <div class="tab-content">
                                 <div class="row">
-                                        <h6 class="text-left mt-2"><a href="https://www.sci.gov.in/limitation-calculator/" target="_blank">Limitation Calculator</a></h6>
-                                    </div>
+                                    <h6 class="text-left mt-2"><a href="https://www.sci.gov.in/limitation-calculator/" target="_blank">Limitation Calculator</a></h6>
+                                </div>
                                 <div class="tab-pane active" id="home" role="tabpanel" aria-labelledby="home-tab">
                                     <?php
                                     $attribute = array('class' => 'form-horizontal', 'name' => 'add_checklist', 'id' => 'add_checklist', 'autocomplete' => 'off');
                                     echo form_open('newcase/add_checklist', $attribute);
                                     ?>
                                     <div class="row">
-                                        <h6 class="text-center fw-bold mt-2">Check List / Declaration</h6>
+                                        <h6 class="text-center fw-bold">Check List / Declaration</h6>
                                     </div>
                                     <div class="row" id="errDiv" style="display: none;">
                                         <div class="alert alert-danger" role="alert" id="msg"></div>
@@ -118,17 +125,15 @@ if (isset($ref_m_usertype_id) && !empty($ref_m_usertype_id) && $ref_m_usertype_i
                                     <div class="tab-form-inner">
                                         <div class="row">
                                             <div style="float: right">
-                                                <div class="col-lg-5 col-md-5 col-sm-6 col-xs-5"></div>
-                                                <button id="collapseAll" onclick="toggleAllAccordions();" class="btn btn-primary pull-right mb-2" style="margin-right: 5px;"> Collapse All </button>
+                                                <button type="button" id="collapseAll" onclick="toggleAllAccordions()" class="btn btn-primary pull-right mb-2" style="margin-right: 5px;"> Collapse All </button>
                                             </div>
                                             <div class="col-md-12 col-sm-12 col-xs-12">
                                                 <div class="accordion view-accordion acrdion-with-edit" id="accordionExample">
-
                                                     <div class="accordion-item">
                                                         <h2 class="accordion-header" id="headingOne">
-                                                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne"><?php echo $caseName->casename; ?></button>
-                                                        </h2>                                                        
-                                                        <div id="collapseOne" class="accordion-collapse collapse" aria-labelledby="headingOne" data-bs-parent="#accordionExample">
+                                                            <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne"><?php echo $caseName->casename; ?></button>
+                                                        </h2>
+                                                        <div id="collapseOne" class="accordion-collapse collapse show" aria-labelledby="headingOne" data-bs-parent="#accordionExample">
                                                             <div class="accordion-body">
                                                                 <div class="x_panel">
                                                                     <?php
@@ -166,12 +171,19 @@ if (isset($ref_m_usertype_id) && !empty($ref_m_usertype_id) && $ref_m_usertype_i
                                                                             <tbody>
                                                                                 <?php
                                                                                 if (empty($checklist_response)) {
-                                                                                    foreach ($checklist_data as $checklist) { ?>
+                                                                                    $prev = 0;
+                                                                                    foreach ($checklist_data as $checklist) {
+                                                                                ?>
                                                                                         <tr>
                                                                                             <td>
                                                                                                 <input type="hidden" name="checklist_id[]" value="<?php echo !empty($checklist['id']) ? $checklist['id'] : ''; ?>" />
                                                                                                 <input type="hidden" name="question_no[]" value="<?php echo !empty($checklist['question_no']) ? $checklist['question_no'] : ''; ?>" />
-                                                                                                <?php echo !empty($checklist['question_no']) ? $checklist['question_no'] : ''; ?>
+                                                                                                <?php
+                                                                                                if ($checklist['question_no'] != $prev) {
+                                                                                                    echo !empty($checklist['question_no']) ? $checklist['question_no'] : '';
+                                                                                                }
+                                                                                                $prev = $checklist['question_no'];
+                                                                                                ?>
                                                                                             </td>
                                                                                             <td><?php echo !empty($checklist['sub_question_no']) ? $checklist['sub_question_no'] . '.' : ''; ?></td>
                                                                                             <td>
@@ -187,13 +199,19 @@ if (isset($ref_m_usertype_id) && !empty($ref_m_usertype_id) && $ref_m_usertype_i
                                                                                     <?php
                                                                                     }
                                                                                 } else {
+                                                                                    $prev = 0;
                                                                                     foreach ($checklist_response as $checklist) {
                                                                                     ?>
                                                                                         <tr>
                                                                                             <td>
                                                                                                 <input type="hidden" name="checklist_id[]" value="<?php echo !empty($checklist['ref_m_check_list_new_id']) ? $checklist['ref_m_check_list_new_id'] : ''; ?>" />
                                                                                                 <input type="hidden" name="question_no[]" value="<?php echo !empty($checklist['question_no']) ? $checklist['question_no'] : ''; ?>" />
-                                                                                                <?php echo !empty($checklist['question_no']) ? $checklist['question_no'] : ''; ?>
+                                                                                                <?php
+                                                                                                if ($checklist['question_no'] != $prev) {
+                                                                                                    echo !empty($checklist['question_no']) ? $checklist['question_no'] : '';
+                                                                                                }
+                                                                                                $prev = $checklist['question_no'];
+                                                                                                ?>
                                                                                             </td>
                                                                                             <td><?php echo !empty($checklist['sub_question_no']) ? $checklist['sub_question_no'] . '.' : ''; ?></td>
                                                                                             <td>
@@ -213,31 +231,6 @@ if (isset($ref_m_usertype_id) && !empty($ref_m_usertype_id) && $ref_m_usertype_i
                                                                             </tbody>
                                                                         </table>
                                                                     </div>
-                                                                    <div class="bottom_content">
-                                                                        <label class="form-label"><input type="checkbox" name="consent" id="consent" value="1" required />&nbsp;I hereby declare that I have personally verified the petition and its contents and it is in conformity with the Supreme Court Rules, 2013. I certify that the above requirements of this Check List have been complied with. I further certify that all the documents necessary for the purpose of hearing of the matter have been filed.</label>
-                                                                        <div class="date_cust">
-                                                                            <label class="form-label">Date:-</label>
-                                                                            <input type="text" class="form-control cus-form-ctrl datepick" placeholder="DD-MM-YYYY" maxlength="10" value="<?= $crnt_dt; ?>" readonly>
-                                                                        </div>
-                                                                        <div class="name_sinc_custom">
-                                                                            <div class="date_cust d-none">
-                                                                                <label class="form-label">Signature</label>
-                                                                                <input class="form-control cus-form-ctrl" type="text" readonly />
-                                                                            </div>
-                                                                            <div class="date_cust">
-                                                                                <label class="form-label">Name of Advocate-on-Record</label>
-                                                                                <input class="form-control cus-form-ctrl" type="text" value="<?= getSessionData('login')['first_name']; ?>" readonly>
-                                                                            </div>
-                                                                            <div class="date_cust">
-                                                                                <label class="form-label">Code of AOR</label>
-                                                                                <input class="form-control cus-form-ctrl" type="text" value="<?= getSessionData('login')['userid']; ?>" readonly>
-                                                                            </div>
-                                                                            <div class="date_cust">
-                                                                                <label class="form-label">Contact No. & e-mail id</label>
-                                                                                <textarea class="form-control cus-form-ctrl" style="min-width: 0% !important;" readonly><?= getSessionData('login')['mobile_number']; ?>&#013;<?= getSessionData('login')['emailid']; ?></textarea>
-                                                                            </div>
-                                                                        </div>
-                                                                    </div>
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -245,7 +238,7 @@ if (isset($ref_m_usertype_id) && !empty($ref_m_usertype_id) && $ref_m_usertype_i
                                                     <?php if ($case_details[0]['subcode1'] == 8) { ?>
                                                         <div class="accordion-item">
                                                             <h2 class="accordion-header" id="headingTwo">
-                                                                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="true" aria-controls="collapseTwo">Public Interest Litigation</button>
+                                                                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">Public Interest Litigation</button>
                                                             </h2>
                                                             <div id="collapseTwo" class="accordion-collapse collapse" aria-labelledby="headingTwo" data-bs-parent="#accordionExample">
                                                                 <div class="accordion-body">
@@ -275,12 +268,19 @@ if (isset($ref_m_usertype_id) && !empty($ref_m_usertype_id) && $ref_m_usertype_i
                                                                                 <tbody>
                                                                                     <?php
                                                                                     if (empty($checked_response_pil)) {
-                                                                                        foreach ($checklist_data as $checklist) { ?>
+                                                                                        $prev = 0;
+                                                                                        foreach ($checklist_data as $checklist) {
+                                                                                    ?>
                                                                                             <tr>
                                                                                                 <td>
                                                                                                     <input type="hidden" name="checklist_id_pil[]" value="<?php echo !empty($checklist['id']) ? $checklist['id'] : ''; ?>" />
                                                                                                     <input type="hidden" name="question_no_pil[]" value="<?php echo !empty($checklist['question_no']) ? $checklist['question_no'] : ''; ?>" />
-                                                                                                    <?php echo !empty($checklist['question_no']) ? $checklist['question_no'] : ''; ?>
+                                                                                                    <?php
+                                                                                                    if ($checklist['question_no'] != $prev) {
+                                                                                                        echo !empty($checklist['question_no']) ? $checklist['question_no'] : '';
+                                                                                                    }
+                                                                                                    $prev = $checklist['question_no'];
+                                                                                                    ?>
                                                                                                 </td>
                                                                                                 <td><?php echo !empty($checklist['sub_question_no']) ? $checklist['sub_question_no'] . '.' : ''; ?></td>
                                                                                                 <td>
@@ -296,12 +296,19 @@ if (isset($ref_m_usertype_id) && !empty($ref_m_usertype_id) && $ref_m_usertype_i
                                                                                         <?php
                                                                                         }
                                                                                     } else {
-                                                                                        foreach ($checked_response_pil as $checklist) { ?>
+                                                                                        $prev = 0;
+                                                                                        foreach ($checked_response_pil as $checklist) {
+                                                                                        ?>
                                                                                             <tr>
                                                                                                 <td>
                                                                                                     <input type="hidden" name="checklist_id_pil[]" value="<?php echo !empty($checklist['ref_m_check_list_new_id']) ? $checklist['ref_m_check_list_new_id'] : ''; ?>" />
                                                                                                     <input type="hidden" name="question_no_pil[]" value="<?php echo !empty($checklist['question_no']) ? $checklist['question_no'] : ''; ?>" />
-                                                                                                    <?php echo !empty($checklist['question_no']) ? $checklist['question_no'] : ''; ?>
+                                                                                                    <?php
+                                                                                                    if ($checklist['question_no'] != $prev) {
+                                                                                                        echo !empty($checklist['question_no']) ? $checklist['question_no'] : '';
+                                                                                                    }
+                                                                                                    $prev = $checklist['question_no'];
+                                                                                                    ?>
                                                                                                 </td>
                                                                                                 <td><?php echo !empty($checklist['sub_question_no']) ? $checklist['sub_question_no'] . '.' : ''; ?></td>
                                                                                                 <td>
@@ -321,31 +328,6 @@ if (isset($ref_m_usertype_id) && !empty($ref_m_usertype_id) && $ref_m_usertype_i
                                                                                 </tbody>
                                                                             </table>
                                                                         </div>
-                                                                        <div class="bottom_content">
-                                                                            <label class="form-label"><input type="checkbox" name="consent" id="consent" value="1" required />&nbsp;I hereby declare that I have personally verified the petition and its contents and it is in conformity with the Supreme Court Rules, 2013. I certify that the above requirements of this Check List have been complied with. I further certify that all the documents necessary for the purpose of hearing of the matter have been filed.</label>
-                                                                            <div class="date_cust">
-                                                                                <label class="form-label">Date:-</label>
-                                                                                <input type="text" class="form-control cus-form-ctrl datepick" placeholder="DD-MM-YYYY" maxlength="10" value="<?= $crnt_dt; ?>" readonly>
-                                                                            </div>
-                                                                            <div class="name_sinc_custom">
-                                                                                <div class="date_cust d-none">
-                                                                                    <label class="form-label">Signature</label>
-                                                                                    <input class="form-control cus-form-ctrl" type="text" readonly />
-                                                                                </div>
-                                                                                <div class="date_cust">
-                                                                                    <label class="form-label">Name of Advocate-on-Record</label>
-                                                                                    <input class="form-control cus-form-ctrl" type="text" value="<?= getSessionData('login')['first_name']; ?>" readonly>
-                                                                                </div>
-                                                                                <div class="date_cust">
-                                                                                    <label class="form-label">Code of AOR</label>
-                                                                                    <input class="form-control cus-form-ctrl" type="text" value="<?= getSessionData('login')['userid']; ?>" readonly>
-                                                                                </div>
-                                                                                <div class="date_cust">
-                                                                                    <label class="form-label">Contact No. & e-mail id</label>
-                                                                                    <textarea class="form-control cus-form-ctrl" style="min-width: 0% !important;" readonly><?= getSessionData('login')['mobile_number']; ?>&#013;<?= getSessionData('login')['emailid']; ?></textarea>
-                                                                                </div>
-                                                                            </div>
-                                                                        </div>
                                                                     </div>
                                                                 </div>
                                                             </div>
@@ -353,7 +335,7 @@ if (isset($ref_m_usertype_id) && !empty($ref_m_usertype_id) && $ref_m_usertype_i
                                                     <?php } ?>
                                                     <div class="accordion-item">
                                                         <h2 class="accordion-header" id="headingThree">
-                                                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseThree" aria-expanded="true" aria-controls="collapseThree">Annexure D</button>
+                                                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">Annexure D</button>
                                                         </h2>
                                                         <div id="collapseThree" class="accordion-collapse collapse" aria-labelledby="headingThree" data-bs-parent="#accordionExample">
                                                             <div class="accordion-body">
@@ -377,13 +359,19 @@ if (isset($ref_m_usertype_id) && !empty($ref_m_usertype_id) && $ref_m_usertype_i
                                                                             <tbody>
                                                                                 <?php
                                                                                 if (empty($checked_response_annexure)) {
+                                                                                    $prev = 0;
                                                                                     foreach ($annexure_data as $annexure) {
                                                                                 ?>
                                                                                         <tr>
                                                                                             <td>
                                                                                                 <input type="hidden" name="checklist_id_annexure[]" value="<?php echo !empty($annexure['id']) ? $annexure['id'] : ''; ?>" />
                                                                                                 <input type="hidden" name="question_no_annexure[]" value="<?php echo !empty($annexure['question_no']) ? $annexure['question_no'] : ''; ?>" />
-                                                                                                <?php echo !empty($annexure['question_no']) ? $annexure['question_no'] : ''; ?>
+                                                                                                <?php
+                                                                                                if ($checklist['question_no'] != $prev) {
+                                                                                                    echo !empty($checklist['question_no']) ? $checklist['question_no'] : '';
+                                                                                                }
+                                                                                                $prev = $checklist['question_no'];
+                                                                                                ?>
                                                                                             </td>
                                                                                             <td><?php echo !empty($annexure['sub_question_no']) ? $annexure['sub_question_no'] . '.' : ''; ?></td>
                                                                                             <td>
@@ -399,12 +387,19 @@ if (isset($ref_m_usertype_id) && !empty($ref_m_usertype_id) && $ref_m_usertype_i
                                                                                     <?php
                                                                                     }
                                                                                 } else {
-                                                                                    foreach ($checked_response_annexure as $checklist) { ?>
+                                                                                    $prev = 0;
+                                                                                    foreach ($checked_response_annexure as $checklist) {
+                                                                                    ?>
                                                                                         <tr>
                                                                                             <td>
                                                                                                 <input type="hidden" name="checklist_id_annexure[]" value="<?php echo !empty($checklist['ref_m_check_list_new_id']) ? $checklist['ref_m_check_list_new_id'] : ''; ?>" />
                                                                                                 <input type="hidden" name="question_no_annexure[]" value="<?php echo !empty($checklist['question_no']) ? $checklist['question_no'] : ''; ?>" />
-                                                                                                <?php echo !empty($checklist['question_no']) ? $checklist['question_no'] : ''; ?>
+                                                                                                <?php
+                                                                                                if ($checklist['question_no'] != $prev) {
+                                                                                                    echo !empty($checklist['question_no']) ? $checklist['question_no'] : '';
+                                                                                                }
+                                                                                                $prev = $checklist['question_no'];
+                                                                                                ?>
                                                                                             </td>
                                                                                             <td><?php echo !empty($checklist['sub_question_no']) ? $checklist['sub_question_no'] . '.' : ''; ?></td>
                                                                                             <td>
@@ -424,36 +419,47 @@ if (isset($ref_m_usertype_id) && !empty($ref_m_usertype_id) && $ref_m_usertype_i
                                                                             </tbody>
                                                                         </table>
                                                                     </div>
-                                                                    <div class="bottom_content">
-                                                                        <label class="form-label"><input type="checkbox" name="consent" id="consent" value="1" required />&nbsp;I hereby declare that I have personally verified the petition and its contents and it is in conformity with the Supreme Court Rules, 2013. I certify that all the documents necessary for the purpose of hearing of the matter have been filed.</label>
-                                                                        <div class="date_cust">
-                                                                            <label class="form-label">Date:-</label>
-                                                                            <input type="text" class="form-control cus-form-ctrl datepick" placeholder="DD-MM-YYYY" maxlength="10" value="<?= $crnt_dt; ?>" readonly>
-                                                                        </div>
-                                                                        <div class="name_sinc_custom">
-                                                                            <div class="date_cust d-none">
-                                                                                <label class="form-label">Signature</label>
-                                                                                <input class="form-control cus-form-ctrl" type="text" readonly />
-                                                                            </div>
-                                                                            <div class="date_cust">
-                                                                                <label class="form-label">Name of Advocate-on-Record</label>
-                                                                                <input class="form-control cus-form-ctrl" type="text" value="<?= getSessionData('login')['first_name']; ?>" readonly>
-                                                                            </div>
-                                                                            <div class="date_cust">
-                                                                                <label class="form-label">Code of AOR</label>
-                                                                                <input class="form-control cus-form-ctrl" type="text" value="<?= getSessionData('login')['userid']; ?>" readonly>
-                                                                            </div>
-                                                                            <div class="date_cust">
-                                                                                <label class="form-label">Contact No. & e-mail id</label>
-                                                                                <textarea class="form-control cus-form-ctrl" style="min-width: 0% !important;" readonly><?= getSessionData('login')['mobile_number']; ?>&#013;<?= getSessionData('login')['emailid']; ?></textarea>
-                                                                            </div>
-                                                                        </div>
-                                                                    </div>
                                                                 </div>
                                                             </div>
                                                         </div>
                                                     </div>
                                                 </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="bottom_content">
+                                        <label class="form-label"><input type="checkbox" name="consent" id="consent" value="1" required />&nbsp;I agree to all the above checklists and annexures.</label>
+                                    </div>
+                                    <!-- <div class="bottom_content">
+                                        <label class="form-label"><input type="checkbox" name="consent" id="consent" value="1" required />&nbsp;I hereby declare that I have personally verified the petition and its contents and it is in conformity with the Supreme Court Rules, 2013. I certify that the above requirements of this Check List have been complied with. I further certify that all the documents necessary for the purpose of hearing of the matter have been filed.</label>
+                                    </div> -->
+                                    <?php // if ($case_details[0]['subcode1'] == 8) { ?>
+                                        <!-- <div class="bottom_content">
+                                            <label class="form-label"><input type="checkbox" name="consent" id="consent" value="1" required />&nbsp;I hereby declare that I have personally verified the petition and its contents and it is in conformity with the Supreme Court Rules, 2013. I certify that the above requirements of this Check List have been complied with. I further certify that all the documents necessary for the purpose of hearing of the matter have been filed.</label>
+                                        </div> -->
+                                    <?php // } ?>
+                                    <div class="bottom_content">
+                                        <!-- <label class="form-label"><input type="checkbox" name="consent" id="consent" value="1" required />&nbsp;I hereby declare that I have personally verified the petition and its contents and it is in conformity with the Supreme Court Rules, 2013. I certify that all the documents necessary for the purpose of hearing of the matter have been filed.</label> -->
+                                        <div class="date_cust">
+                                            <label class="form-label">Date:-</label>
+                                            <input type="text" class="form-control cus-form-ctrl datepick" placeholder="DD-MM-YYYY" maxlength="10" value="<?= $crnt_dt; ?>" readonly>
+                                        </div>
+                                        <div class="name_sinc_custom">
+                                            <div class="date_cust d-none">
+                                                <label class="form-label">Signature</label>
+                                                <input class="form-control cus-form-ctrl" type="text" readonly />
+                                            </div>
+                                            <div class="date_cust">
+                                                <label class="form-label">Name of Advocate-on-Record</label>
+                                                <input class="form-control cus-form-ctrl" type="text" value="<?= getSessionData('login')['first_name']; ?>" readonly>
+                                            </div>
+                                            <div class="date_cust">
+                                                <label class="form-label">Code of AOR</label>
+                                                <input class="form-control cus-form-ctrl" type="text" value="<?= getSessionData('login')['userid']; ?>" readonly>
+                                            </div>
+                                            <div class="date_cust">
+                                                <label class="form-label">Contact No. & e-mail id</label>
+                                                <textarea class="form-control cus-form-ctrl" style="min-width: 0% !important;" readonly><?= getSessionData('login')['mobile_number']; ?>&#013;<?= getSessionData('login')['emailid']; ?></textarea>
                                             </div>
                                         </div>
                                     </div>
@@ -489,30 +495,27 @@ if (isset($ref_m_usertype_id) && !empty($ref_m_usertype_id) && $ref_m_usertype_i
 <script src="<?= base_url() ?>assets/js/sha256.js"></script>
 <script src="<?= base_url() ?>assets/newAdmin/js/jquery.dataTables.min.js"></script>
 <script src="<?= base_url() . 'assets' ?>/js/select2.min.js"></script>
-@stack('script')
 <script src="<?= base_url(); ?>assets/js/sweetalert.min.js"></script>
-<link rel="stylesheet" href="<?= base_url(); ?>assets/css/sweetalert.css">
 <script>
     $(document).ready(function() {
-        var today = new Date();
-        var startYear = 1984;
-        var startDate = new Date(startYear, 1, 1);
-        $('#listing_dt').datepicker({
-            format: "dd-mm-yyyy",
-            showOtherMonths: true,
-            selectOtherMonths: true,
-            changeMonth: true,
-            changeYear: true,
-            // endDate: today,
-            autoclose: true
-        });
+        // var today = new Date();
+        // var startYear = 1984;
+        // var startDate = new Date(startYear, 1, 1);
+        // $('#listing_dt').datepicker({
+        //     format: "dd-mm-yyyy",
+        //     showOtherMonths: true,
+        //     selectOtherMonths: true,
+        //     changeMonth: true,
+        //     changeYear: true,
+        //     // endDate: today,
+        //     autoclose: true
+        // });
+        function showLoader() {
+            $('#loader-wrapper').show();
+            setTimeout(function() {
+                $('#loader-wrapper').hide();
+            }, 5000); // Hides the loader after 3 seconds
+        }
     });
-
-    function showLoader() {
-        $('#loader-wrapper').show();
-        setTimeout(function() {
-            $('#loader-wrapper').hide();
-        }, 5000); // Hides the loader after 3 seconds
-    }
 </script>
 @endpush
