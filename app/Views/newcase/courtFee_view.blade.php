@@ -747,7 +747,8 @@
                         if (getSessionData('efiling_details')['ref_m_efiled_type_id'] == E_FILING_TYPE_NEW_CASE) {
                             $prev_url = base_url('documentIndex');
                             //$next_url = base_url('affirmation');
-                            $next_url = base_url('newcase/view');
+                            // $next_url = base_url('newcase/view');
+                            $next_url = base_url('newcase/checklist');
                         } else if (getSessionData('efiling_details')['ref_m_efiled_type_id'] == E_FILING_TYPE_CAVEAT) {
                             $prev_url = base_url('documentIndex');
                             $next_url = base_url('caveat/view');
