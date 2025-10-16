@@ -4,11 +4,13 @@ namespace App\Controllers\Newcase;
 use App\Controllers\BaseController;
 use App\Models\NewCase\ChecklistModel;
 use App\Models\Common\CommonModel;
+use App\Models\ShcilPayment\PaymentModel;
 
 class CheckList extends BaseController {
 
     protected $ChecklistModel;
     protected $Common_model;
+    protected $Payment_model;
 
     public function __construct() {
         parent::__construct();
@@ -20,6 +22,7 @@ class CheckList extends BaseController {
         }
         $this->ChecklistModel = new ChecklistModel();
         $this->Common_model = new CommonModel();
+        $this->Payment_model = new PaymentModel();
     }
 
     public function index() {
@@ -176,6 +179,10 @@ class CheckList extends BaseController {
                     }
                     if (!empty($insert_data)) {
                         $insert_checklist = $this->ChecklistModel->insert_checks($insert_data);
+                        if ($insert_checklist) {                            
+                            $breadcrumb_to_update = NEW_CASE_CHECKLIST;
+                            $update_courtfee_breadcrumb_status = $this->Payment_model->update_breadcrumbs(getSessionData('efiling_details')['registration_id'], $breadcrumb_to_update);
+                        }
                         $this->session->setFlashdata('msg', 'Checklist saved successfully.');
                         return redirect()->to(base_url('newcase/checklist'));
                         exit(0);
@@ -258,7 +265,9 @@ class CheckList extends BaseController {
                     }
                     
                     if (!empty($update_data)) {
-                        $insert_checklist = $this->ChecklistModel->update_checks($update_data, getSessionData('efiling_details')['registration_id']);
+                        $insert_checklist = $this->ChecklistModel->update_checks($update_data, getSessionData('efiling_details')['registration_id']);                            
+                        $breadcrumb_to_update = NEW_CASE_CHECKLIST;
+                        $update_courtfee_breadcrumb_status = $this->Payment_model->update_breadcrumbs(getSessionData('efiling_details')['registration_id'], $breadcrumb_to_update);
                         $this->session->setFlashdata('msg', 'Checklist updated successfully.');
                         return redirect()->to(base_url('newcase/checklist'));
                         exit(0);
