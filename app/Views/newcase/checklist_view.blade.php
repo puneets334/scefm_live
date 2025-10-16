@@ -468,7 +468,7 @@ if (isset($ref_m_usertype_id) && !empty($ref_m_usertype_id) && $ref_m_usertype_i
                                     <div class="row">
                                         <div class="col-12 col-sm-12 col-md-12 col-lg-12 my-3">
                                             <div class="save-btns text-center">
-                                                <a href="<?= base_url('/uploadDocuments') ?>" class="quick-btn gray-btn" type="button" tabindex='28'>PREVIOUS</a>
+                                                <a href="<?= base_url('/newcase/courtFee') ?>" class="quick-btn gray-btn" type="button" tabindex='28'>PREVIOUS</a>
                                                 <?php if (!empty($checklist_response)) { ?>
                                                     <input type="submit" class="btn btn-success" name="check_update" id="check_update" tabindex='26' value="UPDATE">
                                                     <a href="<?= base_url('newcase/view') ?>" class="quick-btn gray-btn" type="button" tabindex='27'>NEXT</a>
