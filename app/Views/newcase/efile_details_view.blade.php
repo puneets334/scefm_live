@@ -100,7 +100,7 @@
                                              }
                                           }
                                           ?>
-                                          <button id="collapseAll" onclick="toggleAllAccordions()" class="btn btn-primary pull-right" style="margin-right: 5px;"> Collapse All </button>
+                                          <button id="collapseAll" onclick="toggleAllAccordions()" class="btn btn-primary pull-right mb-2" style="margin-right: 5px;"> Collapse All </button>
                                        </div>
                                        <div class="col-md-12 col-sm-12 col-xs-12">
                                           <div class="accordion view-accordion acrdion-with-edit"
@@ -354,7 +354,7 @@
                                                    </div>
                                                 </div>
                                              </div>
-                                             <div class="accordion-item" style="display: none;">
+                                             <div class="accordion-item">
                                                 <div class="row">
                                                    <h2 class="accordion-header <?php
                                                       if(isset($hidepencilbtn)){
@@ -637,7 +637,35 @@
                                                    </div>
                                                 </div>
                                              </div>
+                                             <div class="accordion-item d-none">
+                                                <div class="row">
+                                                   <h2 class="accordion-header <?php if(isset($hidepencilbtn)) { if ($hidepencilbtn != 'true') { ?>col-sm-12<?php } else { ?>col-sm-12<?php } } ?>" id="headingTen">
+                                                      <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTen" aria-expanded="false" aria-controls="collapseTen" <?php echo $area_extended; ?>>
+                                                         <?php
+                                                         $checklist_details = getCheckListDetails();
+                                                         if ((!isset($checklist_details) || empty($checklist_details)) && ($checklist_details > 0)) { ?>
+                                                            <font style="color:red;">
+                                                               <b>Check List / Declaration</b>
+                                                            </font>
+                                                         <?php } else { ?>
+                                                            <b>Check List / Declaration</b>
+                                                         <?php } ?>
+                                                         <?php if ($hidepencilbtn != 'true') { ?>
+                                                            <a href="<?php echo base_url('newcase/checklist'); ?>"><i class="fa fa-pencil efiling_search"></i></a>
+                                                         <?php } ?>
+                                                      </button>
+                                                   </h2>
+                                                </div>
+                                                <div id="collapseTen"
+                                                   class="accordion-collapse collapse <?php echo $collapse_class; ?>"
+                                                   aria-labelledby="headingTen"
+                                                   data-bs-parent="#accordionExample">
+                                                   <div class="accordion-body">
+                                                      <?php render('newcase.checklist_details_view', ['checklist_details' => $checklist_details]); ?>
+                                                   </div>
+                                                </div>
                                              </div>
+                                          </div>
                                        </div>
                                     </div>
                                     <div class="col-12 col-sm-12 col-md-12 col-lg-12 my-3 text-center">
