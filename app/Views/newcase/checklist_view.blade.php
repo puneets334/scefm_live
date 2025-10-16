@@ -35,8 +35,6 @@
         justify-content: space-between;
         flex-wrap: wrap;
         align-items: end;
-        margin: 0px !important;
-        line-height: 0 !important;
     }
 
     .date_cust {
@@ -414,7 +412,7 @@ if (isset($ref_m_usertype_id) && !empty($ref_m_usertype_id) && $ref_m_usertype_i
                                                                                                 </div>
                                                                                             </td>
                                                                                         </tr>
-                                                                                <?php
+                                                                                        <?php
                                                                                     }
                                                                                 }
                                                                                 ?>
@@ -430,18 +428,7 @@ if (isset($ref_m_usertype_id) && !empty($ref_m_usertype_id) && $ref_m_usertype_i
                                         </div>
                                     </div>
                                     <div class="bottom_content">
-                                        <label class="form-label"><input type="checkbox" name="consent" id="consent" value="1" required />&nbsp;I agree to all the above checklists and annexures.</label>
-                                    </div>
-                                    <!-- <div class="bottom_content">
-                                        <label class="form-label"><input type="checkbox" name="consent" id="consent" value="1" required />&nbsp;I hereby declare that I have personally verified the petition and its contents and it is in conformity with the Supreme Court Rules, 2013. I certify that the above requirements of this Check List have been complied with. I further certify that all the documents necessary for the purpose of hearing of the matter have been filed.</label>
-                                    </div> -->
-                                    <?php // if ($case_details[0]['subcode1'] == 8) { ?>
-                                        <!-- <div class="bottom_content">
-                                            <label class="form-label"><input type="checkbox" name="consent" id="consent" value="1" required />&nbsp;I hereby declare that I have personally verified the petition and its contents and it is in conformity with the Supreme Court Rules, 2013. I certify that the above requirements of this Check List have been complied with. I further certify that all the documents necessary for the purpose of hearing of the matter have been filed.</label>
-                                        </div> -->
-                                    <?php // } ?>
-                                    <div class="bottom_content">
-                                        <!-- <label class="form-label"><input type="checkbox" name="consent" id="consent" value="1" required />&nbsp;I hereby declare that I have personally verified the petition and its contents and it is in conformity with the Supreme Court Rules, 2013. I certify that all the documents necessary for the purpose of hearing of the matter have been filed.</label> -->
+                                        <label class="form-label"><input type="checkbox" name="consent" id="consent" value="1" <?php if (!empty($checklist_response)) { echo 'checked'; } ?> required />&nbsp;I hereby declare that I have personally verified the petition/appeal and its contents, and that the same is in conformity with the Supreme Court Rules, 2013. I further certify that all the requirements mentioned in the relevant Check List(s) have been duly complied with, and that all necessary documents and annexure(s) required for the purpose of hearing of the matter have been properly filed.</label>
                                         <div class="date_cust">
                                             <label class="form-label">Date:-</label>
                                             <input type="text" class="form-control cus-form-ctrl datepick" placeholder="DD-MM-YYYY" maxlength="10" value="<?= $crnt_dt; ?>" readonly>
