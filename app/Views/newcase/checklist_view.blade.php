@@ -469,7 +469,7 @@ if (isset($ref_m_usertype_id) && !empty($ref_m_usertype_id) && $ref_m_usertype_i
                                                 <a href="<?= base_url('/uploadDocuments') ?>" class="quick-btn gray-btn" type="button" tabindex='28'>PREVIOUS</a>
                                                 <?php if (!empty($checklist_response)) { ?>
                                                     <input type="submit" class="btn btn-success" name="check_update" id="check_update" tabindex='26' value="UPDATE">
-                                                    <a href="<?= base_url('newcase/courtFee') ?>" class="quick-btn gray-btn" type="button" tabindex='27'>NEXT</a>
+                                                    <a href="<?= base_url('newcase/view') ?>" class="quick-btn gray-btn" type="button" tabindex='27'>NEXT</a>
                                                 <?php } else { ?>
                                                     <input type="submit" class="btn btn-success" name="check_save" id="check_save" value="SAVE" tabindex='26'>
                                                 <?php } ?>
