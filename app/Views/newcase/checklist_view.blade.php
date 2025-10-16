@@ -122,19 +122,19 @@ if (isset($ref_m_usertype_id) && !empty($ref_m_usertype_id) && $ref_m_usertype_i
                                             <div style="float: right">
                                                 <button type="button" id="collapseAll" onclick="toggleAllAccordions()" class="btn btn-primary pull-right mb-2" style="margin-right: 5px;"> Collapse All </button>
                                             </div>
+                                            <?php
+                                            $this->ChecklistModel = new \App\Models\NewCase\ChecklistModel();
+                                            $checklist_data = $this->ChecklistModel->get_checklist_data_by_efiling_for_type_id($case_details[0]['sc_case_type_id']);
+                                            ?>
                                             <div class="col-md-12 col-sm-12 col-xs-12">
                                                 <div class="accordion view-accordion acrdion-with-edit" id="accordionExample">
                                                     <div class="accordion-item">
                                                         <h2 class="accordion-header" id="headingOne">
-                                                            <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne"><?php echo $caseName->casename; ?></button>
+                                                            <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne"><?php echo  ($checklist_data[0]['sc_case_type_id'] == 999999) ? 'Common Checklist' : $caseName->casename; ?></button>
                                                         </h2>
                                                         <div id="collapseOne" class="accordion-collapse collapse show" aria-labelledby="headingOne" data-bs-parent="#accordionExample">
                                                             <div class="accordion-body">
                                                                 <div class="x_panel">
-                                                                    <?php
-                                                                    $this->ChecklistModel = new \App\Models\NewCase\ChecklistModel();
-                                                                    $checklist_data = $this->ChecklistModel->get_checklist_data_by_efiling_for_type_id($case_details[0]['sc_case_type_id']);
-                                                                    ?>
                                                                     <div class="table-responsive">
                                                                         <table class="table align-middle table-striped custom-table custom_table_latest">
                                                                             <thead>
