@@ -97,11 +97,6 @@ if (isset($ref_m_usertype_id) && !empty($ref_m_usertype_id) && $ref_m_usertype_i
 </div>
 <div class="center-content-inner comn-innercontent">
     <div class="tab-content">
-        <?php if (session()->getFlashdata('msg')): ?>
-            <div class="alert" role="alert" style="margin-top: 21px;">
-                <?= session()->getFlashdata('msg') ?>
-            </div>
-        <?php endif; ?>
         <div class="tab-pane active" id="home" role="tabpanel" aria-labelledby="home-tab">
             <div class="tab-form-inner">
                 <div class="row">
@@ -119,9 +114,16 @@ if (isset($ref_m_usertype_id) && !empty($ref_m_usertype_id) && $ref_m_usertype_i
                                     <div class="row">
                                         <h6 class="text-center fw-bold">Check List / Declaration</h6>
                                     </div>
-                                    <div class="row" id="errDiv" style="display: none;">
-                                        <div class="alert alert-danger" role="alert" id="msg"></div>
-                                    </div>
+                                    <?php if (session()->getFlashdata('msg')): ?>
+                                        <div class="alert alert-success" role="alert">
+                                            <?= session()->getFlashdata('msg') ?>
+                                        </div>
+                                    <?php endif; ?>
+                                    <?php if (session()->getFlashdata('error')): ?>
+                                        <div class="alert alert-danger" role="alert">
+                                            <?= session()->getFlashdata('error') ?>
+                                        </div>
+                                    <?php endif; ?>
                                     <div class="tab-form-inner">
                                         <div class="row">
                                             <div style="float: right">
