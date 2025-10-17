@@ -333,7 +333,7 @@ if (isset($ref_m_usertype_id) && !empty($ref_m_usertype_id) && $ref_m_usertype_i
                                         <label class="form-label"><input type="checkbox" name="consent" id="consent" value="1" <?php if (!empty($checked_response)) { echo 'checked'; } ?> required />&nbsp;I hereby declare that I have personally verified the petition/appeal and its contents, and that the same is in conformity with the Supreme Court Rules, 2013. I further certify that all the requirements mentioned in the relevant Check List(s) have been duly complied with, and that all necessary documents and annexure(s) required for the purpose of hearing of the matter have been properly filed.</label>
                                         <div class="date_cust">
                                             <label class="form-label">Date:-</label>
-                                            <input type="text" class="form-control cus-form-ctrl datepick" placeholder="DD-MM-YYYY" maxlength="10" value="<?= $crnt_dt; ?>" readonly>
+                                            <span class="form-label"><?= $crnt_dt; ?></span>
                                         </div>
                                         <div class="name_sinc_custom">
                                             <div class="date_cust d-none">
@@ -341,16 +341,21 @@ if (isset($ref_m_usertype_id) && !empty($ref_m_usertype_id) && $ref_m_usertype_i
                                                 <input class="form-control cus-form-ctrl" type="text" readonly />
                                             </div>
                                             <div class="date_cust">
-                                                <label class="form-label">Name of Advocate-on-Record</label>
-                                                <input class="form-control cus-form-ctrl" type="text" value="<?= getSessionData('login')['first_name']; ?>" readonly>
-                                            </div>
-                                            <div class="date_cust">
-                                                <label class="form-label">Code of AOR</label>
-                                                <input class="form-control cus-form-ctrl" type="text" value="<?= getSessionData('login')['userid']; ?>" readonly>
-                                            </div>
-                                            <div class="date_cust">
-                                                <label class="form-label">Contact No. & e-mail id</label>
-                                                <textarea class="form-control cus-form-ctrl" style="min-width: 0% !important;" readonly><?= getSessionData('login')['mobile_number']; ?>&#013;<?= getSessionData('login')['emailid']; ?></textarea>
+                                                <ul class="list-unstyled mb-0">
+                                                    <li>
+                                                        <label class="form-label">Name of Advocate-on-Record</label>
+                                                        <span class="form-label"><?= getSessionData('login')['first_name']; ?></span>
+                                                    </li>
+                                                    <li>
+                                                        <label class="form-label">Code of AOR</label>
+                                                        <span class="form-label"><?= getSessionData('login')['userid']; ?></span>
+                                                    </li>
+                                                    <li>
+                                                        <label class="form-label">Contact No. & e-mail id</label>
+                                                        <span class="form-label"><?= getSessionData('login')['mobile_number']; ?></span> &
+                                                        <span class="form-label"><?= getSessionData('login')['emailid']; ?></span>
+                                                    </li>
+                                                </ul>
                                             </div>
                                         </div>
                                     </div>
@@ -377,6 +382,7 @@ if (isset($ref_m_usertype_id) && !empty($ref_m_usertype_id) && $ref_m_usertype_i
         </div>
     </div>
 </div>
+
 <script src="<?= base_url() . 'assets/newAdmin/' ?>js/jquery351.min.js"></script>
 <script src="<?= base_url() . 'assets/newAdmin/' ?>js/bootstrap.bundle.min.js"></script>
 <script src="<?= base_url() . 'assets/newAdmin/' ?>js/general.js"></script>
@@ -385,13 +391,33 @@ if (isset($ref_m_usertype_id) && !empty($ref_m_usertype_id) && $ref_m_usertype_i
 <script src="<?= base_url() ?>assets/newAdmin/js/jquery.dataTables.min.js"></script>
 @push('script')
 <script>
+    
     $(document).ready(function() {
+        $('#check_update, #check_save').on('click', function(e) {
+            e.preventDefault(); // Prevent default form submission
+            showLoader();
+            // Submit form asynchronously to avoid page reload
+            $('#checklist_form').submit();
+        });
+
         function showLoader() {
             $('#loader-wrapper').show();
             setTimeout(function() {
                 $('#loader-wrapper').hide();
-            }, 5000); // Hides the loader after 3 seconds
+                hide();
+            }, 3000); // Hides the loader after 3 seconds
         }
+
+        function hide() {
+            $('.alert-success').hide();
+            $('.alert-danger').hide();
+            <?php 
+                unset($_SESSION['msg']); 
+                unset($_SESSION['error']); 
+            ?>
+        };
     });
+
+    
 </script>
 @endpush

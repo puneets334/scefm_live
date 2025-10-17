@@ -28,7 +28,25 @@ class ChecklistModel extends Model
         } else {
             return NULL;
         }
-  }
+    }
+
+    function get_all_checklist_data_by_registration_id($registration_id)
+    {
+        $builder = $this->db->table('efil.tbl_check_list_transaction');
+        $builder->SELECT('*');
+        $builder->WHERE('registration_id', $registration_id);
+        $builder->WHERE('created_by', getSessionData('login')['userid']);
+        $builder->orderBy('ref_m_check_list_new_id', 'ASC');
+        $query = $builder->get();
+        if ($query->getNumRows() >= 1) {
+            $result = $query->getResultArray();
+            return $result;
+        } else {
+            return NULL;
+        }
+    }
+
+
     function get_checklist_data_by_registration_id_and_type($registration_id, $cat_type)
     {
         $builder = $this->db->table('efil.tbl_check_list_transaction');
@@ -253,5 +271,24 @@ class ChecklistModel extends Model
         $query = $builder->get();
         $result = $query->getRow();
         return $result;
+    }
+
+    function add_logs($registration_id, $log_histroy)
+    {
+        $builder = $this->db->table('efil.tbl_check_list_transaction_logs');
+        $insert = $builder->insertBatch($log_histroy);
+        if($insert){
+            $builder = $this->db->table('efil.tbl_check_list_transaction');
+            $builder->WHERE('registration_id', $registration_id);
+            $del = $builder->delete();
+            if($del){
+                return true;
+            }else{
+                return false;
+            }
+        }else{
+            return false;
+        }
+        
     }
 }
