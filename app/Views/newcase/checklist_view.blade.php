@@ -165,9 +165,18 @@ if (isset($ref_m_usertype_id) && !empty($ref_m_usertype_id) && $ref_m_usertype_i
                                                                             </thead>
                                                                             <tbody>
                                                                                 <?php
-                                                                                if (empty($checklist_response)) {
+                                                                                
                                                                                     $prev = 0;
+                                                                                    // echo '<pre>';
+                                                                                    // print_r($checklist_data);
+                                                                                    // echo '</pre>';
+                                                                                    // echo '<br>';
                                                                                     foreach ($checklist_data as $checklist) {
+                                                                                        $checked_response = $this->ChecklistModel->get_checklist_data_by_registration_id_and_type(getSessionData('efiling_details')['registration_id'],'CA');
+                                                                                        $answer = '';
+                                                                                        if (!empty($checked_response) && isset($checked_response) && count($checked_response) > 0 && !empty($checked_response[0]['question_answer'])) {
+                                                                                            $answer = json_decode($checked_response[0]['question_answer'], true);
+                                                                                        }
                                                                                 ?>
                                                                                         <tr>
                                                                                             <td>
@@ -187,41 +196,12 @@ if (isset($ref_m_usertype_id) && !empty($ref_m_usertype_id) && $ref_m_usertype_i
                                                                                             </td>
                                                                                             <td>
                                                                                                 <div class="form_check_swith_custom form-check form-switch">
-                                                                                                    <input class="form-check-input" style="font-size: 18px !important;" type="checkbox" id="flexSwitchCheckDefault" name="answer[]" value="<?= $checklist['id'] ?>" />
+                                                                                                    <input class="form-check-input" style="font-size: 18px !important;" type="checkbox" id="flexSwitchCheckDefault" name="answer[]" value="<?= $checklist['id'] ?>" <?php echo (!empty($answer) && is_array($answer) && isset($answer[$checklist['id']]) && $answer[$checklist['id']] == 1) ? 'checked' : '' ?> />
                                                                                                 </div>
                                                                                             </td>
                                                                                         </tr>
                                                                                     <?php
                                                                                     }
-                                                                                } else {
-                                                                                    $prev = 0;
-                                                                                    foreach ($checklist_response as $checklist) {
-                                                                                    ?>
-                                                                                        <tr>
-                                                                                            <td>
-                                                                                                <input type="hidden" name="checklist_id[]" value="<?php echo !empty($checklist['ref_m_check_list_new_id']) ? $checklist['ref_m_check_list_new_id'] : ''; ?>" />
-                                                                                                <input type="hidden" name="question_no[]" value="<?php echo !empty($checklist['question_no']) ? $checklist['question_no'] : ''; ?>" />
-                                                                                                <?php
-                                                                                                if ($checklist['question_no'] != $prev) {
-                                                                                                    echo !empty($checklist['question_no']) ? $checklist['question_no'] : '';
-                                                                                                }
-                                                                                                $prev = $checklist['question_no'];
-                                                                                                ?>
-                                                                                            </td>
-                                                                                            <td><?php echo !empty($checklist['sub_question_no']) ? $checklist['sub_question_no'] . '.' : ''; ?></td>
-                                                                                            <td>
-                                                                                                <input type="hidden" name="sub_question_no[]" value="<?php echo !empty($checklist['sub_question_no']) ? $checklist['sub_question_no'] : ''; ?>" />
-                                                                                                &nbsp;<?php echo !empty(checklist_question_by_id($checklist['ref_m_check_list_new_id'])) ? checklist_question_by_id($checklist['ref_m_check_list_new_id']) : ''; ?>
-                                                                                            </td>
-                                                                                            <td>
-                                                                                                <div class="form_check_swith_custom form-check form-switch">
-                                                                                                    <input class="form-check-input" style="font-size: 18px !important;" type="checkbox" id="flexSwitchCheckDefault" name="answer[]" value="<?= $checklist['ref_m_check_list_new_id'] ?>" <?php echo ($checklist['answer'] == 1 ? 'checked' : '') ?> />
-                                                                                                </div>
-                                                                                            </td>
-                                                                                        </tr>
-                                                                                <?php
-                                                                                    }
-                                                                                }
                                                                                 ?>
                                                                             </tbody>
                                                                         </table>
@@ -262,9 +242,13 @@ if (isset($ref_m_usertype_id) && !empty($ref_m_usertype_id) && $ref_m_usertype_i
                                                                                 </thead>
                                                                                 <tbody>
                                                                                     <?php
-                                                                                    if (empty($checked_response_pil)) {
                                                                                         $prev = 0;
                                                                                         foreach ($checklist_data as $checklist) {
+                                                                                            $checked_response = $this->ChecklistModel->get_checklist_data_by_registration_id_and_type(getSessionData('efiling_details')['registration_id'],'IL');
+                                                                                            $answer = '';
+                                                                                            if (!empty($checked_response) && isset($checked_response) && count($checked_response) > 0 && !empty($checked_response[0]['question_answer'])) {
+                                                                                                $answer = json_decode($checked_response[0]['question_answer'], true);
+                                                                                            }
                                                                                     ?>
                                                                                             <tr>
                                                                                                 <td>
@@ -284,41 +268,13 @@ if (isset($ref_m_usertype_id) && !empty($ref_m_usertype_id) && $ref_m_usertype_i
                                                                                                 </td>
                                                                                                 <td>
                                                                                                     <div class="form_check_swith_custom form-check form-switch">
-                                                                                                        <input class="form-check-input" style="font-size: 18px !important;" type="checkbox" id="flexSwitchCheckDefault" name="answer_pil[]" value="<?= $checklist['id'] ?>" />
+                                                                                                        <input class="form-check-input" style="font-size: 18px !important;" type="checkbox" id="flexSwitchCheckDefault" name="answer_pil[]" value="<?= $checklist['id'] ?>" <?php echo (!empty($answer) && is_array($answer) && isset($answer[$checklist['id']]) && $answer[$checklist['id']] == 1) ? 'checked' : '' ?>/>
                                                                                                     </div>
                                                                                                 </td>
                                                                                             </tr>
                                                                                         <?php
                                                                                         }
-                                                                                    } else {
-                                                                                        $prev = 0;
-                                                                                        foreach ($checked_response_pil as $checklist) {
-                                                                                        ?>
-                                                                                            <tr>
-                                                                                                <td>
-                                                                                                    <input type="hidden" name="checklist_id_pil[]" value="<?php echo !empty($checklist['ref_m_check_list_new_id']) ? $checklist['ref_m_check_list_new_id'] : ''; ?>" />
-                                                                                                    <input type="hidden" name="question_no_pil[]" value="<?php echo !empty($checklist['question_no']) ? $checklist['question_no'] : ''; ?>" />
-                                                                                                    <?php
-                                                                                                    if ($checklist['question_no'] != $prev) {
-                                                                                                        echo !empty($checklist['question_no']) ? $checklist['question_no'] : '';
-                                                                                                    }
-                                                                                                    $prev = $checklist['question_no'];
-                                                                                                    ?>
-                                                                                                </td>
-                                                                                                <td><?php echo !empty($checklist['sub_question_no']) ? $checklist['sub_question_no'] . '.' : ''; ?></td>
-                                                                                                <td>
-                                                                                                    <input type="hidden" name="sub_question_no_pil[]" value="<?php echo !empty($checklist['sub_question_no']) ? $checklist['sub_question_no'] : ''; ?>" />
-                                                                                                    &nbsp;<?php echo !empty(checklist_question_by_id($checklist['ref_m_check_list_new_id'])) ? checklist_question_by_id($checklist['ref_m_check_list_new_id']) : ''; ?>
-                                                                                                </td>
-                                                                                                <td>
-                                                                                                    <div class="form_check_swith_custom form-check form-switch">
-                                                                                                        <input class="form-check-input" style="font-size: 18px !important;" type="checkbox" id="flexSwitchCheckDefault" name="answer_pil[]" value="<?= $checklist['ref_m_check_list_new_id'] ?>" <?php echo ($checklist['answer'] == 1 ? 'checked' : '') ?> />
-                                                                                                    </div>
-                                                                                                </td>
-                                                                                            </tr>
-                                                                                    <?php
-                                                                                        }
-                                                                                    }
+                                                                                    
                                                                                     ?>
                                                                                 </tbody>
                                                                             </table>
@@ -353,9 +309,13 @@ if (isset($ref_m_usertype_id) && !empty($ref_m_usertype_id) && $ref_m_usertype_i
                                                                             </thead>
                                                                             <tbody>
                                                                                 <?php
-                                                                                if (empty($checked_response_annexure)) {
                                                                                     $prev = 0;
                                                                                     foreach ($annexure_data as $annexure) {
+                                                                                        $checked_response = $this->ChecklistModel->get_checklist_data_by_registration_id_and_type(getSessionData('efiling_details')['registration_id'],'D');
+                                                                                        $answer = '';
+                                                                                        if (!empty($checked_response) && isset($checked_response) && count($checked_response) > 0 && !empty($checked_response[0]['question_answer'])) {
+                                                                                            $answer = json_decode($checked_response[0]['question_answer'], true);
+                                                                                        }
                                                                                 ?>
                                                                                         <tr>
                                                                                             <td>
@@ -375,41 +335,13 @@ if (isset($ref_m_usertype_id) && !empty($ref_m_usertype_id) && $ref_m_usertype_i
                                                                                             </td>
                                                                                             <td>
                                                                                                 <div class="form_check_swith_custom form-check form-switch">
-                                                                                                    <input class="form-check-input" style="font-size: 18px !important;" type="checkbox" id="flexSwitchCheckDefault" name="answer_annexure[]" value="<?= $annexure['id'] ?>" />
+                                                                                                    <input class="form-check-input" style="font-size: 18px !important;" type="checkbox" id="flexSwitchCheckDefault" name="answer_annexure[]" value="<?= $annexure['id'] ?>" <?php echo (!empty($answer) && is_array($answer) && isset($answer[$annexure['id']]) && $answer[$annexure['id']] == 1) ? 'checked' : '' ?>/>
                                                                                                 </div>
                                                                                             </td>
                                                                                         </tr>
                                                                                     <?php
                                                                                     }
-                                                                                } else {
-                                                                                    $prev = 0;
-                                                                                    foreach ($checked_response_annexure as $checklist) {
-                                                                                    ?>
-                                                                                        <tr>
-                                                                                            <td>
-                                                                                                <input type="hidden" name="checklist_id_annexure[]" value="<?php echo !empty($checklist['ref_m_check_list_new_id']) ? $checklist['ref_m_check_list_new_id'] : ''; ?>" />
-                                                                                                <input type="hidden" name="question_no_annexure[]" value="<?php echo !empty($checklist['question_no']) ? $checklist['question_no'] : ''; ?>" />
-                                                                                                <?php
-                                                                                                if ($checklist['question_no'] != $prev) {
-                                                                                                    echo !empty($checklist['question_no']) ? $checklist['question_no'] : '';
-                                                                                                }
-                                                                                                $prev = $checklist['question_no'];
-                                                                                                ?>
-                                                                                            </td>
-                                                                                            <td><?php echo !empty($checklist['sub_question_no']) ? $checklist['sub_question_no'] . '.' : ''; ?></td>
-                                                                                            <td>
-                                                                                                <input type="hidden" name="sub_question_no_annexure[]" value="<?php echo !empty($checklist['sub_question_no']) ? $checklist['sub_question_no'] : ''; ?>" />
-                                                                                                &nbsp;<?php echo !empty(checklist_question_by_id($checklist['ref_m_check_list_new_id'])) ? checklist_question_by_id($checklist['ref_m_check_list_new_id']) : ''; ?>
-                                                                                            </td>
-                                                                                            <td>
-                                                                                                <div class="form_check_swith_custom form-check form-switch">
-                                                                                                    <input class="form-check-input" style="font-size: 18px !important;" type="checkbox" id="flexSwitchCheckDefault" name="answer_annexure[]" value="<?= $checklist['ref_m_check_list_new_id'] ?>" <?php echo ($checklist['answer'] == 1 ? 'checked' : '') ?> />
-                                                                                                </div>
-                                                                                            </td>
-                                                                                        </tr>
-                                                                                        <?php
-                                                                                    }
-                                                                                }
+                                                                                
                                                                                 ?>
                                                                             </tbody>
                                                                         </table>

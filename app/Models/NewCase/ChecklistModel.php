@@ -29,6 +29,22 @@ class ChecklistModel extends Model
             return NULL;
         }
   }
+    function get_checklist_data_by_registration_id_and_type($registration_id, $cat_type)
+    {
+        $builder = $this->db->table('efil.tbl_check_list_transaction');
+        $builder->SELECT('*');
+        $builder->WHERE('registration_id', $registration_id);
+        $builder->WHERE('created_by', getSessionData('login')['userid']);
+        $builder->WHERE('cat_type', $cat_type);
+        $builder->orderBy('ref_m_check_list_new_id', 'ASC');
+        $query = $builder->get();
+        if ($query->getNumRows() >= 1) {
+            $result = $query->getResultArray();
+            return $result;
+        } else {
+            return NULL;
+        }
+  }
 
     function get_checklist_data_by_registration_id_pil($registration_id)
     {
@@ -136,7 +152,8 @@ class ChecklistModel extends Model
     {
         
         $builder = $this->db->table('efil.tbl_check_list_transaction');
-        $insert = $builder->insertBatch($insert_data);
+        $insert = $builder->insert($insert_data);
+        // pr($this->db->error());
         return $insert;
     }
 

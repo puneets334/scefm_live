@@ -213,7 +213,7 @@
                             <div class="col-12 col-sm-12 col-md-4 col-lg-4 show_hide_base_on_org">
                                 <div class="mb-3 icon-input">
                                     <label for="" class="form-label">Date of Birth </label>
-                                    <input tabindex='10' class="form-control cus-form-ctrl" id="party_dob" name="party_dob" value="<?php echo !empty(@$party_details[0]['party_dob']) ? date('d/m/Y', strtotime(@$party_details[0]['party_dob'])) : ''; ?>" maxlength="10" readonly="" placeholder="DD/MM/YYYY" type="text">
+                                    <input tabindex='10' class="form-control cus-form-ctrl party_dob" id="party_dob" name="party_dob" value="<?php echo !empty(@$party_details[0]['party_dob']) ? date('d/m/Y', strtotime(@$party_details[0]['party_dob'])) : ''; ?>" maxlength="10" readonly="" placeholder="DD/MM/YYYY" type="text">
                                     <span class="fa fa-calendar-o form-control-feedback left" aria-hidden="true"></span>
                                     <span class="input-group-addon" data-placement="bottom" data-toggle="popover" title="Please Enter Date of Birth.">
                                         <i class="fa fa-question-circle-o"></i>
@@ -331,7 +331,7 @@
                         </div> -->
                         <div class="col-12 col-sm-12 col-md-4 col-lg-4">
                             <div class="mb-3">
-                                <label class="form-label">Email <?php if ($_SESSION['estab_details']['is_pet_email_required'] == 't') { echo '<span id="party_email_req" value="1" style="color: red">*</span>'; } ?></label>
+                                <label class="form-label">Email <span id="party_email_req" style="color: red">*</span></label>
                                 <input id="party_email" oninput="validateEmail()" style="text-transform: uppercase" name="party_email" placeholder="Email" tabindex='18' value="<?php echo (@$party_details[0]['email_id']); ?>" class="form-control cus-form-ctrl" type="email" minlength="6" maxlength="49">
                                 <span class="input-group-addon" data-placement="bottom" data-toggle="popover" title="Please enter Petitioner valid email id. (eg : abc@example.com)">
                                     <i class="fa fa-question-circle-o"></i>
@@ -356,7 +356,7 @@
                         </div> -->
                         <div class="col-12 col-sm-12 col-md-4 col-lg-4">
                             <div class="mb-3">
-                                <label class="form-label">Mobile <?php if ($_SESSION['estab_details']['is_pet_mobile_required'] == 't') { echo '<span id="pet_mobile_req" value="1" style="color: red">*</span>'; } ?> </label>
+                                <label class="form-label">Mobile <span id="pet_mobile_req" value="1" style="color: red">*</span></label>
                                 <input id="party_mobile" name="party_mobile" tabindex='19' onkeyup="this.value=this.value.replace(/[^0-9]/g,'');" placeholder="Mobile" value="<?php echo (@$party_details[0]['mobile_num']); ?>" class="form-control cus-form-ctrl" type="text" minlength="10" pattern="[6-9][0-9]{9}" maxlength="10">
                                 <span class="input-group-addon" data-placement="bottom" data-toggle="popover" title="Mobile No. should be of 10 digits only.">
                                     <i class="fa fa-question-circle-o"></i>
@@ -373,7 +373,7 @@
                             </div>
                         </div>
                         <div class="col-12 col-sm-12 col-md-4 col-lg-4">
-                            <label class="control-label col-md-5 col-sm-12 col-xs-12">Country <span id="country_span"></span>:</label>
+                            <label class="form-label">Country <span id="country_span"></span></label>
                             <select name="country_id" id="country_id" tabindex='20' class="cus-form-ctrl filter_select_dropdown">
                                 <option value="">Select Country</option>
                                 <?php
@@ -606,6 +606,9 @@
             $('#otherOrgState').hide();
             $('#otherOrgDept').hide();
             $('#otherOrgPost').hide();
+
+            $('#party_email').attr('required', true); 
+            $('#party_mobile').attr('required', true);
         } else {
 
             get_departments(party_as);
@@ -624,6 +627,8 @@
                 /*$('#party_gender1').val('');            
                  $('#party_gender2').val('');            
                  $('#party_gender3').val('');*/
+                $('#party_email').attr('required', false); 
+                $('#party_mobile').attr('required', false);
             } else {
                 $('#indvidual_form').hide();
                 $('#org_form').show();
@@ -633,7 +638,8 @@
                 $('#relative_name').val('');
                 $('#party_dob').val('');
                 $('#party_age').val('');
-
+                $('#party_email').attr('required', false); 
+                $('#party_mobile').attr('required', false);
                 /*$('#party_gender1').val('');            
                  $('#party_gender2').val('');            
                  $('#party_gender3').val('');            */
@@ -1216,4 +1222,38 @@
             });
         }
     }
+
+    $('#party_age').on('keyup', function () {
+        $('#party_dob').val(''); // Clear the DOB field.
+    });
+    var today = new Date();
+        var startDate = new Date();
+        startDate.setFullYear(today.getFullYear() - 40);
+ 
+    $('.party_dob').datepicker({
+        format: "dd/mm/yyyy",
+        showOtherMonths: true,
+        selectOtherMonths: true,
+        changeMonth: true,
+        changeYear: true,
+        endDate: today,
+        defaultDate: startDate,
+        autoclose: true,
+        defaultViewDate: { year: startDate.getFullYear(), month: startDate.getMonth(), day: startDate.getDate() }
+    });
+
+    $(document).on('change', '#party_dob', function() {
+        var value = $('#party_dob').val();
+        var parts = value.split("/");
+        var day = parts[0] && parseInt(parts[0], 10);
+        var month = parts[1] && parseInt(parts[1], 10);
+        var year = parts[2] && parseInt(parts[2], 10);
+        var str = day + '/' + month + '/' + year;
+        var today = new Date();
+        var dob = new Date(str);
+        // age = new Date(today - dob).getFullYear() - 1970;
+        var age = today.getFullYear() - year;
+        $('#party_age').val(age);
+
+    });
 </script>
