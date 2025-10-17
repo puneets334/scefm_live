@@ -637,19 +637,11 @@
                                                    </div>
                                                 </div>
                                              </div>
-                                             <div class="accordion-item d-none">
+                                             <div class="accordion-item">
                                                 <div class="row">
                                                    <h2 class="accordion-header <?php if(isset($hidepencilbtn)) { if ($hidepencilbtn != 'true') { ?>col-sm-12<?php } else { ?>col-sm-12<?php } } ?>" id="headingTen">
                                                       <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTen" aria-expanded="false" aria-controls="collapseTen" <?php echo $area_extended; ?>>
-                                                         <?php
-                                                         $checklist_details = getCheckListDetails();
-                                                         if ((!isset($checklist_details) || empty($checklist_details)) && ($checklist_details > 0)) { ?>
-                                                            <font style="color:red;">
-                                                               <b>Check List / Declaration</b>
-                                                            </font>
-                                                         <?php } else { ?>
-                                                            <b>Check List / Declaration</b>
-                                                         <?php } ?>
+                                                         <b>Check List / Declaration</b>
                                                          <?php if ($hidepencilbtn != 'true') { ?>
                                                             <a href="<?php echo base_url('newcase/checklist'); ?>"><i class="fa fa-pencil efiling_search"></i></a>
                                                          <?php } ?>
@@ -661,7 +653,7 @@
                                                    aria-labelledby="headingTen"
                                                    data-bs-parent="#accordionExample">
                                                    <div class="accordion-body">
-                                                      <?php render('newcase.checklist_details_view', ['checklist_details' => $checklist_details]); ?>
+                                                      <?php render('newcase.checklist_details_view'); ?>
                                                    </div>
                                                 </div>
                                              </div>
