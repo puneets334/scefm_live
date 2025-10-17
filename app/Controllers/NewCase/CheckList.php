@@ -75,121 +75,145 @@ class CheckList extends BaseController {
         $consent = $this->request->getPost('consent');
         if (!empty($consent)) {
             $checklist_id = $this->request->getPost('checklist_id');
-            $question_no = $this->request->getPost('question_no');
-            $sub_question_no = $this->request->getPost('sub_question_no');
+            // $question_no = $this->request->getPost('question_no');
+            // $sub_question_no = $this->request->getPost('sub_question_no');
             $answer = $this->request->getPost('answer');
             $checklist_id_pil = $this->request->getPost('checklist_id_pil');
-            $question_no_pil = $this->request->getPost('question_no_pil');
-            $sub_question_no_pil = $this->request->getPost('sub_question_no_pil');
+            // $question_no_pil = $this->request->getPost('question_no_pil');
+            // $sub_question_no_pil = $this->request->getPost('sub_question_no_pil');
             $answer_pil = $this->request->getPost('answer_pil');
             $checklist_id_annexure = $this->request->getPost('checklist_id_annexure');
-            $question_no_annexure = $this->request->getPost('question_no_annexure');
-            $sub_question_no_annexure = $this->request->getPost('sub_question_no_annexure');
+            // $question_no_annexure = $this->request->getPost('question_no_annexure');
+            // $sub_question_no_annexure = $this->request->getPost('sub_question_no_annexure');
             $answer_annexure = $this->request->getPost('answer_annexure');
             if($this->request->getPost('check_save')) {
                 if (!empty($checklist_id) && is_array($checklist_id)) {
-                    $insert_data = array();
+                    $insert_data = [];
+                    $question_answer = [];
                     foreach ($checklist_id as $key => $value) {
-                        if (in_array($value, $answer)) {
-                            $aws = 1;
-                        } else {
-                            $aws = 0;
-                        }
-                        // if(key_exists($key, $answer) ) {
-                        //     if($answer[$key] == 'on') {
-                                $insert_data[] = array(
-                                    'registration_id' => getSessionData('efiling_details')['registration_id'],
-                                    'question_no' => !empty($question_no[$key]) ? $question_no[$key] : '',
-                                    'sub_question_no' => !empty($sub_question_no[$key]) ? $sub_question_no[$key] : '',
-                                    'answer' => $aws,
-                                    'created_by' => getSessionData('login')['userid'],
-                                    'created_at' => date('Y-m-d H:i:s'),
-                                    'updated_by' => NULL,
-                                    'updated_at' => NULL,
-                                    'ref_m_check_list_new_id' => $value,
-                                    'cat_type' => 'CA'
-                                );
-                        //     }
-                        // }
+                        $aws = (!empty($answer) && in_array($value, $answer)) ? 1 : 0;
+                        $question_answer[$value] = $aws;
                     }
+
+                    $json_string = json_encode($question_answer);
+                    if (json_last_error() !== JSON_ERROR_NONE) {
+                        log_message('error', 'JSON encoding failed: ' . json_last_error_msg());
+                        $this->session->setFlashdata('error', 'Invalid data format, please try again.');
+                        return;
+                    }
+
+                    $insert_data = [
+                        'registration_id' => getSessionData('efiling_details')['registration_id'],
+                        'question_answer' => "$json_string",
+                        'created_by' => getSessionData('login')['userid'],
+                        'created_at' => date('Y-m-d H:i:s'),
+                        'updated_by' => null,
+                        'updated_at' => null,
+                        'cat_type' => 'CA'
+                    ];
+
                     if (!empty($insert_data)) {
-                        $insert_checklist = $this->ChecklistModel->insert_checks($insert_data);
+                        try {
+                            $insert_checklist = $this->ChecklistModel->insert_checks($insert_data);
+                            if ($insert_checklist) {
+                                $this->session->setFlashdata('success', 'Checklist saved successfully.');
+                            } else {
+                                $this->session->setFlashdata('error', 'Failed to save checklist.');
+                            }
+                        } catch (\Exception $e) {
+                            log_message('error', 'Insert failed: ' . $e->getMessage());
+                            $this->session->setFlashdata('error', 'Something went wrong, please try again.');
+                        }
                     } else {
-                        $this->session->setFlashdata('error', 'Something went wrong, please try again.');
+                        $this->session->setFlashdata('error', 'No data to insert.');
                     }
                 }
 
                 if (!empty($checklist_id_pil) && is_array($checklist_id_pil)) {
-                    $insert_data = array();
+                    $insert_data = [];
+                    $question_answer = [];
                     foreach ($checklist_id_pil as $key => $value) {
-                        if (in_array($value, $answer_pil)) {
-                            $aws = 1;
-                        } else {
-                            $aws = 0;
-                        }
-                        // if(key_exists($key, $answer_pil) ) {
-                        //     if($answer_pil[$key] == 'on') {
-                                $insert_data[] = array(
-                                    'registration_id' => getSessionData('efiling_details')['registration_id'],
-                                    'question_no' => !empty($question_no_pil[$key]) ? $question_no_pil[$key] : '',
-                                    'sub_question_no' => !empty($sub_question_no_pil[$key]) ? $sub_question_no_pil[$key] : '',
-                                    'answer' => $aws,
-                                    'created_by' => getSessionData('login')['userid'],
-                                    'created_at' => date('Y-m-d H:i:s'),
-                                    'updated_by' => NULL,
-                                    'updated_at' => NULL,
-                                    'sub_cat_id' => 8, // PIL
-                                    'ref_m_check_list_new_id' => $value,
-                                    'cat_type' => 'IL'
-                                );
-                        //     }
-                        // }
+                        $aws = (!empty($answer_pil) && in_array($value, $answer_pil)) ? 1 : 0;
+                        $question_answer[$value] = $aws;
                     }
+
+                    $json_string = json_encode($question_answer);
+                    if (json_last_error() !== JSON_ERROR_NONE) {
+                        log_message('error', 'JSON encoding failed: ' . json_last_error_msg());
+                        $this->session->setFlashdata('error', 'Invalid data format, please try again.');
+                        return;
+                    }
+
+                    $insert_data = [
+                        'registration_id' => getSessionData('efiling_details')['registration_id'],
+                        'question_answer' => "$json_string",
+                        'created_by' => getSessionData('login')['userid'],
+                        'created_at' => date('Y-m-d H:i:s'),
+                        'updated_by' => null,
+                        'updated_at' => null,
+                        'sub_cat_id' => 8, // PIL
+                        'cat_type' => 'IL'
+                    ];
+
                     if (!empty($insert_data)) {
-                        $insert_checklist = $this->ChecklistModel->insert_checks($insert_data);
+                        try {
+                            $insert_checklist = $this->ChecklistModel->insert_checks($insert_data);
+                            if ($insert_checklist) {
+                                $this->session->setFlashdata('success', 'Checklist saved successfully.');
+                            } else {
+                                $this->session->setFlashdata('error', 'Failed to save checklist.');
+                            }
+                        } catch (\Exception $e) {
+                            log_message('error', 'Insert failed: ' . $e->getMessage());
+                            $this->session->setFlashdata('error', 'Something went wrong, please try again.');
+                        }
                     } else {
-                        $this->session->setFlashdata('error', 'Something went wrong, please try again.');
+                        $this->session->setFlashdata('error', 'No data to insert.');
                     }
                 }
 
                 if (!empty($checklist_id_annexure) && is_array($checklist_id_annexure)) {
-                    $insert_data = array();
-                foreach ($checklist_id_annexure as $key => $value) {
-                        if (in_array($value, $answer_annexure)) {
-                            $aws = 1;
-                        } else {
-                            $aws = 0;
-                        }
-                        // if(key_exists($key, $answer_annexure) ) {
-                        //     if($answer_annexure[$key] == 'on') {
-                                $insert_data[] = array(
-                                    'registration_id' => getSessionData('efiling_details')['registration_id'],
-                                    'question_no' => !empty($question_no_annexure[$key]) ? $question_no_annexure[$key] : '',
-                                    'sub_question_no' => !empty($sub_question_no_annexure[$key]) ? $sub_question_no_annexure[$key] : '',
-                                    'answer' => $aws,
-                                    'created_by' => getSessionData('login')['userid'],
-                                    'created_at' => date('Y-m-d H:i:s'),
-                                    'updated_by' => NULL,
-                                    'updated_at' => NULL,
-                                    'ref_m_check_list_new_id' => $value,
-                                    'cat_type' => 'D'
-                                );
-                        //     }
-                        // }
+                    $insert_data = [];
+                    $question_answer = [];
+                    foreach ($checklist_id_annexure as $key => $value) {
+                        $aws = (!empty($answer_annexure) && in_array($value, $answer_annexure)) ? 1 : 0;
+                        $question_answer[$value] = $aws;
                     }
+
+                    $json_string = json_encode($question_answer);
+                    if (json_last_error() !== JSON_ERROR_NONE) {
+                        log_message('error', 'JSON encoding failed: ' . json_last_error_msg());
+                        $this->session->setFlashdata('error', 'Invalid data format, please try again.');
+                        return;
+                    }
+
+                    $insert_data = [
+                        'registration_id' => getSessionData('efiling_details')['registration_id'],
+                        'question_answer' => "$json_string",
+                        'created_by' => getSessionData('login')['userid'],
+                        'created_at' => date('Y-m-d H:i:s'),
+                        'updated_by' => null,
+                        'updated_at' => null,
+                        'cat_type' => 'D'
+                    ];
+
                     if (!empty($insert_data)) {
-                        $insert_checklist = $this->ChecklistModel->insert_checks($insert_data);
-                        if ($insert_checklist) {                            
-                            $breadcrumb_to_update = NEW_CASE_CHECKLIST;
-                            $update_courtfee_breadcrumb_status = $this->Payment_model->update_breadcrumbs(getSessionData('efiling_details')['registration_id'], $breadcrumb_to_update);
+                        if (!empty($insert_data)) {
+                            $insert_checklist = $this->ChecklistModel->insert_checks($insert_data);
+                            if ($insert_checklist) {                            
+                                $breadcrumb_to_update = NEW_CASE_CHECKLIST;
+                                $update_courtfee_breadcrumb_status = $this->Payment_model->update_breadcrumbs(getSessionData('efiling_details')['registration_id'], $breadcrumb_to_update);
+                            }
+                            $this->session->setFlashdata('msg', 'Checklist saved successfully.');
+                            return redirect()->to(base_url('newcase/checklist'));
+                            exit(0);
+                        } else {
+                            $this->session->setFlashdata('error', 'Something went wrong, please try again.');
+                            return redirect()->to(base_url('newcase/checklist'));
+                            exit(0);
                         }
-                        $this->session->setFlashdata('msg', 'Checklist saved successfully.');
-                        return redirect()->to(base_url('newcase/checklist'));
-                        exit(0);
                     } else {
-                        $this->session->setFlashdata('error', 'Something went wrong, please try again.');
-                        return redirect()->to(base_url('newcase/checklist'));
-                        exit(0);
+                        $this->session->setFlashdata('error', 'No data to insert.');
                     }
                 }
             }
