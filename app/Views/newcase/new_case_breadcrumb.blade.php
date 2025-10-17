@@ -576,7 +576,7 @@ $sas = array(Initial_Defected_Stage, I_B_Defected_Stage);
                                 //$disabled_status='pointer-events: none; cursor: default;';
                             }
                             ?>
-                            <a href="<?= $url_extra_party ?>" class="nav-link <?php echo $status_color; ?>" type="button" style="z-index:9; <?php if(!in_array(NEW_CASE_RESPONDENT, $StageArray)){ echo $disabled_status1;} ?>" aria-selected="false"><span class="tab-num" style="<?php echo $ColorCode; ?>">4</span> Extra Party </a>
+                            <a href="<?= $url_extra_party ?>" class="nav-link <?php echo $status_color; ?>" type="button" style="z-index:9; <?php if(!in_array(NEW_CASE_RESPONDENT, $StageArray)){ echo $disabled_status1;} ?>" aria-selected="false"><span class="tab-num" style="<?php echo $ColorCode; ?>">4</span> Additional Party </a>
                     </li>
                     <li class="nav-item" role="presentation">
                         <?php

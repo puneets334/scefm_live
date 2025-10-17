@@ -373,9 +373,9 @@
                                                       <?php
                                                          if (!isset($extra_parties_list) || empty($extra_parties_list)) { ?><font
                                                          style="color:orange;">
-                                                      <b>Extra Party</b>
+                                                      <b>Additional Party</b>
                                                       </font><?php } else { ?>
-                                                      <b>Extra Party</b><?php } ?>
+                                                      <b>Additional Party</b><?php } ?>
                                                       <?php
                                                       if(isset($hidepencilbtn)){
                                                       if ($hidepencilbtn != 'true') { ?>
