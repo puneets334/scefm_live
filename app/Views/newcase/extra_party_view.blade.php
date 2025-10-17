@@ -42,7 +42,7 @@
     <div class="tab-content">
         <div class="tab-pane active" id="home" role="tabpanel" aria-labelledby="home-tab">
             <div class="tab-form-inner">
-                <h4 style="text-align: center;color: #31B0D5">Extra Party Information</h4>
+                <h4 style="text-align: center;color: #31B0D5">Additional Party Information</h4>
                 <div class="col-12 col-sm-12 col-md-12 col-lg-12">
                    
                     <?php
@@ -59,7 +59,7 @@
                     ?>
                     <div class="row">
                         <div class="col-12 col-sm-12 col-md-4 col-lg-4">
-                            <label class="control-label col-md-5 col-sm-12 col-xs-12"> Extra Party Side <span style="color: red">*</span>:</label>
+                            <label class="control-label col-md-5 col-sm-12 col-xs-12"> Additional Party Side <span style="color: red">*</span>:</label>
                             <div class="col-md-7 col-sm-12 col-xs-12">
                                 <?php
                                 $selectPSide = @$party_details[0]['p_r_type'] == 'P' ? 'selected=selected' : '';
@@ -67,8 +67,8 @@
                                 ?>
                                 <select tabindex='1' name="p_r_type" id="p_r_type" class="cus-form-ctrl filter_select_dropdown">
                                     <option value="">Select</option>
-                                    <option value="P" <?php echo $selectPSide; ?>>Petitioner Extra Party</option>
-                                    <option value="R" <?php echo $selectRSide; ?>>Respondent Extra Party</option>
+                                    <option value="P" <?php echo $selectPSide; ?>>Petitioner Additional Party</option>
+                                    <option value="R" <?php echo $selectRSide; ?>>Respondent Additional Party</option>
                                 </select>
                             </div>
                         </div>
