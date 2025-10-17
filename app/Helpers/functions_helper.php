@@ -5083,14 +5083,3 @@ function checklist_question_by_id($ref_m_check_list_new_id) {
         return $checked_question->question;
     }
 }
-
-function getCheckListDetails()
-{
-    $all_checklist_details = array();
-    $registration_id = (!empty(getSessionData('efiling_details')) && isset(getSessionData('efiling_details')['registration_id'])) ? getSessionData('efiling_details')['registration_id'] : '';
-    if (!empty($registration_id)) {
-        $ChecklistModel = new ChecklistModel();
-        $all_checklist_details = $ChecklistModel->get_check_list_view_details(getSessionData('efiling_details')['registration_id']);
-    }
-    return $all_checklist_details;
-}
