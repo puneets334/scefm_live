@@ -27,7 +27,7 @@
                                             $caseName = $this->ChecklistModel->get_sci_case_type_name_by_id($case_details[0]['sc_case_type_id']);
                                             ?>
                                             <div class="table-responsive">
-                                                <h2><?php echo ($checklist_data[0]['sc_case_type_id'] == 999999) ? 'Common Checklist' : $caseName->casename; ?></h2>
+                                                <h2 class="mt-5"><?php echo ($checklist_data[0]['sc_case_type_id'] == 999999) ? 'Common Checklist' : $caseName->casename; ?></h2>
                                                 <table class="table align-middle table-striped custom-table custom_table_latest">
                                                     <thead>
                                                         <tr>
@@ -52,7 +52,7 @@
                                                                     echo "";
                                                                 } ?>
                                                             </th>
-                                                            <th>Select if complied (Blue denotes compliance)</th>
+                                                            <th>Complied</th>
                                                         </tr>
                                                     </thead>
                                                     <tbody>
@@ -77,7 +77,7 @@
                                                                     </td>
                                                                     <td><?php echo !empty($checklist['sub_question_no']) ? $checklist['sub_question_no'] . '.' : ''; ?></td>
                                                                     <td>&nbsp;<?php echo !empty($checklist['question']) ? $checklist['question'] : ''; ?></td>
-                                                                    <td><?php echo (!empty($answer) && is_array($answer) && isset($answer[$checklist['id']]) && $answer[$checklist['id']] == 1) ? 'Yes' : 'No'; ?></td>
+                                                                    <td class="pull-center"><?php echo (!empty($answer) && is_array($answer) && isset($answer[$checklist['id']]) && $answer[$checklist['id']] == 1) ? 'Yes' : 'No'; ?></td>
                                                                 </tr>
                                                                 <?php
                                                             }
@@ -106,7 +106,7 @@
                                                                     }
                                                                     ?>
                                                                 </th>
-                                                                <th>Select if complied (Blue denotes compliance)</th>
+                                                                <th>Complied</th>
                                                             </tr>
                                                         </thead>
                                                         <tbody>
@@ -131,7 +131,7 @@
                                                                         </td>
                                                                         <td><?php echo !empty($checklist['sub_question_no']) ? $checklist['sub_question_no'] . '.' : ''; ?></td>
                                                                         <td>&nbsp;<?php echo !empty($checklist['question']) ? $checklist['question'] : ''; ?></td>
-                                                                        <td><?php echo (!empty($answer) && is_array($answer) && isset($answer[$checklist['id']]) && $answer[$checklist['id']] == 1) ? 'Yes' : 'No'; ?></td>
+                                                                        <td class="pull-center"><?php echo (!empty($answer) && is_array($answer) && isset($answer[$checklist['id']]) && $answer[$checklist['id']] == 1) ? 'Yes' : 'No'; ?></td>
                                                                     </tr>
                                                                     <?php
                                                                 }
@@ -155,7 +155,7 @@
                                                             <th>
                                                                 <?php echo 'PROPOSED ADVOCATE\'S CHECK LIST (TO BE CERTIFIED BY ADVOCATE-ON-RECORD)'; ?>
                                                             </th>
-                                                            <th>Select if complied (Blue denotes compliance)</th>
+                                                            <th>Complied</th>
                                                         </tr>
                                                     </thead>
                                                     <tbody>
@@ -180,7 +180,7 @@
                                                                     </td>
                                                                     <td><?php echo !empty($checklist['sub_question_no']) ? $checklist['sub_question_no'] . '.' : ''; ?></td>
                                                                     <td>&nbsp;<?php echo !empty($checklist['question']) ? $checklist['question'] : ''; ?></td>
-                                                                    <td><?php echo (!empty($answer) && is_array($answer) && isset($answer[$checklist['id']]) && $answer[$checklist['id']] == 1) ? 'Yes' : 'No' ?></td>
+                                                                    <td class="pull-center"><?php echo (!empty($answer) && is_array($answer) && isset($answer[$checklist['id']]) && $answer[$checklist['id']] == 1) ? 'Yes' : 'No' ?></td>
                                                                 </tr>
                                                                 <?php
                                                             }
