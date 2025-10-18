@@ -636,7 +636,7 @@ td {
                         @endif
                     </div>
                 </div>
-                <?php if (session()->getFlashdata('paymentError')) : ?>
+                <?php  if (session()->getFlashdata('paymentError')) : ?>
                     <div class="alert-danger">
                         <b><?= session()->getFlashdata('paymentError') ?></b>
                     </div>
@@ -651,6 +651,8 @@ td {
                                 <div class="dashboard-section">
                                     <div class="row">
                                         @if(!in_array($_SESSION['login']['ref_m_usertype_id'],array(ARGUING_COUNSEL,SR_ADVOCATE,AMICUS_CURIAE_USER)))
+                                        
+                                        @if(!empty($scheduled_cases) && (is_array($scheduled_cases) || is_object($scheduled_cases)) && (isset($scheduled_cases[0]) || !empty($scheduled_cases[0])) && (count($scheduled_cases[0])>0))
                                             <div class="col-12 col-sm-12 col-md-12 col-lg-4">
                                                 <div class="dash-card" >
                                                     <div class="title-sec">
@@ -787,6 +789,7 @@ td {
                                                 </div>
                                                 <hr class="uk-divider-vertical uk-margin-small-left uk-margin-small-right uk-visible@m">
                                             </div>
+                                        @endif
                                         @endif
 
                                         <!-- start amicus_curiae_user soon cases -->
@@ -1061,7 +1064,11 @@ td {
                                         @endif
                                         <!-- end sr advocate data -->
                                         @if(!in_array($_SESSION['login']['ref_m_usertype_id'],array(ARGUING_COUNSEL,SR_ADVOCATE)))
+                                        @if(!empty($scheduled_cases) && (is_array($scheduled_cases) || is_object($scheduled_cases)) && (isset($scheduled_cases[0]) || !empty($scheduled_cases[0])) && (count($scheduled_cases[0])>0))
                                         <div class="col-12 col-sm-12 col-md-12 col-lg-8">
+                                            @else
+                                        <div class="col-12 col-sm-12 col-md-12 col-lg-12">
+                                            @endif
                                             <div class="dash-card">
                                                 <div class="title-sec">
                                                     <h5 class="unerline-title">e-Filed Cases</h5>

@@ -1356,7 +1356,7 @@ class ResponsiveVariantRouteController extends BaseController
     public function showCasePaperBookViewer($diary_id)
     {
         $filename = $diary_id . "_" . date('d-m-Y_H_i_s') . ".pdf";
-        $response_code = (downloadCasePaperBook(API_SCI_INTERACT_PAPERBOOK_PDF.$diary_id."/get/paper_book?taskStage=live",array('Authorization: Bearer 9bdbe02iu1x9akd66zsif25hu'),true));
+        $response_code = (downloadCasePaperBook(API_SCI_INTERACT_PAPERBOOK_PDF.$diary_id."/get/paper_book?taskStage=live",array('Authorization: Bearer 9bdbe02iu1x9akd66zsif25hu'),true, $filename));
         // list($case_file_paper_books, $response_code) = (curl_get_contents(API_SCI_INTERACT_PAPERBOOK_PDF . $diary_id . "/get/paper_book?taskStage=live", array(), true));
         // if ($response_code == 417) {
         //     echo $case_file_paper_books;
@@ -1391,7 +1391,7 @@ class ResponsiveVariantRouteController extends BaseController
             $requestedBy = str_replace([' ', '(', ')'], ['%20', '%28', '%29'], $requestedBy);
         // $response_code = (downloadCasePaperBook(API_SCI_INTERACT_PAPERBOOK_PDF.$diary_id."/get/paper_book?taskStage=live",array('Authorization: Bearer 9bdbe02iu1x9akd66zsif25hu'),true));
         // list($case_file_paper_books, $response_code) = (curl_get_contents(API_SCI_INTERACT_PAPERBOOK_PDF . $diary_id . "/get/paper_book/categorized?taskStage=live&requestedBy=" . $requestedBy, array('Authorization: Bearer Bdjdgejshdv16484_svsg123134'), true));
-        list($case_file_paper_books, $response_code) = (downloadCasePaperBook(API_SCI_INTERACT_PAPERBOOK_PDF.$diary_id."/get/paper_book/categorized?taskStage=live&requestedBy=".$requestedBy,array('Authorization: Bearer 9bdbe02iu1x9akd66zsif25hu'),true));
+        list($case_file_paper_books, $response_code) = (downloadCasePaperBook(API_SCI_INTERACT_PAPERBOOK_PDF.$diary_id."/get/paper_book/categorized?taskStage=live&requestedBy=".$requestedBy,array('Authorization: Bearer 9bdbe02iu1x9akd66zsif25hu'),true, $file_name));
         // if ($response_code == 417) {
         //     echo $case_file_paper_books;
         // } else {
