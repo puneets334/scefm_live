@@ -330,7 +330,7 @@ if (isset($ref_m_usertype_id) && !empty($ref_m_usertype_id) && $ref_m_usertype_i
                                         </div>
                                     </div>
                                     <div class="bottom_content">
-                                        <label class="form-label"><input type="checkbox" name="consent" id="consent" value="1" <?php if (!empty($checked_response)) { echo 'checked'; } ?> required />&nbsp;I hereby declare that I have personally verified the petition/appeal and its contents, and that the same is in conformity of Supreme Court Rules, 2013 the Practice and Procedure of the Court. I further certify that all the requirements mentioned in the relevant Check List(s) have been duly complied with, and that all necessary documents and annexure(s) required for the purpose of hearing of the matter have been properly filed.</label>
+                                        <label class="form-label"><input type="checkbox" name="consent" id="consent" value="1" <?php if (!empty($checked_response)) { echo 'checked'; } ?> required />&nbsp;I hereby declare that I have personally verified the petition/appeal and its contents, and that the same is in conformity with the Supreme Court Rules, 2013 the Practice and Procedure of the Court. I further certify that all the requirements mentioned in the relevant Check List(s) have been duly complied with, and that all necessary documents and annexure(s) required for the purpose of hearing of the matter have been properly filed.</label>
                                         <div class="date_cust">
                                             <label class="form-label">Date:-</label>
                                             <span class="form-label"><?= $crnt_dt; ?></span>
