@@ -165,14 +165,13 @@ class ExtraParty extends BaseController {
                     ],
                 ];
             }
-            
             if($_POST['is_dead_minor'] == '0') {
                 $is_dead_minor = false;
                 $is_dead_file_status = false;
                 $validations += [
                     "party_age" => [
                         "label" => "Age",
-                        "rules" => "trim|required|min_length[1]|max_length[2]|is_natural"
+                        "rules" => "trim|required|greater_than[0]|min_length[1]|max_length[2]"
                     ],
                     "party_address" => [
                         "label" => "Address",
@@ -194,7 +193,7 @@ class ExtraParty extends BaseController {
                             "rules" => "required|trim|validate_encrypted_value"
                         ],
                     ];
-                } elseif(isset($country_id) && !empty($country_id) && $country_id != 96 && $_POST['is_dead_minor'] == '1') {
+                } elseif(isset($country_id) && !empty($country_id) && $country_id != 96 && $this->request->getPost('is_dead_minor') == '1') {
                     $validations += [
                         "party_city" => [
                             "label" => "City",
@@ -271,18 +270,40 @@ class ExtraParty extends BaseController {
                 ];
             }
         }
+        // $validations += [
+        //     "party_email" => [
+        //         "label" => "Email",
+        //         "rules" => "required|trim|min_length[6]|max_length[49]|valid_email"
+        //     ],
+        //     "party_mobile" => [
+        //         "label" => "Mobile number",
+        //         "rules" => "required|trim|exact_length[10]|is_natural"
+        //     ],
+        //     "party_pincode" => [
+        //         "label" => "Pincode",
+        //         "rules" => "required|trim|exact_length[6]|is_natural"
+        //     ],
+        // ];
+        if (isset($_POST['party_email']) && !empty($_POST['party_email'])) {
+            $validations += [
+                "party_email" => [
+                    "label" => "Email",
+                    "rules" => "trim|min_length[6]|max_length[49]|valid_email"
+                ],
+            ];
+        }
+        if (isset($_POST['party_mobile']) && !empty($_POST['party_mobile'])) {
+            $validations += [
+                "party_mobile" => [
+                    "label" => "Mobile number",
+                    "rules" => "numeric|trim|exact_length[10]|is_natural"
+                ],
+            ];
+        }
         $validations += [
-            "party_email" => [
-                "label" => "Email",
-                "rules" => "required|trim|min_length[6]|max_length[49]|valid_email"
-            ],
-            "party_mobile" => [
-                "label" => "Mobile number",
-                "rules" => "required|trim|exact_length[10]|is_natural"
-            ],
             "party_pincode" => [
                 "label" => "Pincode",
-                "rules" => "required|trim|exact_length[6]|is_natural"
+                "rules" => "required|numeric|trim|exact_length[6]|is_natural"
             ],
         ];
         $this->validation->setRules($validations);

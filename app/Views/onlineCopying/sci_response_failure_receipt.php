@@ -45,7 +45,7 @@
                     </td>
                 <td>
                     <div style="font-family:'Arial'; text-align: right;font-size: 24px; color: #0887c3; padding: 2px;"> Receipt</div>
-                        <div style="font-family:'Arial'; text-align: right;font-size: 14px; padding: 2px;">CRN: <?php echo isset($orderCode) ? $orderCode : '' ?></div>
+                        <!-- <div style="font-family:'Arial'; text-align: right;font-size: 14px; padding: 2px;">CRN: <?php //echo isset($orderCode) ? $orderCode : '' ?></div> -->
                             <!--<div style="font-family:'Arial'; text-align: right;font-size: 14px; padding: 2px;">Application No.:<?php echo (!empty($application_no) ? $application_no : 0); ?></div>-->
                                 <div style="font-family:'Arial'; text-align: right;font-size: 14px; padding: 2px;">Date of Receipt: <?php echo (!empty($orderDate) ? date('d-m-Y', strtotime($orderDate)) : '') ?></div>
                                     <div style="font-family:'Arial'; text-align: right;font-size: 14px; padding: 2px;">Payment Status: <?php echo (!empty($orderStatus) ? $orderStatus : '') ?></div>

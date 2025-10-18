@@ -65,7 +65,7 @@
                                 $selectPSide = @$party_details[0]['p_r_type'] == 'P' ? 'selected=selected' : '';
                                 $selectRSide = @$party_details[0]['p_r_type'] == 'R' ? 'selected=selected' : '';
                                 ?>
-                                <select tabindex='1' name="p_r_type" id="p_r_type" class="cus-form-ctrl filter_select_dropdown">
+                                <select tabindex='1' name="p_r_type" id="p_r_type" class="cus-form-ctrl filter_select_dropdown" required>
                                     <option value="">Select</option>
                                     <option value="P" <?php echo $selectPSide; ?>>Petitioner Additional Party</option>
                                     <option value="R" <?php echo $selectRSide; ?>>Respondent Additional Party</option>
@@ -81,7 +81,7 @@
                                 $selectCentralDept = @$party_details[0]['party_type'] == 'D2' ? 'selected=selected' : '';
                                 $selectOtherDept = @$party_details[0]['party_type'] == 'D3' ? 'selected=selected' : '';
                                 ?>
-                                <select tabindex='2' name="party_as" id="party_as" onchange="get_party_as(this.value)" class="cus-form-ctrl filter_select_dropdown">
+                                <select tabindex='2' name="party_as" id="party_as" onchange="get_party_as(this.value)" class="cus-form-ctrl filter_select_dropdown" required>
                                     <option value="I" <?php echo $selectIndividual; ?>>Individual</option>
                                     <option value="D1" <?php echo $selectStateDept; ?>>State Department</option>
                                     <option value="D2" <?php echo $selectCentralDept; ?>>Central Department</option>
@@ -250,7 +250,7 @@
                                         $party_age = @$party_details[0]['party_age'];
                                     }
                                     ?>
-                                    <input id="party_age" tabindex='11' name="party_age" maxlength="2" onkeyup="return isNumber(event)" placeholder="Age" value="<?php echo ($party_age); ?>" class="form-control cus-form-ctrl age_calculate" type="text">
+                                    <input id="party_age" tabindex='11' name="party_age" maxlength="2" onkeyup="return isNumber(event)" placeholder="Age" value="<?php echo ($party_age); ?>" class="form-control cus-form-ctrl age_calculate" type="text" onkeyup="this.value=this.value.replace(/[^0-9]/g,'');">
                                     <span class="input-group-addon" data-placement="bottom" data-toggle="popover" title="Approx. age in years only.">
                                         <i class="fa fa-question-circle-o"></i>
                                     </span>
@@ -302,7 +302,7 @@
                                     </select>
                                 </div>
                             </div>
-                            <div class="col-12 col-sm-12 col-md-4 col-lg-4" style="<?php echo (isset($party_details[0]) && @$party_details[0]['org_post_id'] == 0) ? ' display: block' : ' display: none'; ?>" id="otherOrgPost">
+                            <div class="col-12 col-sm-12 col-md-4 col-lg-4 <?php echo (isset($party_details[0]) && @$party_details[0]['org_post_id'] == 0) ? ' display: block' : ' display: none'; ?>" id="otherOrgPost">
                                 <div class="mb-3">
                                     <label class="form-label">Other Post <span style="color: red" class="astriks">*</span></label>
                                     <textarea rows="1" id="org_post_name" name="org_post_name" tabindex='17' minlength="5" maxlength="99" class="form-control cus-form-ctrl" placeholder="Other Post Name" type="text" style="text-transform: uppercase"><?php echo (@$party_details[0]['org_post_name']); ?></textarea>
@@ -331,7 +331,7 @@
                         </div> -->
                         <div class="col-12 col-sm-12 col-md-4 col-lg-4">
                             <div class="mb-3">
-                                <label class="form-label">Email <span id="party_email_req" style="color: red">*</span></label>
+                                <label class="form-label">Email </label>
                                 <input id="party_email" oninput="validateEmail()" style="text-transform: uppercase" name="party_email" placeholder="Email" tabindex='18' value="<?php echo (@$party_details[0]['email_id']); ?>" class="form-control cus-form-ctrl" type="email" minlength="6" maxlength="49">
                                 <span class="input-group-addon" data-placement="bottom" data-toggle="popover" title="Please enter Petitioner valid email id. (eg : abc@example.com)">
                                     <i class="fa fa-question-circle-o"></i>
@@ -356,7 +356,7 @@
                         </div> -->
                         <div class="col-12 col-sm-12 col-md-4 col-lg-4">
                             <div class="mb-3">
-                                <label class="form-label">Mobile <span id="pet_mobile_req" value="1" style="color: red">*</span></label>
+                                <label class="form-label">Mobile </label>
                                 <input id="party_mobile" name="party_mobile" tabindex='19' onkeyup="this.value=this.value.replace(/[^0-9]/g,'');" placeholder="Mobile" value="<?php echo (@$party_details[0]['mobile_num']); ?>" class="form-control cus-form-ctrl" type="text" minlength="10" pattern="[6-9][0-9]{9}" maxlength="10">
                                 <span class="input-group-addon" data-placement="bottom" data-toggle="popover" title="Mobile No. should be of 10 digits only.">
                                     <i class="fa fa-question-circle-o"></i>
@@ -393,7 +393,7 @@
                         <div class="col-12 col-sm-12 col-md-4 col-lg-4">
                             <div class="mb-3">
                                 <label class="form-label">Pin Code<span style="color: red" class="astriks">*</span></label>
-                                <input id="party_pincode" name="party_pincode" tabindex='22' onkeyup="this.value=this.value.replace(/[^0-9]/g,'');" placeholder="Pincode" value="<?php echo (@$party_details[0]['pincode']); ?>" class="form-control cus-form-ctrl" type="text" minlength="6" maxlength="6" required>
+                                <input id="party_pincode" name="party_pincode" tabindex='22' onkeyup="this.value=this.value.replace(/[^0-9]/g,'');" placeholder="Pincode" value="<?php echo (@$party_details[0]['pincode']); ?>" class="form-control cus-form-ctrl" type="text" minlength="6" maxlength="6">
                                 <span class="input-group-addon" data-placement="bottom" data-toggle="popover" title="Pincode should be 6 digits only.">
                                     <i class="fa fa-question-circle-o"></i>
                                     <a href="https://www.indiapost.gov.in/vas/pages/findpincode.aspx" target="_blank" class="pin-code-loc">Pin Code Locator</a>
@@ -411,7 +411,7 @@
                         </div>
                         <div class="col-12 col-sm-12 col-md-4 col-lg-4">
                             <label class="control-label col-md-5 col-sm-12 col-xs-12"> State <span id="state_span" <?php echo $style; ?>><?php echo $astrik; ?></span>:</label>
-                            <select name="party_state" id="party_state" tabindex='23' class="cus-form-ctrl filter_select_dropdown">
+                            <select name="party_state" id="party_state" tabindex='23' class="cus-form-ctrl filter_select_dropdown" required>
                                 <option value="" title="Select">Select State</option>
                                 <?php
                                 $stateArr = array();
@@ -432,7 +432,7 @@
                         </div>
                         <div class="col-12 col-sm-12 col-md-4 col-lg-4">
                             <label class="control-label col-md-5 col-sm-12 col-xs-12"> District <span id="district_span" <?php echo $style; ?>><?php echo $astrik; ?></span>:</label>
-                            <select name="party_district" id="party_district" tabindex='24' class="cus-form-ctrl filter_select_dropdown party_district">
+                            <select name="party_district" id="party_district" tabindex='24' class="cus-form-ctrl filter_select_dropdown party_district" required>
                                     <option value="" title="Select">Select District</option>
                                     <?php
                                     if (count($district_list)) {
@@ -542,12 +542,27 @@
     });
 </script>
 <script>
+    function isNumber(value) {
+        return typeof value === 'number';
+    }
     $(document).ready(function() {
         $("#extra_party_sms").click(function() {
             var resArr = '<?= $extra_party_sms; ?>';
             // alert(resArr);
             $('#msg').show();
             $(".form-response").html("<p class='message invalid' id='msgdiv'>&nbsp;&nbsp;&nbsp; " + resArr + "  <span class='close' onclick=hideMessageDiv()>X</span></p>");
+        });
+    });
+    function validateInput(event) {
+        const input = event.target.value;
+        outputVal = initVal.replace(/[^a-zA-Z0-9\.\/@_\\,'()\s"-]/g, "").replace(/^\./, "");
+        if (initVal != outputVal) {
+            $(this).val(outputVal);
+        }
+    } 
+    $(document).ready(function() {
+        $("input[name='party_age']").on('input', function(e) {
+            $(this).val($(this).val().replace(/[^0-9]/g, ''));
         });
     });
 </script>
@@ -592,11 +607,17 @@
         }
     });
 
-    function get_party_as(value) {
+    $('.party_gender1').attr('required', 'required');
+    $('.party_name').attr('required', true);
+    // $('.relative_name').attr('required', true);
+    $('#relation').attr('required', true);
+    $('#org_state').attr('required', false);
+    $('input[name="party_gender"]').attr('required', true);
+    $('#party_age').attr('required', true);
 
+    function get_party_as(value) {
         var party_as = value;
         if (party_as == 'I') {
-
             $('#indvidual_form').show();
             $('#org_form').hide();
             $('#org_state_row').show();
@@ -606,14 +627,116 @@
             $('#otherOrgState').hide();
             $('#otherOrgDept').hide();
             $('#otherOrgPost').hide();
+            $('#org_dept').attr('required', false);
+            $('#org_state').attr('required', false);
+            $('#org_post').attr('required', false);
+            $('#indvidual_form').show();
+            $('#org_form').hide();
+            $('#org_state_row').show();
+            //$('.party_gender1').attr('required', 'required');
+            $('.party_name').attr('required', true);
+            // $('.relative_name').attr('required', true);
+            $('#relation').attr('required', true); 
+            $('#party_age').attr('required', true);
+            $('input[name="party_gender"]').attr('required', true);
+        } else {
+            $('.party_name').attr('required', false);
+            $('.relative_name').attr('required', false);
+            $('#relation').attr('required', false); 
+            $('#party_age').attr('required', false);
+            $('input[name="party_gender"]').attr('required', false);
+            get_departments(party_as);
+            get_posts();
+            $('#indvidual_form').hide();
+            $('#org_form').show();
+            if (party_as == 'D3') {
+                //Other Organisation : D3
 
-            $('#party_email').attr('required', true); 
-            $('#party_mobile').attr('required', true);
+                $('#org_state_row').hide();
+                $('#otherOrgState').hide();
+
+                var org_dept = '<?php echo isset($party_details[0]) ? $party_details[0]['org_dept_id'] : ''; ?>';
+                if (org_dept == 0) {
+                    $('#otherOrgDept').show();
+                    $('#org_post').val('<?php echo url_encryption(0); ?>');
+                    $('#org_dept_name').val('<?php isset($party_details[0]) ? echo_data($party_details[0]['org_dept_name']) : ''; ?>');
+                } else {
+                    $('#otherOrgDept').hide();
+                    $('#org_dept_name').val('');
+                }
+                var org_post = '<?php echo isset($party_details[0]) ? $party_details[0]['org_post_id'] : ''; ?>';
+                if (org_post == 0) {
+                    $('#otherOrgPost').show();
+                    $('#org_post').val('<?php echo url_encryption(0); ?>');
+                    $('#org_post_name').val('<?php isset($party_details[0]) ? echo_data($party_details[0]['org_post_name']) : ''; ?>');
+                } else {
+                    $('#otherOrgPost').hide();
+                    $('#org_post_name').val('');
+                }
+
+
+            } else if (party_as == 'D1' || party_as == 'D2') {
+                //State Department : D1 and //Central Department : D2
+                $('#org_state_row').show();
+
+                var org_state = '<?php echo @$party_details[0]['org_state_id']; ?>';
+                //alert('party_as direct '+party_as_sel+org_state);
+                if (org_state == 0) {
+                    $('#otherOrgState').show();
+                    $('#org_state_name').val('');
+                    $('#org_state_name').val('<?php echo_data(@$party_details[0]['org_state_name']); ?>');
+                } else {
+                    $('#otherOrgState').hide();
+                    $('#org_state_name').val('');
+                }
+                var org_dept = '<?php echo isset($party_details[0]) ? $party_details[0]['org_dept_id'] : ''; ?>';
+                if (org_dept == 0) {
+                    $('#otherOrgDept').show();
+                    $('#org_dept_name').val('');
+                    $('#org_dept_name').val('<?php isset($party_details[0]) ? echo_data($party_details[0]['org_dept_name']) : ''; ?>');
+                } else {
+                    $('#otherOrgDept').hide();
+                    $('#org_dept_name').val('');
+                }
+                var org_post = '<?php echo isset($party_details[0]) ? $party_details[0]['org_post_id'] : ''; ?>';
+                if (org_post == 0) {
+                    $('#otherOrgPost').show();
+                    $('#org_post_name').val('');
+                    $('#org_post_name').val('<?php isset($party_details[0]) ? echo_data($party_details[0]['org_post_name']) : ''; ?>');
+                } else {
+                    $('#otherOrgPost').hide();
+                    $('#org_post_name').val('');
+                }
+
+
+            } else {
+                $('#indvidual_form').hide();
+                $('#org_form').show();
+                $('#org_state_row').show();
+                $('#party_name').val('');
+                $('#relation').val('');
+                $('#relative_name').val('');
+                $('#party_dob').val('');
+                $('#party_age').val('');
+                /*$('#party_gender1').val('');
+                 $('#party_gender2').val('');
+                 $('#party_gender3').val('');*/
+            }
+        }
+        /*if (party_as == 'I') {
+            $('#indvidual_form').show();
+            $('#org_form').hide();
+            $('#org_state_row').show();
+            $('#org_state').val('');
+            $('#org_dept').val('');
+            $('#org_post').val('');
+            $('#otherOrgState').hide();
+            $('#otherOrgDept').hide();
+            $('#otherOrgPost').hide();
         } else {
 
             get_departments(party_as);
             get_posts();
-
             if (party_as == 'D3') {
                 $('#indvidual_form').hide();
                 $('#org_form').show();
@@ -624,11 +747,9 @@
                 $('#relative_name').val('');
                 $('#party_dob').val('');
                 $('#party_age').val('');
-                /*$('#party_gender1').val('');            
-                 $('#party_gender2').val('');            
-                 $('#party_gender3').val('');*/
-                $('#party_email').attr('required', false); 
-                $('#party_mobile').attr('required', false);
+                /!*$('#party_gender1').val('');
+                 $('#party_gender2').val('');
+                 $('#party_gender3').val('');*!/
             } else {
                 $('#indvidual_form').hide();
                 $('#org_form').show();
@@ -638,17 +759,16 @@
                 $('#relative_name').val('');
                 $('#party_dob').val('');
                 $('#party_age').val('');
-                $('#party_email').attr('required', false); 
-                $('#party_mobile').attr('required', false);
-                /*$('#party_gender1').val('');            
-                 $('#party_gender2').val('');            
-                 $('#party_gender3').val('');            */
+
+                /!*$('#party_gender1').val('');
+                 $('#party_gender2').val('');
+                 $('#party_gender3').val('');            *!/
             }
-        }
+        }*/
     }
 
     //---------- Organisation State Name----------------------//
-    $('#org_state').change(function() {
+    $('#org_state').change(function () {
 
         var CSRF_TOKEN = 'CSRF_TOKEN';
         var CSRF_TOKEN_VALUE = $('[name="CSRF_TOKEN"]').val();
@@ -656,50 +776,46 @@
         var org_state = $(this).val();
         if (org_state == '<?php echo url_encryption(0); ?>') {
             $('#otherOrgState').show();
-            $('#otherOrgDept').show();
-            $('#otherOrgPost').show();
-            $('#org_dept').val('<?php echo url_encryption(0); ?>');
-            $('#org_post').val('<?php echo url_encryption(0); ?>');
+            // $('#org_dept').val('<?php echo url_encryption(0); ?>');
+            // $('#org_post').val('<?php echo url_encryption(0); ?>');
+            // $('#org_state_name').attr('required', true);
         } else {
             $('#otherOrgState').hide();
-            $('#otherOrgDept').hide();
-            $('#otherOrgPost').hide();
-            $('#org_dept').val('');
-            $('#org_post').val('');
+            // $('#org_state_name').attr('required', false);
+            // $('#org_state_name').val('');
         }
     });
 
     //---------- Organisation Department Name----------------------//
-    $('#org_dept').change(function() {
+    $('#org_dept').change(function () {
 
         var CSRF_TOKEN = 'CSRF_TOKEN';
         var CSRF_TOKEN_VALUE = $('[name="CSRF_TOKEN"]').val();
-
         var org_dept = $(this).val();
         if (org_dept == '<?php echo url_encryption(0); ?>') {
             $('#otherOrgDept').show();
-            $('#otherOrgPost').show();
-            $('#org_post').val('<?php echo url_encryption(0); ?>');
+            $('#org_dept_name').attr('required', true);
         } else {
             $('#otherOrgDept').hide();
-            $('#otherOrgPost').hide();
-            $('#org_post').val('');
+            $('#org_dept_name').attr('required', false);
+            $('#org_dept_name').val('');
         }
     });
 
 
+
     //---------- Organisation Post Name----------------------//
     $('#org_post').change(function() {
-
         var CSRF_TOKEN = 'CSRF_TOKEN';
         var CSRF_TOKEN_VALUE = $('[name="CSRF_TOKEN"]').val();
-
         var org_post = $(this).val();
         if (org_post == '<?php echo url_encryption(0); ?>') {
             $('#otherOrgPost').show();
-
+            $('#org_post_name').attr('required', true);
         } else {
             $('#otherOrgPost').hide();
+            $('#org_post_name').attr('required', false);
+            $('#org_post_name').val('');
         }
     });
 
@@ -1086,8 +1202,8 @@
 
                     } else if (resArr[0] == 3) {
                         // alert(resArr[1]);
-                        $('#errDiv').show();
-                        $('#alertMsg').html(resArr[1]);
+                        $('#dangerAlert').show();
+                        $('#dangerAlert').html(resArr[1]);
                         var te = resArr[1];
                         if(te.includes("cause_pet")){                                 
                             $('#cause_pet').val('');
@@ -1098,7 +1214,7 @@
                             return false;
                         }
                         setTimeout(function() {
-                            $('#errDiv').hide();
+                            $('#dangerAlert').hide();
                         }, 3000);
                     }
                         $.getJSON("<?php echo base_url() . 'csrftoken'; ?>", function(result) {

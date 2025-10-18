@@ -211,7 +211,7 @@
                 <tr class="Block-of">
                     <td>
                         <h3>
-                            eCopying - Payment Success
+                            eCopying - Payment Failed
                         </h3>
                     </td>
                 </tr>

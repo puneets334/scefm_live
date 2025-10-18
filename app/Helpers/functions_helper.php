@@ -4755,30 +4755,98 @@ function sendSMS($typeId="38",$mobileNo="",$smsText="",$templateId="")
     return $result;
 }
 
-function parsePBDownloadResponseHeaders($curl,$header_return){
-    header($header_return);
-    return strlen($header_return);
+// function parsePBDownloadResponseHeaders($curl,$header_return){
+//     header($header_return);
+//     return strlen($header_return);
+// }
+// function downloadCasePaperBook($url, $headers = [], $if_return_metadata = false)
+// {
+//     $curl = curl_init();
+//     curl_setopt_array($curl, array(
+//         CURLOPT_URL => $url,
+//         CURLOPT_RETURNTRANSFER => false,
+//         CURLOPT_ENCODING => '',
+//         CURLOPT_MAXREDIRS => 10,
+//         CURLOPT_TIMEOUT => 0,
+//         CURLOPT_FOLLOWLOCATION => true,
+//         CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+//         CURLOPT_SSL_VERIFYHOST => false,
+//         CURLOPT_SSL_VERIFYPEER => false,
+//         CURLOPT_CUSTOMREQUEST => 'GET',
+//         CURLOPT_HEADERFUNCTION => 'parsePBDownloadResponseHeaders',
+//         CURLOPT_HTTPHEADER => ($headers ?: array('User-Agent: AutoBot')),
+//     ));
+//     $response = curl_exec($curl);
+//     curl_close($curl);
+//     return $response;
+// }
+
+function parsePBDownloadResponseHeaders($curl, $header_line) {
+    // Only pass specific headers to the client
+    if (stripos($header_line, 'Content-Type:') === 0 || 
+        stripos($header_line, 'Content-Disposition:') === 0 || 
+        stripos($header_line, 'Content-Length:') === 0) {
+        header($header_line);
+    }
+    return strlen($header_line);
 }
-function downloadCasePaperBook($url, $headers = [], $if_return_metadata = false)
-{
+
+function downloadCasePaperBook($url, $headers = [], $if_return_metadata = false, $filename) {
+    // Clean output buffer to prevent corruption
+    ob_clean();
+    ob_start();
+
     $curl = curl_init();
     curl_setopt_array($curl, array(
         CURLOPT_URL => $url,
-        CURLOPT_RETURNTRANSFER => false,
-        CURLOPT_ENCODING => '',
+        CURLOPT_RETURNTRANSFER => true, // Capture response instead of direct output
+        CURLOPT_ENCODING => '', // Accept all encodings
         CURLOPT_MAXREDIRS => 10,
         CURLOPT_TIMEOUT => 0,
         CURLOPT_FOLLOWLOCATION => true,
         CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
-        CURLOPT_SSL_VERIFYHOST => false,
-        CURLOPT_SSL_VERIFYPEER => false,
+        CURLOPT_SSL_VERIFYHOST => false, // Consider enabling in production
+        CURLOPT_SSL_VERIFYPEER => false, // Consider enabling in production
         CURLOPT_CUSTOMREQUEST => 'GET',
         CURLOPT_HEADERFUNCTION => 'parsePBDownloadResponseHeaders',
-        CURLOPT_HTTPHEADER => ($headers ?: array('User-Agent: AutoBot')),
+        CURLOPT_HTTPHEADER => ($headers ?: ['User-Agent: AutoBot']),
     ));
+
+    // Execute cURL request
     $response = curl_exec($curl);
+
+    // Check for cURL errors
+    if (curl_errno($curl)) {
+        curl_close($curl);
+        throw new Exception('cURL Error: ' . curl_error($curl));
+    }
+
+    // Get HTTP status code and content info
+    $http_code = curl_getinfo($curl, CURLINFO_HTTP_CODE);
+    $content_type = curl_getinfo($curl, CURLINFO_CONTENT_TYPE);
+    $content_length = curl_getinfo($curl, CURLINFO_CONTENT_LENGTH_DOWNLOAD);
+
     curl_close($curl);
-    return $response;
+
+    // Validate response
+    if ($http_code !== 200) {
+        throw new Exception('Failed to download file. HTTP Code: ' . $http_code);
+    }
+
+    // Ensure correct headers for ZIP download
+    header('Content-Type: application/zip');
+    header('Content-Disposition: attachment; filename="' . basename($filename) . '"');
+    header('Content-Length: ' . strlen($response)); // Use response length
+    header('Cache-Control: no-cache, no-store, must-revalidate');
+    header('Pragma: no-cache');
+    header('Expires: 0');
+
+    // Output the file content
+    echo $response;
+
+    // Flush output buffer and end
+    ob_end_flush();
+    exit;
 }
 
 function relay_mail_api_through_jio_cloud_server($to_email, $subject, $message, $to_user_name = "")
